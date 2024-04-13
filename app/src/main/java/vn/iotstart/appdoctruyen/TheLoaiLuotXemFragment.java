@@ -12,11 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.truyenapp.adapter.LuotXemApdapter;
-import com.example.truyenapp.database.Database;
-import com.example.truyenapp.model.PLTruyen;
 
-import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -74,39 +70,23 @@ public class TheLoaiLuotXemFragment extends Fragment {
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view= inflater.inflate(R.layout.fragment_theloai_luotxem, container, false);
-//        db=new Database(getActivity());
-//        Anhxa();
-//
-//        Intent intent=getActivity().getIntent();
-//        email=intent.getStringExtra("email");
-//
-//        theLoai= (TheLoai) getActivity();
-//        hienThiTheoTheLoai();
 
-
-        return view;
-    }
 
     public void recyclerViewTruyen() {
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL,false);
+        /*LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL,false);
         rcv.setLayoutManager(linearLayoutManager);
         String lenhSqlite_theloai="select truyen.id, thongke.tongluotxem, thongke.sosaotb, truyen.tentruyen, chapter.ngaydang, truyen.theloai theloai, truyen.linkanh from truyen inner join chapter on truyen.id=chapter.idtruyen inner join thongke on truyen.id=thongke.idtruyen where chapter.tenchapter='Chapter 1' and truyen.theloai='"+_theloai+"' order by thongke.tongluotxem desc, chapter.ngaydang desc";
         ArrayList<PLTruyen> truyens=db.getListPLTruyen(lenhSqlite_theloai);
         rcv_adapter=new LuotXemApdapter(getActivity(),truyens,email);
-        rcv.setAdapter(rcv_adapter);
+        rcv.setAdapter(rcv_adapter);*/
     }
 
     public void Anhxa(){
-        rcv=view.findViewById(R.id.rcv_theloai_view);
+      /*  *//*rcv=view.findViewById(R.id.rcv_theloai_view*//*);*/
     }
 
     public void hienThiTheoTheLoai(){
-        _theloai=theLoai.autoCompleteTextView.getText().toString();
+        /*_theloai=theLoai.autoCompleteTextView.getText().toString();
         recyclerViewTruyen();
         theLoai.autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -116,6 +96,6 @@ public class TheLoaiLuotXemFragment extends Fragment {
                 recyclerViewTruyen();
                 Toast.makeText(getActivity().getApplicationContext(),"Thể loại: "+item,Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
     }
 }
