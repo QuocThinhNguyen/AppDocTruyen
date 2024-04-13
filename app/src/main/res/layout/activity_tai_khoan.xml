@@ -16,22 +16,27 @@
         <ImageView
             android:id="@+id/bg_top"
             android:layout_width="wrap_content"
-            android:layout_height="540px"
+            android:layout_height="650px"
             android:background="@drawable/top_background"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            tools:ignore="MissingConstraints" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="16dp"
             android:text="Cá Nhân"
             android:textColor="@color/white"
             android:textSize="40dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.621"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,16 +45,21 @@
             android:layout_width="97dp"
             android:layout_height="99dp"
 
+            android:layout_marginStart="33dp"
             android:layout_marginTop="80dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.105"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/bg_top"
             app:layout_constraintTop_toTopOf="@+id/bg_top"
+
+            app:layout_constraintVertical_bias="0.0"
             app:shapeAppearanceOverlay="@style/circle"
             app:srcCompat="@drawable/avatar"
             tools:ignore="ImageContrastCheck" />
 
         <TextView
+            android:id="@+id/tx_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="115dp"
@@ -58,13 +68,28 @@
             android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold"
-            android:id="@+id/tx_username"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/imgAvatar"
             app:layout_constraintTop_toBottomOf="@+id/textView"
-            app:layout_constraintVertical_bias="0.8" />
+            app:layout_constraintVertical_bias="0.388" />
+
+        <TextView
+            android:id="@+id/tv_tongngaydiemdanh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="7 Ngày"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            app:drawableTopCompat="@drawable/ic_reward"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.957"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -78,7 +103,7 @@
             app:layout_constraintHorizontal_bias="0.211"
             app:layout_constraintStart_toEndOf="@+id/imgAvatar"
             app:layout_constraintTop_toBottomOf="@+id/tx_username"
-            app:layout_constraintVertical_bias="0.026" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -92,86 +117,169 @@
             app:layout_constraintVertical_bias="0.088"
             app:srcCompat="@drawable/logout" />
 
+
+        <TextView
+            android:id="@+id/tv_tk_lv"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:background="@color/green"
+            android:gravity="center"
+            android:text="Lv.5"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.983"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.721" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="210dp"
+        android:layout_marginTop="220dp"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="@+id/CsLayoutTop"
         app:layout_constraintTop_toTopOf="@+id/CsLayoutTop">
 
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            app:cardCornerRadius="8dp">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/account"
-                    android:drawableEnd="@drawable/arrow"
-                    android:id="@+id/btn_taiKhoanBaoMat"
-                    android:background="@null"
-                    android:text="Tài khoản và Bảo mật"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <Button
-                    android:id="@+id/btn_gioiThieuBanBe"
-                    android:text="Giới thiệu bạn bè"
-                    android:layout_marginBottom="0dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-                <Button
-                    android:id="@+id/btn_phanHoi"
-                    android:layout_marginBottom="0dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Phản hồi ý kiến"/>
-                <Button
-                    android:id="@+id/btn_gioiThieu"
-                    android:layout_marginBottom="0dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Giới thiệu chúng tôi"/>
-            </LinearLayout>
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/tv_taikhoan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginLeft="20dp"
+                android:padding="7dp"
+                android:gravity="center"
+                android:drawableStart="@drawable/account1"
+                android:text="Tài khoản và Bảo mật"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+        </androidx.cardview.widget.CardView>
 
-                <Button
-                    android:id="@+id/btn_chinhSach"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Chính sách bảo mật"/>
-                <Button
-                    android:id="@+id/btn_dichVu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Điều khoản dịch vụ"/>
+        <androidx.cardview.widget.CardView
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white">
+            <TextView
+                android:id="@+id/tv_gioithieu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:padding="7dp"
+                android:gravity="center"
+                android:drawableStart="@drawable/introduce_friend"
+                android:text="Giới thiệu bạn bè"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+        </androidx.cardview.widget.CardView>
 
-            </LinearLayout>
+        <androidx.cardview.widget.CardView
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white">
+            <TextView
+                android:id="@+id/tv_phanhoi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:padding="7dp"
+                android:gravity="center"
+                android:drawableStart="@drawable/feedback"
+                android:text="Phản hồi ý kiến"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/tv_gioithieuapp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:drawableStart="@drawable/introduce"
+                android:gravity="center"
+                android:padding="7dp"
+                android:text="Giới thiệu chúng tôi"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white">
+            <TextView
+                android:id="@+id/tv_chinhsach"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:padding="7dp"
+                android:gravity="center"
+                android:drawableStart="@drawable/privacy_policy"
+                android:text="Chính sách bảo mật"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white">
+            <TextView
+                android:id="@+id/tv_dieukhoan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:padding="7dp"
+                android:gravity="center"
+                android:drawableStart="@drawable/terms_conditions"
+                android:text="Điều khoản dịch vụ"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+        </androidx.cardview.widget.CardView>
 
 
-        </LinearLayout>
 
-
-
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
