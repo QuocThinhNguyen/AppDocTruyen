@@ -1,4 +1,4 @@
-package vn.iotstart.appdoctruyen;
+package vn.iotstar.appdoctruyen;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("vn.iotstart.appdoctruyen", appContext.getPackageName());
+        assertEquals("vn.iotstar.appdoctruyen", appContext.getPackageName());
     }
 }

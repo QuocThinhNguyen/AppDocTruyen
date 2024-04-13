@@ -1,26 +1,19 @@
-package vn.iotstart.appdoctruyen;
+package vn.iotstar.appdoctruyen;
 
-import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ChiTietFragment#newInstance} factory method to
+ * Use the {@link ThongBaoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ChiTietFragment extends Fragment {
-
-
+public class ThongBaoFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,7 +24,7 @@ public class ChiTietFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public ChiTietFragment() {
+    public ThongBaoFragment() {
         // Required empty public constructor
     }
 
@@ -41,11 +34,11 @@ public class ChiTietFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ChiTietFragment.
+     * @return A new instance of fragment ThongBaoFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ChiTietFragment newInstance(String param1, String param2) {
-        ChiTietFragment fragment = new ChiTietFragment();
+    public static ThongBaoFragment newInstance(String param1, String param2) {
+        ThongBaoFragment fragment = new ThongBaoFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -65,17 +58,7 @@ public class ChiTietFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
-        return inflater.inflate(R.layout.fragment_chi_tiet, container, false);
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_thong_bao, container, false);
     }
-
-
-//    private void recyclerViewBinhLuan(){
-//        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL,false);
-//        rcv_binhluan.setLayoutManager(linearLayoutManager);
-//        ArrayList<BinhLuan> listBinhLuan=db.getBinhLuanTruyen(id_truyen);
-//        rcv_adapter=new BinhLuanTruyenAdapter(getActivity(),listBinhLuan,db);
-//        rcv_binhluan.setAdapter(rcv_adapter);
-//    }
 }

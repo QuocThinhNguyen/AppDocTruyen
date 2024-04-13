@@ -1,4 +1,4 @@
-package vn.iotstart.appdoctruyen;
+package vn.iotstar.appdoctruyen;
 
 import android.os.Bundle;
 

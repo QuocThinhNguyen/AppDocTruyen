@@ -1,4 +1,4 @@
-package vn.iotstart.appdoctruyen;
+package vn.iotstar.appdoctruyen;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -14,7 +14,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
 
         chipNavigationBar = findViewById(R.id.NavigationBar);
@@ -29,17 +28,12 @@ public class MainActivity extends AppCompatActivity {
                 }else if (i == R.id.store){
                     fragment = new TuSachFragment();
                 }else {
-                    fragment = new ThongBaoFragment();
+                    fragment = new TaiKhoanFragment();
                 }
                 if (fragment != null) {
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                 }
             }
         });
-
-        setContentView(R.layout.login);
-        
-
-
     }
 }
