@@ -1,4 +1,4 @@
-package vn.iotstar.appdoctruyen;
+package vn.iotstart.appdoctruyen;
 
 import org.junit.Test;
 
