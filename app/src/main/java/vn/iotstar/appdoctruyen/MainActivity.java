@@ -27,7 +27,10 @@ public class MainActivity extends AppCompatActivity {
                     fragment = new HomeFragment();
                 }else if (i == R.id.store){
                     fragment = new TuSachFragment();
-                }else {
+                }else if (i == R.id.cart){
+                    fragment = new ThongBaoFragment();
+                }
+                else {
                     fragment = new TaiKhoanFragment();
                 }
                 if (fragment != null) {
