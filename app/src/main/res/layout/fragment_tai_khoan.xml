@@ -46,7 +46,7 @@
             android:layout_height="99dp"
 
             android:layout_marginStart="33dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -138,10 +138,141 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="220dp"
+        android:layout_marginTop="200dp"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="@+id/CsLayoutTop"
         app:layout_constraintTop_toTopOf="@+id/CsLayoutTop">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="40dp"
+            android:gravity="center">
+            <androidx.cardview.widget.CardView
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="2dp"
+                android:background="@color/white"
+                android:layout_marginRight="1dp">
+                <LinearLayout
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_tk_diem"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="500"
+
+                        android:layout_gravity="center"
+                        android:textColor="@color/black"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Điểm của tôi"
+
+                        android:textSize="12dp"
+                        android:layout_gravity="center"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="2dp"
+                android:background="@color/white"
+                android:layout_marginRight="1dp">
+                <LinearLayout
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_tk_sotruyen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10"
+                        android:layout_gravity="center"
+                        android:textColor="@color/black"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cuốn truyện"
+                        android:textSize="12dp"
+                        android:layout_gravity="center"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="2dp"
+                android:background="@color/white"
+                android:layout_marginRight="1dp">
+                <LinearLayout
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_tk_sobinhluan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10"
+                        android:layout_gravity="center"
+                        android:textColor="@color/black"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bình luận"
+                        android:textSize="12dp"
+                        android:layout_gravity="center"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="2dp"
+                android:background="@color/white">
+                <LinearLayout
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_tk_sodanhgia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10"
+                        android:layout_gravity="center"
+                        android:textColor="@color/black"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Đánh giá"
+                        android:textSize="12dp"
+                        android:layout_gravity="center"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -161,7 +292,7 @@
                 android:padding="7dp"
                 android:gravity="center"
                 android:drawableStart="@drawable/account1"
-                android:text="Tài khoản và Bảo mật"
+                android:text="Thông tin tài khoản"
                 android:textColor="@color/black"
                 android:textSize="20dp" />
         </androidx.cardview.widget.CardView>
@@ -176,36 +307,14 @@
             android:layout_marginTop="10dp"
             android:background="@color/white">
             <TextView
-                android:id="@+id/tv_gioithieu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:padding="7dp"
-                android:gravity="center"
-                android:drawableStart="@drawable/introduce_friend"
-                android:text="Giới thiệu bạn bè"
-                android:textColor="@color/black"
-                android:textSize="20dp" />
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="8dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/white">
-            <TextView
-                android:id="@+id/tv_phanhoi"
+                android:id="@+id/tv_binhluan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:padding="7dp"
                 android:gravity="center"
                 android:drawableStart="@drawable/feedback"
-                android:text="Phản hồi ý kiến"
+                android:text="Bình luận của tôi"
                 android:textColor="@color/black"
                 android:textSize="20dp" />
         </androidx.cardview.widget.CardView>
@@ -221,14 +330,14 @@
             android:background="@color/white">
 
             <TextView
-                android:id="@+id/tv_gioithieuapp"
+                android:id="@+id/tv_danhgiacuatoi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:drawableStart="@drawable/introduce"
+                android:drawableStart="@drawable/feedback1"
                 android:gravity="center"
                 android:padding="7dp"
-                android:text="Giới thiệu chúng tôi"
+                android:text="Đánh giá của tôi"
                 android:textColor="@color/black"
                 android:textSize="20dp" />
         </androidx.cardview.widget.CardView>
@@ -243,14 +352,14 @@
             android:layout_marginTop="10dp"
             android:background="@color/white">
             <TextView
-                android:id="@+id/tv_chinhsach"
+                android:id="@+id/tv_doimatkhau"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:padding="7dp"
                 android:gravity="center"
-                android:drawableStart="@drawable/privacy_policy"
-                android:text="Chính sách bảo mật"
+                android:drawableStart="@drawable/changepassword"
+                android:text="Đổi mật khẩu"
                 android:textColor="@color/black"
                 android:textSize="20dp" />
         </androidx.cardview.widget.CardView>
@@ -265,14 +374,14 @@
             android:layout_marginTop="10dp"
             android:background="@color/white">
             <TextView
-                android:id="@+id/tv_dieukhoan"
+                android:id="@+id/tv_dangxuat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:padding="7dp"
                 android:gravity="center"
-                android:drawableStart="@drawable/terms_conditions"
-                android:text="Điều khoản dịch vụ"
+                android:drawableStart="@drawable/logout1"
+                android:text="Đăng xuất"
                 android:textColor="@color/black"
                 android:textSize="20dp" />
         </androidx.cardview.widget.CardView>

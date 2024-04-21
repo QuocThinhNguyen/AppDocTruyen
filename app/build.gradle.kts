@@ -38,4 +38,5 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("com.github.ismaeldivita:chip-navigation-bar:1.4.0")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.4.0")
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
 }
