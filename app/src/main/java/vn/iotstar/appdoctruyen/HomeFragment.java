@@ -1,18 +1,32 @@
 package vn.iotstar.appdoctruyen;
 
+import android.hardware.lights.LightState;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import vn.iotstar.appdoctruyen.API.APIService;
+import vn.iotstar.appdoctruyen.API.RetrofitClient;
+import vn.iotstar.appdoctruyen.Adapter.truyenAdapter;
+import vn.iotstar.appdoctruyen.model.truyen;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,6 +36,11 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment implements View.OnClickListener {
     ImageSlider imageSlider;
     View view;
+    RecyclerView rc1;
+    truyenAdapter truyenAdapter;
+    APIService apiService;
+    List<truyen> truyenList;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -75,11 +94,37 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         slideModels.add(new SlideModel(R.drawable.image3, ScaleTypes.FIT));
         slideModels.add(new SlideModel(R.drawable.image4, ScaleTypes.FIT));
         imageSlider.setImageList(slideModels, ScaleTypes.FIT);
+        AnhXa();
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false);
+        rc1.setLayoutManager(linearLayoutManager);
+        GetTruyen();
+        rc1.setAdapter(truyenAdapter);
         return view;
     }
 
     @Override
     public void onClick(View v) {
 
+    }
+    private void AnhXa(){
+        rc1 = (RecyclerView) view.findViewById(R.id.rv3);
+    }
+    private void GetTruyen(){
+        apiService = RetrofitClient.getRetrofit().create(APIService.class);
+        apiService.getTruyenAll().enqueue(new Callback<List<truyen>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<truyen>> call, @NonNull Response<List<truyen>> response) {
+                if (response.isSuccessful()){
+                    truyenList = response.body();
+                    truyenAdapter = new truyenAdapter(getContext(), truyenList);
+                    rc1.setHasFixedSize(true);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<truyen>> call, @NonNull Throwable t) {
+                Toast.makeText(getContext(), "Failure", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
