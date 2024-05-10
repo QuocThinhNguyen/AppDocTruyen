@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
     private static Retrofit retrofit;
-    private static String BASE_URL = "http://172.172.22.189:8090/truyen/";
+    private static String BASE_URL = "http://192.168.1.76:8090/";
     public static Retrofit getRetrofit(){
         if (retrofit == null){
             Gson gson = new GsonBuilder().setDateFormat("dd-MM-yyyy").create();

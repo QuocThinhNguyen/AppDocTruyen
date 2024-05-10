@@ -95,7 +95,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         slideModels.add(new SlideModel(R.drawable.image4, ScaleTypes.FIT));
         imageSlider.setImageList(slideModels, ScaleTypes.FIT);
         AnhXa();
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false);
         rc1.setLayoutManager(linearLayoutManager);
         GetTruyen();
         rc1.setAdapter(truyenAdapter);
@@ -116,7 +116,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             public void onResponse(@NonNull Call<List<truyen>> call, @NonNull Response<List<truyen>> response) {
                 if (response.isSuccessful()){
                     truyenList = response.body();
-                    truyenAdapter = new truyenAdapter(getContext(), truyenList);
+                    truyenAdapter = new truyenAdapter(getActivity(), truyenList);
                     rc1.setHasFixedSize(true);
                 }
             }
