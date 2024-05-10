@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     View view;
     RecyclerView rc1;
     truyenAdapter truyenAdapter;
-    APIService apiService;
     List<truyen> truyenList;
 
 
@@ -95,12 +95,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         slideModels.add(new SlideModel(R.drawable.image4, ScaleTypes.FIT));
         imageSlider.setImageList(slideModels, ScaleTypes.FIT);
         AnhXa();
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false);
-        rc1.setLayoutManager(linearLayoutManager);
-        GetTruyen();
+
+        LinearLayoutManager llm = new LinearLayoutManager(getContext());
+        llm.setOrientation(LinearLayoutManager.HORIZONTAL);
+        rc1.setLayoutManager(llm);
+
+        truyenList = new ArrayList<>();
+        truyenAdapter = new truyenAdapter(getActivity(), truyenList);
         rc1.setAdapter(truyenAdapter);
+
+        GetTruyen();
         return view;
     }
+
 
     @Override
     public void onClick(View v) {
@@ -110,21 +117,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         rc1 = (RecyclerView) view.findViewById(R.id.rv3);
     }
     private void GetTruyen(){
-        apiService = RetrofitClient.getRetrofit().create(APIService.class);
-        apiService.getTruyenAll().enqueue(new Callback<List<truyen>>() {
+        APIService.apiService.getTruyenAll().enqueue(new Callback<List<truyen>>() {
             @Override
             public void onResponse(@NonNull Call<List<truyen>> call, @NonNull Response<List<truyen>> response) {
-                if (response.isSuccessful()){
-                    truyenList = response.body();
-                    truyenAdapter = new truyenAdapter(getActivity(), truyenList);
-                    rc1.setHasFixedSize(true);
-                }
+                truyenList = response.body();
+                truyenAdapter categoryAdapter = new truyenAdapter(getContext(), truyenList);
+                rc1.setAdapter(categoryAdapter);
             }
 
             @Override
+
             public void onFailure(@NonNull Call<List<truyen>> call, @NonNull Throwable t) {
-                Toast.makeText(getContext(), "Failure", Toast.LENGTH_SHORT).show();
+                Log.e("API_CALL", "Failed to fetch data from API", t);
+                Toast.makeText(getContext(), "Failure: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
+
         });
     }
 }

@@ -46,7 +46,10 @@ public class truyenAdapter extends RecyclerView.Adapter<truyenAdapter.MyViewHold
 
     @Override
     public int getItemCount() {
-        return array == null ? 0 :array.size();
+        if (array != null){
+            return array.size();
+        }
+        return 0;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
