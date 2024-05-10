@@ -3,6 +3,7 @@ package vn.iotstar.appdoctruyen;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
@@ -11,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
 
     Fragment fragment=null;
     ChipNavigationBar chipNavigationBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

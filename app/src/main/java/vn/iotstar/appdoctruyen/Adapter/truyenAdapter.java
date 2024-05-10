@@ -19,8 +19,8 @@ import vn.iotstar.appdoctruyen.R;
 import vn.iotstar.appdoctruyen.model.truyen;
 
 public class truyenAdapter extends RecyclerView.Adapter<truyenAdapter.MyViewHolder> {
-    Context context;
-    List<truyen> array;
+    private Context context;
+    private List<truyen> array;
 
     public truyenAdapter(Context context, List<truyen> array) {
         this.context = context;
@@ -30,16 +30,18 @@ public class truyenAdapter extends RecyclerView.Adapter<truyenAdapter.MyViewHold
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv,null);
-        MyViewHolder myViewHolder = new MyViewHolder(view);
-        return myViewHolder;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv,parent,false);
+        return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        truyen truyen1 = array.get(position);
-        holder.tenTruyen.setText(truyen1.getTentruyen());
-        Glide.with(context).load(truyen1.getLinkanh()).into(holder.images);
+        truyen Truyen = array.get(position);
+        if (Truyen == null){
+            return;
+        }
+        holder.tenTruyen.setText(Truyen.getTentruyen());
+        Glide.with(context).load(Truyen.getLinkanh()).into(holder.images);
     }
 
     @Override
