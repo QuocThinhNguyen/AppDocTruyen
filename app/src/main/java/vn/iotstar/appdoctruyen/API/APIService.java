@@ -14,7 +14,7 @@ import vn.iotstar.appdoctruyen.model.truyen;
 public interface APIService {
     Gson gson = new GsonBuilder().setDateFormat("dd-MM-yyyy").create();
     APIService apiService = new Retrofit.Builder()
-            .baseUrl("http://172.172.17.12:8090/")
+            .baseUrl("http://172.172.17.82:8090/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(APIService.class);

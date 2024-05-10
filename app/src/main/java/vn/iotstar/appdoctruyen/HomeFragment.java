@@ -109,18 +109,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         rc1.setAdapter(truyenAdapter);
 
         GetTruyen();
-        return view;
-    }
-
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
-        rc1.setLayoutManager(linearLayoutManager);
-        GetTruyen();
-        rc1.setAdapter(truyenAdapter);
-
         setOnClickListener();
-
         return view;
+
+
+
     }
 
     private void setOnClickListener() {
@@ -141,11 +134,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void AnhXa() {
+    private void AnhXa(){
         rc1 = (RecyclerView) view.findViewById(R.id.rv3);
         tv_theloai = (TextView) view.findViewById(R.id.tv_theloai);
     }
-
     private void GetTruyen(){
         APIService.apiService.getTruyenAll().enqueue(new Callback<List<truyen>>() {
             @Override
@@ -153,19 +145,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 truyenList = response.body();
                 truyenAdapter categoryAdapter = new truyenAdapter(getContext(), truyenList);
                 rc1.setAdapter(categoryAdapter);
-
-
-    private void GetTruyen() {
-        apiService = RetrofitClient.getRetrofit().create(APIService.class);
-        apiService.getTruyenAll().enqueue(new Callback<List<truyen>>() {
-            @Override
-            public void onResponse(@NonNull Call<List<truyen>> call, @NonNull Response<List<truyen>> response) {
-                if (response.isSuccessful()) {
-                    truyenList = response.body();
-                    truyenAdapter = new truyenAdapter(getActivity(), truyenList);
-                    rc1.setHasFixedSize(true);
-                }
-
             }
 
             @Override
