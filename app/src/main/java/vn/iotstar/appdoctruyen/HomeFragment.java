@@ -1,5 +1,6 @@
 package vn.iotstar.appdoctruyen;
 
+import android.content.Intent;
 import android.hardware.lights.LightState;
 import android.os.Bundle;
 
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.denzcoskun.imageslider.ImageSlider;
@@ -40,8 +42,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     truyenAdapter truyenAdapter;
     APIService apiService;
     List<truyen> truyenList;
+    TextView tv_theloai;
 
-
+    String email;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -95,26 +98,44 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         slideModels.add(new SlideModel(R.drawable.image4, ScaleTypes.FIT));
         imageSlider.setImageList(slideModels, ScaleTypes.FIT);
         AnhXa();
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
         rc1.setLayoutManager(linearLayoutManager);
         GetTruyen();
         rc1.setAdapter(truyenAdapter);
+
+        setOnClickListener();
+
         return view;
     }
+
+    private void setOnClickListener() {
+
+        tv_theloai.setOnClickListener(this);
+    }
+
 
     @Override
     public void onClick(View v) {
 
+        //switch (v.getId()){
+        if (v.getId() == R.id.tv_theloai) {
+            Intent dialog_box3 = new Intent(getActivity(), TheLoaiFragment.class);
+            dialog_box3.putExtra("email", email);
+            startActivity(dialog_box3);
+        }
     }
-    private void AnhXa(){
+
+    private void AnhXa() {
         rc1 = (RecyclerView) view.findViewById(R.id.rv3);
+        tv_theloai = (TextView) view.findViewById(R.id.tv_theloai);
     }
-    private void GetTruyen(){
+
+    private void GetTruyen() {
         apiService = RetrofitClient.getRetrofit().create(APIService.class);
         apiService.getTruyenAll().enqueue(new Callback<List<truyen>>() {
             @Override
             public void onResponse(@NonNull Call<List<truyen>> call, @NonNull Response<List<truyen>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     truyenList = response.body();
                     truyenAdapter = new truyenAdapter(getActivity(), truyenList);
                     rc1.setHasFixedSize(true);
