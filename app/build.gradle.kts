@@ -55,4 +55,7 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.14.2")
     annotationProcessor("com.github.bumptech.glide:compiler:4.14.2")
 
+    compileOnly ("org.projectlombok:lombok:1.18.26")
+    annotationProcessor ("org.projectlombok:lombok:1.18.26")
+
 }
