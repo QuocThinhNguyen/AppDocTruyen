@@ -1,5 +1,6 @@
 package vn.iotstar.appdoctruyen;
 
+import android.content.Intent;
 import android.hardware.lights.LightState;
 import android.os.Bundle;
 
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.denzcoskun.imageslider.ImageSlider;
@@ -44,10 +46,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     truyenAdapter truyenMoiAdapter;
     truyenAdapter truyenTopAdapter;
     List<truyen> truyenList;
+
     List<truyen> truyenMoi;
     List<truyen> truyenTop;
 
+    TextView tv_theloai;
 
+
+    String email;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -102,6 +108,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         imageSlider.setImageList(slideModels, ScaleTypes.FIT);
         AnhXa();
 
+
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false);
         LinearLayoutManager linearLayoutManager2=new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false);
         LinearLayoutManager linearLayoutManager3=new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false);
@@ -109,6 +116,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         rc1.setLayoutManager(linearLayoutManager);
         rc2.setLayoutManager(linearLayoutManager2);
         rc3.setLayoutManager(linearLayoutManager3);
+
 
         truyenList = new ArrayList<>();
         truyenAdapter = new truyenAdapter(getActivity(), truyenList);
@@ -121,18 +129,39 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         rc3.setAdapter(truyenTopAdapter);
 
         GetTruyen();
+        setOnClickListener();
         return view;
+
+
+
     }
+
+    private void setOnClickListener() {
+
+        tv_theloai.setOnClickListener(this);
+    }
+
 
 
     @Override
     public void onClick(View v) {
 
+        //switch (v.getId()){
+        if (v.getId() == R.id.tv_theloai) {
+            Intent dialog_box3 = new Intent(getActivity(), TheLoaiFragment.class);
+            dialog_box3.putExtra("email", email);
+            startActivity(dialog_box3);
+        }
     }
+
     private void AnhXa(){
         rc1 = (RecyclerView) view.findViewById(R.id.rv3);
+
         rc2 = (RecyclerView) view.findViewById(R.id.rv);
         rc3 = (RecyclerView) view.findViewById(R.id.rv2);
+
+        tv_theloai = (TextView) view.findViewById(R.id.tv_theloai);
+
     }
     private void GetTruyen(){
         APIService.apiService.getTruyenAll().enqueue(new Callback<List<truyen>>() {
