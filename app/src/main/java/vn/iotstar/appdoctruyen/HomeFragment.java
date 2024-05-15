@@ -38,8 +38,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     ImageSlider imageSlider;
     View view;
     RecyclerView rc1;
+    RecyclerView rc2;
+    RecyclerView rc3;
     truyenAdapter truyenAdapter;
+    truyenAdapter truyenMoiAdapter;
+    truyenAdapter truyenTopAdapter;
     List<truyen> truyenList;
+    List<truyen> truyenMoi;
+    List<truyen> truyenTop;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -96,13 +102,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         imageSlider.setImageList(slideModels, ScaleTypes.FIT);
         AnhXa();
 
-        LinearLayoutManager llm = new LinearLayoutManager(getContext());
-        llm.setOrientation(LinearLayoutManager.HORIZONTAL);
-        rc1.setLayoutManager(llm);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false);
+        LinearLayoutManager linearLayoutManager2=new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false);
+        LinearLayoutManager linearLayoutManager3=new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false);
+
+        rc1.setLayoutManager(linearLayoutManager);
+        rc2.setLayoutManager(linearLayoutManager2);
+        rc3.setLayoutManager(linearLayoutManager3);
 
         truyenList = new ArrayList<>();
         truyenAdapter = new truyenAdapter(getActivity(), truyenList);
         rc1.setAdapter(truyenAdapter);
+        truyenMoi = new ArrayList<>();
+        truyenAdapter = new truyenAdapter(getActivity(), truyenMoi);
+        rc2.setAdapter(truyenMoiAdapter);
+        truyenTop = new ArrayList<>();
+        truyenAdapter = new truyenAdapter(getActivity(), truyenTop);
+        rc3.setAdapter(truyenTopAdapter);
 
         GetTruyen();
         return view;
@@ -115,6 +131,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
     private void AnhXa(){
         rc1 = (RecyclerView) view.findViewById(R.id.rv3);
+        rc2 = (RecyclerView) view.findViewById(R.id.rv);
+        rc3 = (RecyclerView) view.findViewById(R.id.rv2);
     }
     private void GetTruyen(){
         APIService.apiService.getTruyenAll().enqueue(new Callback<List<truyen>>() {
@@ -123,6 +141,38 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 truyenList = response.body();
                 truyenAdapter categoryAdapter = new truyenAdapter(getContext(), truyenList);
                 rc1.setAdapter(categoryAdapter);
+            }
+
+            @Override
+
+            public void onFailure(@NonNull Call<List<truyen>> call, @NonNull Throwable t) {
+                Log.e("API_CALL", "Failed to fetch data from API", t);
+                Toast.makeText(getContext(), "Failure: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+        });
+        APIService.apiService.getTruyenMoi().enqueue(new Callback<List<truyen>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<truyen>> call, @NonNull Response<List<truyen>> response) {
+                truyenMoi = response.body();
+                truyenAdapter truyenAdapter1 = new truyenAdapter(getContext(), truyenMoi);
+                rc2.setAdapter(truyenAdapter1);
+            }
+
+            @Override
+
+            public void onFailure(@NonNull Call<List<truyen>> call, @NonNull Throwable t) {
+                Log.e("API_CALL", "Failed to fetch data from API", t);
+                Toast.makeText(getContext(), "Failure: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+        });
+        APIService.apiService.getTopTruyen().enqueue(new Callback<List<truyen>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<truyen>> call, @NonNull Response<List<truyen>> response) {
+                truyenTop = response.body();
+                truyenAdapter truyenAdapter2 = new truyenAdapter(getContext(), truyenTop);
+                rc3.setAdapter(truyenAdapter2);
             }
 
             @Override

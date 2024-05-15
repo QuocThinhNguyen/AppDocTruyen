@@ -1,6 +1,7 @@
 package vn.iotstar.appdoctruyen.model;
 
 import java.io.Serializable;
+import java.util.Set;
 
 public class truyen implements Serializable {
     private Integer id;
@@ -11,6 +12,7 @@ public class truyen implements Serializable {
     private String linkanh;
     private Integer trangthai;
     private String keySearch;
+
 
     public truyen() {
     }
