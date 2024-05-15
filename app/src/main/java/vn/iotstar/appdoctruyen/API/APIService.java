@@ -9,6 +9,7 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
+import vn.iotstar.appdoctruyen.model.PhanLoaiTruyen;
 import vn.iotstar.appdoctruyen.model.truyen;
 
 public interface APIService {
@@ -22,8 +23,18 @@ public interface APIService {
             .create(APIService.class);
     @GET("truyen")
     Call<List<truyen>> getTruyenAll();
+
+
+    @GET("theloai")
+    Call<List<String>> getTheLoai();
+
+    @GET("/truyennewest")
+    Call<List<PhanLoaiTruyen>> getNewestBooks();
+
+
     @GET("truyen/toptruyenmoi")
     Call<List<truyen>> getTruyenMoi();
     @GET("truyen/toptruyen")
     Call<List<truyen>> getTopTruyen();
+
 }

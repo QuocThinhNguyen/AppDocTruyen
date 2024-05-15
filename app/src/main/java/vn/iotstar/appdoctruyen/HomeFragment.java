@@ -163,7 +163,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         tv_theloai = (TextView) view.findViewById(R.id.tv_theloai);
 
     }
-    private void GetTruyen(){
+    private void GetTruyen() {
         APIService.apiService.getTruyenAll().enqueue(new Callback<List<truyen>>() {
             @Override
             public void onResponse(@NonNull Call<List<truyen>> call, @NonNull Response<List<truyen>> response) {
@@ -213,4 +213,5 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         });
     }
+
 }

@@ -19,6 +19,18 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ChiTietTruyen"
+            android:exported="false" />
+        <activity
+            android:name=".TheLoaiVoteFragment"
+            android:exported="false" />
+        <activity
+            android:name=".TheLoaiNewFragment"
+            android:exported="false" />
+        <activity
+            android:name=".TheLoaiLuotXemFragment"
+            android:exported="false" />
+        <activity
             android:name=".TheLoaiFragment"
             android:exported="false" />
         <activity
