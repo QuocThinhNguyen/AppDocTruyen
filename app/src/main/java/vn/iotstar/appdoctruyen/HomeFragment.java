@@ -31,11 +31,7 @@ import vn.iotstar.appdoctruyen.model.truyen;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class HomeFragment extends Fragment implements View.OnClickListener {
     ImageSlider imageSlider;
     View view;
@@ -50,32 +46,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     List<truyen> truyenMoi;
     List<truyen> truyenTop;
 
-    TextView tv_theloai;
-
+    TextView tv_theloai,tv_xephang;
 
     String email;
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     public HomeFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static HomeFragment newInstance(String param1, String param2) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
@@ -108,7 +92,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         imageSlider.setImageList(slideModels, ScaleTypes.FIT);
         AnhXa();
 
-
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false);
         LinearLayoutManager linearLayoutManager2=new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false);
         LinearLayoutManager linearLayoutManager3=new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false);
@@ -116,7 +99,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         rc1.setLayoutManager(linearLayoutManager);
         rc2.setLayoutManager(linearLayoutManager2);
         rc3.setLayoutManager(linearLayoutManager3);
-
 
         truyenList = new ArrayList<>();
         truyenAdapter = new truyenAdapter(getActivity(), truyenList);
@@ -131,14 +113,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         GetTruyen();
         setOnClickListener();
         return view;
-
-
-
     }
 
     private void setOnClickListener() {
-
         tv_theloai.setOnClickListener(this);
+        tv_xephang.setOnClickListener(this);
     }
 
 
@@ -152,6 +131,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             dialog_box3.putExtra("email", email);
             startActivity(dialog_box3);
         }
+        if (v.getId() == R.id.tv_xephang) {
+            Intent dialog_box4 = new Intent(getActivity(), XepHangFragment.class);
+            dialog_box4.putExtra("email", email);
+            startActivity(dialog_box4);
+        }
     }
 
     private void AnhXa(){
@@ -161,6 +145,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         rc3 = (RecyclerView) view.findViewById(R.id.rv2);
 
         tv_theloai = (TextView) view.findViewById(R.id.tv_theloai);
+        tv_xephang = (TextView) view.findViewById(R.id.tv_xephang);
 
     }
     private void GetTruyen() {
