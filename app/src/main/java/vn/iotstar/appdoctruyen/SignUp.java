@@ -35,7 +35,7 @@ public class SignUp extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        if (prg.isShowing() || prgisshow == false) user.delete();
+        if (prg.isShowing() || !prgisshow) user.delete();
     }
 
     @Override
