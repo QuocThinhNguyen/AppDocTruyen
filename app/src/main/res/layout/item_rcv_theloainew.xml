@@ -34,7 +34,7 @@
                 android:layout_marginLeft="12dp"
                 android:gravity="left"/>
                 <TextView
-                    android:id="@+id/tv_theloai_pl"
+                    android:id="@+id/tv_theloai_ngaydang"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"

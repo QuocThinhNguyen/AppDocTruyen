@@ -94,6 +94,16 @@ public class TheLoaiFragment extends AppCompatActivity {
         getTheLoai();
     }
 
+    public interface OnTheLoaiSelectedListener {
+        void onTheLoaiSelected(String theLoai);
+    }
+
+    private OnTheLoaiSelectedListener onTheLoaiSelectedListener;
+
+    public void setOnTheLoaiSelectedListener(OnTheLoaiSelectedListener listener) {
+        this.onTheLoaiSelectedListener = listener;
+    }
+
     private void getTheLoai() {
         APIService.apiService.getTheLoai().enqueue(new Callback<List<String>>() {
             @Override
@@ -116,15 +126,30 @@ public class TheLoaiFragment extends AppCompatActivity {
                 Log.e("API_CALL", "Failed to fetch data from API", t);
                 Toast.makeText(getApplicationContext(), "Failure: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
+
+
         });
+
+//        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String item = parent.getItemAtPosition(position).toString();
+//                Toast.makeText(getApplicationContext(), "Thể loại: "+item,Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
 
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String item = parent.getItemAtPosition(position).toString();
+                if (onTheLoaiSelectedListener != null) {
+                    onTheLoaiSelectedListener.onTheLoaiSelected(item);
+                }
                 Toast.makeText(getApplicationContext(), "Thể loại: "+item,Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
     private void reload(){

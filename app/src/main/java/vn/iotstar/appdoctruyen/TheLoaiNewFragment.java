@@ -1,7 +1,7 @@
 package vn.iotstar.appdoctruyen;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,13 +10,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Toast;
-
 
 
 import java.util.ArrayList;
+import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import vn.iotstar.appdoctruyen.API.APIService;
 import vn.iotstar.appdoctruyen.Adapter.TheLoaiAdapter;
 import vn.iotstar.appdoctruyen.model.PhanLoaiTruyen;
 import vn.iotstar.appdoctruyen.model.Truyen1;
@@ -29,6 +31,8 @@ public class TheLoaiNewFragment extends Fragment {
     public TheLoaiAdapter rcv_adapter;
     String email;
     public String _theloai;
+
+    private List<PhanLoaiTruyen> mListPL;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -62,47 +66,75 @@ public class TheLoaiNewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         view= inflater.inflate(R.layout.fragment_theloai_new, container, false);
 
-        //db=new Database(getActivity());
         Anhxa();
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL,false);
+        rcv.setLayoutManager(linearLayoutManager);
+
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL);
+        rcv.addItemDecoration(itemDecoration);
+
+        mListPL = new ArrayList<>();
+
         Intent intent=getActivity().getIntent();
         email=intent.getStringExtra("email");
 
-        theLoai= (TheLoaiFragment) getActivity();
-        hienThiTheoTheLoai();
+        callApiGetTruyenMoiNhat();
+
+        TheLoaiFragment theLoaiFragment = (TheLoaiFragment) getActivity();
+        if (theLoaiFragment != null) {
+            theLoaiFragment.setOnTheLoaiSelectedListener(new TheLoaiFragment.OnTheLoaiSelectedListener() {
+                @Override
+                public void onTheLoaiSelected(String theLoai) {
+                    _theloai = theLoai;
+                    if (_theloai != null && !_theloai.isEmpty()) {
+                        // Call the API to get books by the selected category
+                        callApiGetTruyenMoiNhatTheoTheLoai();
+                    }
+                }
+            });
+        }
 
         return view;
     }
 
-    public void recyclerViewTruyen() {
-//        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL,false);
-//        rcv.setLayoutManager(linearLayoutManager);
-//        //select truyen.id, thongke.tongluotxem, thongke.sosaotb, truyen.tentruyen, chapter.ngaydang, truyen.theloai theloai, truyen.linkanh from truyen inner join chapter on truyen.id=chapter.idtruyen inner join thongke on truyen.id=thongke.idtruyen where chapter.tenchapter='Chapter 1'
-//        String lenhSqlite_theloai="select truyen.id, thongke.tongluotxem, thongke.sosaotb, truyen.tentruyen, chapter.ngaydang, truyen.theloai theloai, truyen.linkanh from truyen inner join chapter on truyen.id=chapter.idtruyen inner join thongke on truyen.id=thongke.idtruyen where chapter.tenchapter='Chapter 1' and truyen.theloai='"+_theloai+"' order by chapter.ngaydang desc";
-//        String lenhSqlite_theloai1="select * from truyen where theloai='"+_theloai+"'";
-//        //ArrayList<PhanLoaiTruyen> truyens=db.getListPLTruyen(lenhSqlite_theloai);
-//        rcv_adapter=new TheLoaiAdapter(getActivity(),truyens,email);
-//        rcv.setAdapter(rcv_adapter);
+    private void callApiGetTruyenMoiNhatTheoTheLoai() {
+        APIService.apiService.getNewestComicsByTheLoai(_theloai).enqueue(new Callback<List<PhanLoaiTruyen>>() {
+            @Override
+            public void onResponse(Call<List<PhanLoaiTruyen>> call, Response<List<PhanLoaiTruyen>> response) {
+                mListPL = response.body();
+                TheLoaiAdapter theLoaiAdapter = new TheLoaiAdapter(getActivity(), mListPL, email);
+                rcv.setAdapter(theLoaiAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<PhanLoaiTruyen>> call, Throwable t) {
+                //Toast.makeText(TheLoaiNewFragment.this,"Loi",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void callApiGetTruyenMoiNhat(){
+        APIService.apiService.getNewestComics().enqueue(new Callback<List<PhanLoaiTruyen>>() {
+            @Override
+            public void onResponse(Call<List<PhanLoaiTruyen>> call, Response<List<PhanLoaiTruyen>> response) {
+                mListPL = response.body();
+                TheLoaiAdapter theLoaiAdapter = new TheLoaiAdapter(getActivity(),mListPL,email);
+                rcv.setAdapter(theLoaiAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<PhanLoaiTruyen>> call, Throwable t) {
+                //Toast.makeText(TheLoaiNewFragment.this,"Loi",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void Anhxa(){
         rcv=view.findViewById(R.id.rcv_theloai_new);
-    }
-
-    public void hienThiTheoTheLoai(){
-        _theloai=theLoai.autoCompleteTextView.getText().toString();
-        recyclerViewTruyen();
-        theLoai.autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String item=adapterView.getItemAtPosition(i).toString();
-                _theloai=item;
-                recyclerViewTruyen();
-                Toast.makeText(getActivity().getApplicationContext(),"Thể loại: "+item,Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
 }
