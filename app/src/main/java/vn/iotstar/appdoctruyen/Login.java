@@ -66,8 +66,7 @@ public class Login extends AppCompatActivity {
             return;
         }
 
-        String huutien= "huutien1510@gmail.com";
-        mAuth.sendSignInLinkToEmail(huutien)
+
         mAuth.signInWithEmailAndPassword(emailtype,passtype).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
