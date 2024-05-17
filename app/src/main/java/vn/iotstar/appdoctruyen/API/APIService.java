@@ -17,12 +17,15 @@ import vn.iotstar.appdoctruyen.model.truyen;
 public interface APIService {
     Gson gson = new GsonBuilder().setDateFormat("dd-MM-yyyy").create();
     APIService apiService = new Retrofit.Builder()
+
             .baseUrl("http://172.172.10.97:8090/")
+            
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(APIService.class);
     @GET("truyen")
     Call<List<truyen>> getTruyenAll();
+
 
     @GET("theloai")
     Call<List<String>> getTheLoai();
@@ -45,5 +48,11 @@ public interface APIService {
     @GET("truyen/truyenview/{theloai}")
     Call<List<TruyenVotes>> getViewComicsByTheLoai(@Path("theloai") String theloai);
 
+
+
+    @GET("truyen/toptruyenmoi")
+    Call<List<truyen>> getTruyenMoi();
+    @GET("truyen/toptruyen")
+    Call<List<truyen>> getTopTruyen();
 
 }
