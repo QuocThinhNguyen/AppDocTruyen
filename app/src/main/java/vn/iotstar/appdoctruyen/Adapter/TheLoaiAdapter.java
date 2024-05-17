@@ -19,11 +19,12 @@ import java.util.List;
 import vn.iotstar.appdoctruyen.ChiTietTruyen;
 import vn.iotstar.appdoctruyen.R;
 import vn.iotstar.appdoctruyen.model.PhanLoaiTruyen;
+import vn.iotstar.appdoctruyen.model.TruyenVotes;
 
 public class TheLoaiAdapter extends RecyclerView.Adapter<TheLoaiAdapter.TheLoaiViewHolder> {
 
     private Context context;
-    private List<PhanLoaiTruyen> list;
+    private final List<PhanLoaiTruyen> list;
     private String email;
 
     public TheLoaiAdapter(Context context, List<PhanLoaiTruyen> list, String email) {
@@ -37,24 +38,32 @@ public class TheLoaiAdapter extends RecyclerView.Adapter<TheLoaiAdapter.TheLoaiV
     @Override
     public TheLoaiAdapter.TheLoaiViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rcv_theloainew,parent,false);
-        return new TheLoaiAdapter.TheLoaiViewHolder(view);
+        return new TheLoaiViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TheLoaiAdapter.TheLoaiViewHolder holder, int position) {
-        PhanLoaiTruyen truyen=list.get(position);
-        if(truyen==null) {
+//        PhanLoaiTruyen truyen=list.get(position);
+//        if(truyen==null) {
+//            return;
+//        }
+//        Glide.with(this.context).load(truyen.getLinkanh()).into(holder.img_theloai);
+//        holder.tv_tentruyen.setText(truyen.getTentruyen());
+//        holder.tv_pl.setText("Ngày đăng: "+truyen.getNgaydang());
+//        holder.ll_rcv_theloai.setOnClickListener(view -> {
+//            Intent intent=new Intent(holder.itemView.getContext(), ChiTietTruyen.class);
+//            intent.putExtra("id_truyen",truyen.getId());
+//            intent.putExtra("email",email);
+//            holder.itemView.getContext().startActivity(intent);
+//        });
+
+        PhanLoaiTruyen phanLoaiTruyen = list.get(position);
+        if (phanLoaiTruyen == null){
             return;
         }
-        Glide.with(this.context).load(truyen.getLinkanh()).into(holder.img_theloai);
-        holder.tv_tentruyen.setText(truyen.getTentruyen());
-        holder.tv_pl.setText("Ngày đăng: "+truyen.getNgaydang());
-        holder.ll_rcv_theloai.setOnClickListener(view -> {
-            Intent intent=new Intent(holder.itemView.getContext(), ChiTietTruyen.class);
-            intent.putExtra("id_truyen",truyen.getId());
-            intent.putExtra("email",email);
-            holder.itemView.getContext().startActivity(intent);
-        });
+        holder.tv_tentruyen.setText(phanLoaiTruyen.getTentruyen());
+        holder.tv_pl.setText("Ngày đăng: "+phanLoaiTruyen.getNgaydang());
+        Glide.with(this.context).load(phanLoaiTruyen.getLinkanh()).into(holder.img_theloai);
     }
 
     @Override
@@ -65,8 +74,8 @@ public class TheLoaiAdapter extends RecyclerView.Adapter<TheLoaiAdapter.TheLoaiV
         return 0;
     }
 
-    public class TheLoaiViewHolder extends RecyclerView.ViewHolder {
-        private TextView tv_tentruyen, tv_pl;
+    public static class TheLoaiViewHolder extends RecyclerView.ViewHolder {
+        private final TextView tv_tentruyen, tv_pl;
         private LinearLayout ll_rcv_theloai;
         private ImageView img_theloai;
 
@@ -74,7 +83,7 @@ public class TheLoaiAdapter extends RecyclerView.Adapter<TheLoaiAdapter.TheLoaiV
         public TheLoaiViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_tentruyen = itemView.findViewById(R.id.tv_theloai_tentruyen);
-            tv_pl = itemView.findViewById(R.id.tv_theloai_pl);
+            tv_pl = itemView.findViewById(R.id.tv_theloai_ngaydang);
             ll_rcv_theloai = itemView.findViewById(R.id.ll_rcv_theloai);
             img_theloai = itemView.findViewById(R.id.img_theloai);
         }
