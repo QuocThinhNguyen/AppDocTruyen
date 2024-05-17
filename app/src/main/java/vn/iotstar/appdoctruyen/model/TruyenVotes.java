@@ -1,13 +1,13 @@
 package vn.iotstar.appdoctruyen.model;
 
 public class TruyenVotes {
-    private int id, luotxem;
+    private int id, tongluotxem;
     private float sosaotb;
     private String tentruyen, ngaydang, theloai, linkanh;
 
-    public TruyenVotes(int id, int luotxem, float sosaotb, String tentruyen, String ngaydang, String theloai, String linkanh) {
+    public TruyenVotes(int id, int tongluotxem, float sosaotb, String tentruyen, String ngaydang, String theloai, String linkanh) {
         this.id = id;
-        this.luotxem = luotxem;
+        this.tongluotxem = tongluotxem;
         this.sosaotb = sosaotb;
         this.tentruyen = tentruyen;
         this.ngaydang = ngaydang;
@@ -23,12 +23,12 @@ public class TruyenVotes {
         this.id = id;
     }
 
-    public int getLuotxem() {
-        return luotxem;
+    public int getTongluotxem() {
+        return tongluotxem;
     }
 
-    public void setLuotxem(int luotxem) {
-        this.luotxem = luotxem;
+    public void setTongluotxem(int tongluotxem) {
+        this.tongluotxem = tongluotxem;
     }
 
     public float getSosaotb() {
