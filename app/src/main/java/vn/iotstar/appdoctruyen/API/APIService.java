@@ -16,7 +16,7 @@ public interface APIService {
     Gson gson = new GsonBuilder().setDateFormat("dd-MM-yyyy").create();
     APIService apiService = new Retrofit.Builder()
 
-            .baseUrl("http://172.172.4.28:8090/")
+            .baseUrl("http://172.172.10.52:8090/")
 
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
