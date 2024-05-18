@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 public class MainActivity extends AppCompatActivity {
@@ -14,12 +15,13 @@ public class MainActivity extends AppCompatActivity {
     Fragment fragment=null;
     ChipNavigationBar chipNavigationBar;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        String email = getIntent().getExtras().getString("email");
-        Toast.makeText(this,email,Toast.LENGTH_SHORT).show();
+
 
         chipNavigationBar = findViewById(R.id.NavigationBar);
         chipNavigationBar.setItemSelected(R.id.home, true);
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                     fragment = new ThongBaoFragment();
                 }
                 else {
-                    fragment = TaiKhoanFragment.newInstance(email);
+                    fragment = new TaiKhoanFragment();
                 }
                 if (fragment != null) {
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
