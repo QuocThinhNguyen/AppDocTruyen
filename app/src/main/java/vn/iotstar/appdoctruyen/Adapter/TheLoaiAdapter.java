@@ -1,7 +1,6 @@
 package vn.iotstar.appdoctruyen.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +15,8 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import vn.iotstar.appdoctruyen.ChiTietTruyen;
 import vn.iotstar.appdoctruyen.R;
 import vn.iotstar.appdoctruyen.model.PhanLoaiTruyen;
-import vn.iotstar.appdoctruyen.model.TruyenVotes;
 
 public class TheLoaiAdapter extends RecyclerView.Adapter<TheLoaiAdapter.TheLoaiViewHolder> {
 

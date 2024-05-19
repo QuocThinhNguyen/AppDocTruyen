@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(int i) {
                 if (i == R.id.home){
-                    fragment = new HomeFragment();
+                    fragment = HomeFragment.newInstance(email);
                 }else if (i == R.id.store){
                     fragment = new TuSachFragment();
                 }else if (i == R.id.cart){
