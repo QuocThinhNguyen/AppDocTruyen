@@ -13,6 +13,38 @@ public class truyen implements Serializable {
     private Integer trangthai;
     private String keySearch;
 
+    @Override
+    public String toString() {
+        return "truyen{" +
+                "id=" + id +
+                ", tentruyen='" + tentruyen + '\'' +
+                ", tacgia='" + tacgia + '\'' +
+                ", mota='" + mota + '\'' +
+                ", theloai='" + theloai + '\'' +
+                ", linkanh='" + linkanh + '\'' +
+                ", trangthai=" + trangthai +
+                ", keySearch='" + keySearch + '\'' +
+                '}';
+    }
+
+    public truyen(String tentruyen, String tacgia, String mota, String theloai, String linkanh, String keySearch) {
+        this.tentruyen = tentruyen;
+        this.tacgia = tacgia;
+        this.mota = mota;
+        this.theloai = theloai;
+        this.linkanh = linkanh;
+        this.keySearch = keySearch;
+    }
+
+    public truyen(String tentruyen, String tacgia, String mota, String theloai, String linkanh, Integer trangthai, String keySearch) {
+        this.tentruyen = tentruyen;
+        this.tacgia = tacgia;
+        this.mota = mota;
+        this.theloai = theloai;
+        this.linkanh = linkanh;
+        this.trangthai = trangthai;
+        this.keySearch = keySearch;
+    }
 
     public truyen() {
     }
