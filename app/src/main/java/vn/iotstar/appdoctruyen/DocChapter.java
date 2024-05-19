@@ -213,7 +213,7 @@ public class DocChapter extends AppCompatActivity implements View.OnClickListene
                 intent1.putExtra("id_truyen", id_truyen);
                 startActivity(intent1);
             }
-        } else if (view.getId() == R.id.img_backdoctruyen) {
+        } /*else if (view.getId() == R.id.img_backdoctruyen) {
             Intent intent2 = new Intent(this, CTTruyen.class);
             intent2.putExtra("email", user.getEmail());
             intent2.putExtra("id_truyen", id_truyen);
@@ -226,8 +226,8 @@ public class DocChapter extends AppCompatActivity implements View.OnClickListene
                 recyclerViewBinhLuan();
             } else {
                 Toast.makeText(this, "Vui lòng nhập bình luận!", Toast.LENGTH_SHORT).show();
-            }
-        } else if (view.getId() == R.id.bt_danhgia) {
+            }*/
+        } /*else if (view.getId() == R.id.bt_danhgia) {
             Boolean kt = db.checkDanhGia(taiKhoan.getId(), id_chapter);
             float sosao = rtb.getRating();
             if (kt) {
@@ -236,8 +236,7 @@ public class DocChapter extends AppCompatActivity implements View.OnClickListene
             } else {
                 db.insertDanhGia(id_chapter, taiKhoan.getId(), sosao);
                 setData();
-            }
-        }
+            }*/
 
     }
 

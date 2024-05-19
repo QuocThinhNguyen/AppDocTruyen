@@ -25,9 +25,6 @@
             android:name=".CTTruyen"
             android:exported="false" />
         <activity
-            android:name=".ChiTietTruyen"
-            android:exported="false" />
-        <activity
             android:name=".TheLoaiVoteFragment"
             android:exported="false" />
         <activity
