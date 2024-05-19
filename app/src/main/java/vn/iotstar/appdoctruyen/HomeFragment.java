@@ -55,7 +55,11 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
     List<truyen> truyenMoi;
     List<truyen> truyenTop;
 
-    TextView tv_theloai,tv_xephang,tv_emailhome;
+
+    TextView tv_TimKemHome, tv_theloai,tv_xephang;
+
+    TextView tv_emailhome;
+
 
     String email;
     NavigationView navi;
@@ -157,8 +161,12 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
     private void setOnClickListener() {
         tv_theloai.setOnClickListener(this);
         tv_xephang.setOnClickListener(this);
+
+        tv_TimKemHome.setOnClickListener(this);
+
         btn_login.setOnClickListener(this);
         btn_logout.setOnClickListener(this);
+
     }
 
 
@@ -183,6 +191,11 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
             dialog_box4.putExtra("email", email);
             startActivity(dialog_box4);
         }
+
+        if (v.getId() == R.id.tv_TimKiemHome){
+            Intent dialog_box1 = new Intent(getActivity(), TimKiem.class);
+            dialog_box1.putExtra("email",email);
+            startActivity(dialog_box1);
         if (v.getId() == R.id.bt_dxhome)
         {
             FirebaseAuth m = FirebaseAuth.getInstance();
@@ -203,6 +216,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
 
         tv_theloai = (TextView) view.findViewById(R.id.tv_theloai);
         tv_xephang = (TextView) view.findViewById(R.id.tv_xephang);
+        tv_TimKemHome =  (TextView) view.findViewById(R.id.tv_TimKiemHome);
 
         navi = (NavigationView) view.findViewById(R.id.menu);
         menu = navi.getMenu();

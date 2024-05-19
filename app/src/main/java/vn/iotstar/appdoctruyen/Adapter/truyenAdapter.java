@@ -54,6 +54,8 @@ public class truyenAdapter extends RecyclerView.Adapter<truyenAdapter.MyViewHold
         });
     }
 
+
+
     @Override
     public int getItemCount() {
         if (array != null){

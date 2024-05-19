@@ -19,10 +19,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+
+            android:name=".TimKiem"
+            android:exported="false" />
+        <activity
             android:name=".DocChapter"
             android:exported="false" />
         <activity
             android:name=".CTTruyen"
+
             android:exported="false" />
         <activity
             android:name=".ChiTietTruyen"

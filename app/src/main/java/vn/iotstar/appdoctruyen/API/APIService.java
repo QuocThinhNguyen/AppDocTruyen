@@ -8,17 +8,25 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import retrofit2.http.Field;
 import retrofit2.http.Body;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+
+import vn.iotstar.appdoctruyen.model.Chapter;
+import vn.iotstar.appdoctruyen.model.Lichsudoctruyen;
+import vn.iotstar.appdoctruyen.model.Model_TimKiem;
+
 import vn.iotstar.appdoctruyen.model.BinhLuanDto;
 import vn.iotstar.appdoctruyen.model.BinhLuanTruyenDto;
 import vn.iotstar.appdoctruyen.model.ChapterDto;
 import vn.iotstar.appdoctruyen.model.NoiDungChapterDto;
 import vn.iotstar.appdoctruyen.model.Noidungchapter;
+
 import vn.iotstar.appdoctruyen.model.PhanLoaiTruyen;
 import vn.iotstar.appdoctruyen.model.Truyen1;
 import vn.iotstar.appdoctruyen.model.TruyenVotes;
@@ -29,7 +37,8 @@ public interface APIService {
     APIService apiService = new Retrofit.Builder()
 
 
-            .baseUrl("http://192.168.1.76:8090/")
+            .baseUrl("http://192.168.1.14:8090/")
+
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(APIService.class);
@@ -57,8 +66,6 @@ public interface APIService {
 
     @GET("truyen/truyenview/{theloai}")
     Call<List<TruyenVotes>> getViewComicsByTheLoai(@Path("theloai") String theloai);
-
-
 
     @GET("truyen/toptruyenmoi")
     Call<List<truyen>> getTruyenMoi();
@@ -96,4 +103,18 @@ public interface APIService {
 
 
 
+    @GET("tusach/lichsu/{idtaikhoan}")
+    Call<List<Lichsudoctruyen>> getListTruyenDaDoc(@Path("idtaikhoan") int idtaikhoan);
+
+    @GET("/truyen/getone/{idchapter}")
+    Call<Truyen1> getOneTruyen(@Path("idchapter") int idchapter);
+
+    @GET("/truyen/chapter/getone/{idchapter}")
+    Call<ChapterDto> getOneChapter(@Path("idchapter") int id);
+
+    @GET("/truyen/chapter/tenchapter/{idtruyen}")
+    Call<String> getTenChapterNew(@Path("idtruyen") int idtruyen);
+
+    @GET("/search")
+    Call<List<Model_TimKiem>> getListTimKiem(@Field("textsearch") String textsearch);
 }
