@@ -70,16 +70,16 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
 
     private String mParam1;
     private String mParam2;
+    private static final String ARG_PARAM3 = "email";
 
     public HomeFragment() {
     }
 
 
-    public static HomeFragment newInstance(String param1, String param2) {
+    public static HomeFragment newInstance(String email) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_PARAM3, email);
         fragment.setArguments(args);
         return fragment;
     }
@@ -105,6 +105,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         slideModels.add(new SlideModel(R.drawable.image3, ScaleTypes.FIT));
         slideModels.add(new SlideModel(R.drawable.image4, ScaleTypes.FIT));
         imageSlider.setImageList(slideModels, ScaleTypes.FIT);
+
         AnhXa();
 
         navi.setNavigationItemSelectedListener(this);
@@ -139,13 +140,13 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         rc3.setLayoutManager(linearLayoutManager3);
 
         truyenList = new ArrayList<>();
-        truyenAdapter = new truyenAdapter(getActivity(), truyenList);
+        truyenAdapter = new truyenAdapter(getActivity(), truyenList, email);
         rc1.setAdapter(truyenAdapter);
         truyenMoi = new ArrayList<>();
-        truyenAdapter = new truyenAdapter(getActivity(), truyenMoi);
+        truyenAdapter = new truyenAdapter(getActivity(), truyenMoi,email);
         rc2.setAdapter(truyenMoiAdapter);
         truyenTop = new ArrayList<>();
-        truyenAdapter = new truyenAdapter(getActivity(), truyenTop);
+        truyenAdapter = new truyenAdapter(getActivity(), truyenTop,email);
         rc3.setAdapter(truyenTopAdapter);
 
         GetTruyen();
@@ -219,7 +220,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
             @Override
             public void onResponse(@NonNull Call<List<truyen>> call, @NonNull Response<List<truyen>> response) {
                 truyenList = response.body();
-                truyenAdapter categoryAdapter = new truyenAdapter(getContext(), truyenList);
+                truyenAdapter categoryAdapter = new truyenAdapter(getContext(), truyenList,email);
                 rc1.setAdapter(categoryAdapter);
             }
 
@@ -235,7 +236,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
             @Override
             public void onResponse(@NonNull Call<List<truyen>> call, @NonNull Response<List<truyen>> response) {
                 truyenMoi = response.body();
-                truyenAdapter truyenAdapter1 = new truyenAdapter(getContext(), truyenMoi);
+                truyenAdapter truyenAdapter1 = new truyenAdapter(getContext(), truyenMoi, email);
                 rc2.setAdapter(truyenAdapter1);
             }
 
@@ -251,7 +252,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
             @Override
             public void onResponse(@NonNull Call<List<truyen>> call, @NonNull Response<List<truyen>> response) {
                 truyenTop = response.body();
-                truyenAdapter truyenAdapter2 = new truyenAdapter(getContext(), truyenTop);
+                truyenAdapter truyenAdapter2 = new truyenAdapter(getContext(), truyenTop,email);
                 rc3.setAdapter(truyenAdapter2);
             }
 
