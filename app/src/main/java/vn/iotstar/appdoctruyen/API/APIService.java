@@ -28,8 +28,8 @@ public interface APIService {
     Gson gson = new GsonBuilder().setDateFormat("dd-MM-yyyy").create();
     APIService apiService = new Retrofit.Builder()
 
-            .baseUrl("http://192.168.1.76:8090/")
 
+            .baseUrl("http://192.168.1.76:8090/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(APIService.class);
