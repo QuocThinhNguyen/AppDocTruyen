@@ -46,7 +46,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     List<truyen> truyenMoi;
     List<truyen> truyenTop;
 
-    TextView tv_theloai,tv_xephang;
+    TextView tv_TimKemHome, tv_theloai,tv_xephang;
 
     String email;
 
@@ -118,6 +118,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private void setOnClickListener() {
         tv_theloai.setOnClickListener(this);
         tv_xephang.setOnClickListener(this);
+        tv_TimKemHome.setOnClickListener(this);
     }
 
 
@@ -136,6 +137,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             dialog_box4.putExtra("email", email);
             startActivity(dialog_box4);
         }
+        if (v.getId() == R.id.tv_TimKiemHome){
+            Intent dialog_box1 = new Intent(getActivity(), TimKiem.class);
+            dialog_box1.putExtra("email",email);
+            startActivity(dialog_box1);
+        }
     }
 
     private void AnhXa(){
@@ -146,6 +152,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         tv_theloai = (TextView) view.findViewById(R.id.tv_theloai);
         tv_xephang = (TextView) view.findViewById(R.id.tv_xephang);
+        tv_TimKemHome =  (TextView) view.findViewById(R.id.tv_TimKiemHome);
 
     }
     private void GetTruyen() {

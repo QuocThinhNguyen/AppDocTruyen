@@ -44,6 +44,8 @@ public class truyenAdapter extends RecyclerView.Adapter<truyenAdapter.MyViewHold
         Glide.with(context).load(Truyen.getLinkanh()).into(holder.images);
     }
 
+
+
     @Override
     public int getItemCount() {
         if (array != null){
