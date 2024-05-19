@@ -88,11 +88,11 @@ public interface APIService {
     @POST("truyen")
     Call<truyen> addTruyen(@Body truyen truyen1);
 
-    @GET("truyen/{id}")
-    Call<List<truyen>> getTruyenById(@Path("id") int id);
+//    @GET("truyen/{id}")
+//    Call<List<truyen>> getTruyenById(@Path("id") int id);
 
     @GET("truyen/chapter/{id}")
-    Call<List<ChapterAdmin>> getChapterById(@Path("id") int id);
+    Call<List<ChapterAdmin>> getChapterByIdAdmin(@Path("id") int id);
 
     //@PutMapping("/truyen/{id}")
     //    public Truyen updateTruyen(@RequestBody Truyen truyen, @PathVariable Integer id) {

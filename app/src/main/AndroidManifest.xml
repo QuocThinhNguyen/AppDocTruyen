@@ -75,11 +75,11 @@
             android:name=".Login"
             android:exported="false" />
       <activity
-            android:name=".AdminController.QuanLyTruyen"
+            android:name=".MainActivity"
             android:exported="false" />
         <activity
            
-            android:name=".MainActivity"
+            android:name=".AdminController.QuanLyTruyen"
             android:exported="true">
 
             <intent-filter>

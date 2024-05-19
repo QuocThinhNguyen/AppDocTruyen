@@ -84,7 +84,7 @@ public class ShowThongTinTruyen extends AppCompatActivity implements View.OnClic
     }
 
     private void showChapter() {
-        APIService.apiService.getChapterById(id).enqueue(new Callback<List<ChapterAdmin>>() {
+        APIService.apiService.getChapterByIdAdmin(id).enqueue(new Callback<List<ChapterAdmin>>() {
             @Override
             public void onResponse(Call<List<ChapterAdmin>> call, Response<List<ChapterAdmin>> response) {
                 chapterList = response.body();
