@@ -56,7 +56,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
     List<truyen> truyenTop;
 
 
-    TextView tv_TimKemHome, tv_theloai,tv_xephang;
+    TextView tv_TimKemHome, tv_theloai, tv_xephang;
 
     TextView tv_emailhome;
 
@@ -117,7 +117,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         //Xét quyền hiển thị chức năng
         user = FirebaseAuth.getInstance().getCurrentUser();
 
-        if (user!= null) {
+        if (user != null) {
             email = user.getEmail();
 
             if (user.getEmail() == "admin@gmail.com") {
@@ -127,17 +127,16 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
             tv_emailhome.setVisibility(view.VISIBLE);
             btn_logout.setVisibility(view.VISIBLE);
             btn_login.setVisibility(view.GONE);
-        }
-        else{
+        } else {
             menuquantri.setVisible(false);
             tv_emailhome.setVisibility(view.GONE);
             btn_logout.setVisibility(view.GONE);
             btn_login.setVisibility(view.VISIBLE);
         }
 
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false);
-        LinearLayoutManager linearLayoutManager2=new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false);
-        LinearLayoutManager linearLayoutManager3=new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
+        LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
 
         rc1.setLayoutManager(linearLayoutManager);
         rc2.setLayoutManager(linearLayoutManager2);
@@ -147,12 +146,11 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         truyenAdapter = new truyenAdapter(getActivity(), truyenList, email);
         rc1.setAdapter(truyenAdapter);
         truyenMoi = new ArrayList<>();
-        truyenAdapter = new truyenAdapter(getActivity(), truyenMoi,email);
+        truyenAdapter = new truyenAdapter(getActivity(), truyenMoi, email);
         rc2.setAdapter(truyenMoiAdapter);
         truyenTop = new ArrayList<>();
-        truyenAdapter = new truyenAdapter(getActivity(), truyenTop,email);
+        truyenAdapter = new truyenAdapter(getActivity(), truyenTop, email);
         rc3.setAdapter(truyenTopAdapter);
-
         GetTruyen();
         setOnClickListener();
         return view;
@@ -170,7 +168,6 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
     }
 
 
-
     @Override
     public void onClick(View v) {
 
@@ -181,107 +178,107 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         }
 
         //switch (v.getId()){
-        if (v.getId() == R.id.tv_theloai ) {
+        if (v.getId() == R.id.tv_theloai) {
             Intent dialog_box3 = new Intent(getActivity(), TheLoaiFragment.class);
-            dialog_box3.putExtra("email",email );
+            dialog_box3.putExtra("email", email);
             startActivity(dialog_box3);
         }
-        if (v.getId() == R.id.tv_xephang ) {
+        if (v.getId() == R.id.tv_xephang) {
             Intent dialog_box4 = new Intent(getActivity(), XepHangFragment.class);
             dialog_box4.putExtra("email", email);
             startActivity(dialog_box4);
         }
 
-        if (v.getId() == R.id.tv_TimKiemHome){
+        if (v.getId() == R.id.tv_TimKiemHome) {
             Intent dialog_box1 = new Intent(getActivity(), TimKiem.class);
-            dialog_box1.putExtra("email",email);
+            dialog_box1.putExtra("email", email);
             startActivity(dialog_box1);
-        if (v.getId() == R.id.bt_dxhome)
-        {
-            FirebaseAuth m = FirebaseAuth.getInstance();
-            m.signOut();
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            Toast.makeText(getActivity().getApplicationContext(),"Đăng xuất thành công",Toast.LENGTH_SHORT).show();
-            startActivity(intent);
-            getActivity().finish();
+            if (v.getId() == R.id.bt_dxhome) {
+                FirebaseAuth m = FirebaseAuth.getInstance();
+                m.signOut();
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                Toast.makeText(getActivity().getApplicationContext(), "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
+                startActivity(intent);
+                getActivity().finish();
+            }
         }
     }
 
-    private void AnhXa(){
-        rc1 = (RecyclerView) view.findViewById(R.id.rv3);
+        private void AnhXa () {
+            rc1 = (RecyclerView) view.findViewById(R.id.rv3);
 
-        rc2 = (RecyclerView) view.findViewById(R.id.rv);
-        rc3 = (RecyclerView) view.findViewById(R.id.rv2);
+            rc2 = (RecyclerView) view.findViewById(R.id.rv);
+            rc3 = (RecyclerView) view.findViewById(R.id.rv2);
 
-        tv_theloai = (TextView) view.findViewById(R.id.tv_theloai);
-        tv_xephang = (TextView) view.findViewById(R.id.tv_xephang);
-        tv_TimKemHome =  (TextView) view.findViewById(R.id.tv_TimKiemHome);
+            tv_theloai = (TextView) view.findViewById(R.id.tv_theloai);
+            tv_xephang = (TextView) view.findViewById(R.id.tv_xephang);
+            tv_TimKemHome = (TextView) view.findViewById(R.id.tv_TimKiemHome);
 
-        navi = (NavigationView) view.findViewById(R.id.menu);
-        menu = navi.getMenu();
-        menuquantri = menu.findItem(R.id.it_chucnangquantri);
+            navi = (NavigationView) view.findViewById(R.id.menu);
+            menu = navi.getMenu();
+            menuquantri = menu.findItem(R.id.it_chucnangquantri);
 
-        headerLayout= navi.inflateHeaderView(R.layout.menuheader);
-        btn_login= (Button) headerLayout.findViewById(R.id.bt_dnhome);
-        btn_logout=headerLayout.findViewById(R.id.bt_dxhome);
-        tv_emailhome = headerLayout.findViewById(R.id.tv_emailhome);
+            headerLayout = navi.inflateHeaderView(R.layout.menuheader);
+            btn_login = (Button) headerLayout.findViewById(R.id.bt_dnhome);
+            btn_logout = headerLayout.findViewById(R.id.bt_dxhome);
+            tv_emailhome = headerLayout.findViewById(R.id.tv_emailhome);
 
 
-    }
-    private void GetTruyen() {
-        APIService.apiService.getTruyenAll().enqueue(new Callback<List<truyen>>() {
-            @Override
-            public void onResponse(@NonNull Call<List<truyen>> call, @NonNull Response<List<truyen>> response) {
-                truyenList = response.body();
-                truyenAdapter categoryAdapter = new truyenAdapter(getContext(), truyenList,email);
-                rc1.setAdapter(categoryAdapter);
-            }
+        }
+        private void GetTruyen() {
+            APIService.apiService.getTruyenAll().enqueue(new Callback<List<truyen>>() {
+                @Override
+                public void onResponse(@NonNull Call<List<truyen>> call, @NonNull Response<List<truyen>> response) {
+                    truyenList = response.body();
+                    truyenAdapter categoryAdapter = new truyenAdapter(getContext(), truyenList, email);
+                    rc1.setAdapter(categoryAdapter);
+                }
 
-            @Override
+                @Override
 
-            public void onFailure(@NonNull Call<List<truyen>> call, @NonNull Throwable t) {
-                Log.e("API_CALL", "Failed to fetch data from API", t);
-                Toast.makeText(getContext(), "Failure: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
+                public void onFailure(@NonNull Call<List<truyen>> call, @NonNull Throwable t) {
+                    Log.e("API_CALL", "Failed to fetch data from API", t);
+                    Toast.makeText(getContext(), "Failure: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
 
-        });
-        APIService.apiService.getTruyenMoi().enqueue(new Callback<List<truyen>>() {
-            @Override
-            public void onResponse(@NonNull Call<List<truyen>> call, @NonNull Response<List<truyen>> response) {
-                truyenMoi = response.body();
-                truyenAdapter truyenAdapter1 = new truyenAdapter(getContext(), truyenMoi, email);
-                rc2.setAdapter(truyenAdapter1);
-            }
+            });
+            APIService.apiService.getTruyenMoi().enqueue(new Callback<List<truyen>>() {
+                @Override
+                public void onResponse(@NonNull Call<List<truyen>> call, @NonNull Response<List<truyen>> response) {
+                    truyenMoi = response.body();
+                    truyenAdapter truyenAdapter1 = new truyenAdapter(getContext(), truyenMoi, email);
+                    rc2.setAdapter(truyenAdapter1);
+                }
 
-            @Override
+                @Override
 
-            public void onFailure(@NonNull Call<List<truyen>> call, @NonNull Throwable t) {
-                Log.e("API_CALL", "Failed to fetch data from API", t);
-                Toast.makeText(getContext(), "Failure: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
+                public void onFailure(@NonNull Call<List<truyen>> call, @NonNull Throwable t) {
+                    Log.e("API_CALL", "Failed to fetch data from API", t);
+                    Toast.makeText(getContext(), "Failure: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
 
-        });
-        APIService.apiService.getTopTruyen().enqueue(new Callback<List<truyen>>() {
-            @Override
-            public void onResponse(@NonNull Call<List<truyen>> call, @NonNull Response<List<truyen>> response) {
-                truyenTop = response.body();
-                truyenAdapter truyenAdapter2 = new truyenAdapter(getContext(), truyenTop,email);
-                rc3.setAdapter(truyenAdapter2);
-            }
+            });
+            APIService.apiService.getTopTruyen().enqueue(new Callback<List<truyen>>() {
+                @Override
+                public void onResponse(@NonNull Call<List<truyen>> call, @NonNull Response<List<truyen>> response) {
+                    truyenTop = response.body();
+                    truyenAdapter truyenAdapter2 = new truyenAdapter(getContext(), truyenTop, email);
+                    rc3.setAdapter(truyenAdapter2);
+                }
 
-            @Override
+                @Override
 
-            public void onFailure(@NonNull Call<List<truyen>> call, @NonNull Throwable t) {
-                Log.e("API_CALL", "Failed to fetch data from API", t);
-                Toast.makeText(getContext(), "Failure: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
+                public void onFailure(@NonNull Call<List<truyen>> call, @NonNull Throwable t) {
+                    Log.e("API_CALL", "Failed to fetch data from API", t);
+                    Toast.makeText(getContext(), "Failure: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
 
-        });
-    }
+            });
+        }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        @Override
+        public boolean onNavigationItemSelected (@NonNull MenuItem menuItem){
 
 //            case R.id.it_quanlytaikhoan:
 //                Intent dialog_box = new Intent(getActivity(), QuanLyTaiKhoan.class);
@@ -299,16 +296,15 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
 //                Intent dialog_box3 = new Intent(getActivity(), QuanLyThongKe.class);
 //                startActivity(dialog_box3);
 //                break;
-        if (menuItem.getItemId() == R.id.it_xephang)
-        {
-            Intent dialog_box4 = new Intent(getActivity(), XepHangFragment.class);
-            startActivity(dialog_box4);
-        }
-        if (menuItem.getItemId() == R.id.it_theloai) {
-            Intent dialog_box5 = new Intent(getActivity(), TheLoaiFragment.class);
-            startActivity(dialog_box5);
-        }
+            if (menuItem.getItemId() == R.id.it_xephang) {
+                Intent dialog_box4 = new Intent(getActivity(), XepHangFragment.class);
+                startActivity(dialog_box4);
+            }
+            if (menuItem.getItemId() == R.id.it_theloai) {
+                Intent dialog_box5 = new Intent(getActivity(), TheLoaiFragment.class);
+                startActivity(dialog_box5);
+            }
 
-        return true;
+            return true;
+        }
     }
-}

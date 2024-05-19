@@ -93,7 +93,7 @@ public class LichSuDocFragment extends Fragment {
 
         Intent intent=getActivity().getIntent();
         email=intent.getStringExtra("email");
-        taiKhoan=db.getTaiKhoan(email);
+        /*taiKhoan=db.getTaiKhoan(email);*/
 
         recyclerViewTruyenDaDoc();
 

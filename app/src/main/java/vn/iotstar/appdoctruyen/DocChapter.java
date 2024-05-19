@@ -219,7 +219,7 @@ public class DocChapter extends AppCompatActivity implements View.OnClickListene
             intent2.putExtra("id_truyen", id_truyen);
             startActivity(intent2);
             finish();
-        }  else if (view.getId() == R.id.bt_binhluan) {
+        }  /*else if (view.getId() == R.id.bt_binhluan) {
             if (edt_binhluan.getText().length() != 0) {
                 db.insertBinhLuan(id_chapter, taiKhoan.getId(), edt_binhluan.getText().toString());
                 edt_binhluan.setText("");
@@ -236,8 +236,7 @@ public class DocChapter extends AppCompatActivity implements View.OnClickListene
             } else {
                 db.insertDanhGia(id_chapter, taiKhoan.getId(), sosao);
                 setData();
-            }
-        }
+            }*/
 
     }
 
