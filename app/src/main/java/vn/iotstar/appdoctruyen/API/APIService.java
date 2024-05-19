@@ -38,6 +38,7 @@ import vn.iotstar.appdoctruyen.model.Noidungchapter;
 
 
 import vn.iotstar.appdoctruyen.model.PhanLoaiTruyen;
+import vn.iotstar.appdoctruyen.model.Taikhoan;
 import vn.iotstar.appdoctruyen.model.Truyen1;
 import vn.iotstar.appdoctruyen.model.TruyenVotes;
 import vn.iotstar.appdoctruyen.model.truyen;
@@ -186,5 +187,18 @@ public interface APIService {
 
     @GET("/search")
     Call<List<Model_TimKiem>> getListTimKiem(@Field("textsearch") String textsearch);
+
+    @GET("/taikhoan")
+    Call<List<Taikhoan>> getTaiKhoan();
+
+    @GET("timtaikhoan/{email}")
+    Call<List<Taikhoan>> getTaiKhoanByEmail(@Path("email") String email);
+
+    @PUT("taikhoan/{id}/{loaitk}")
+    Call<Taikhoan> updateLoaiTk(@Path("id") int id, @Path("loaitk") int loaitk);
+
+    @POST("taikhoan")
+    Call<Taikhoan> addTaiKhoan(@Body Taikhoan taikhoan);
+
 
 }

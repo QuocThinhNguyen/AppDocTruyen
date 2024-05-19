@@ -20,6 +20,15 @@ public class Taikhoan {
     private String linkanh;
     private Set<Binhluan> binhluans ;
 
+    public Taikhoan(String email, String matkhau, String hoten, String dienthoai, Integer diemthuong, Integer loaitk) {
+        this.email = email;
+        this.matkhau = matkhau;
+        this.hoten = hoten;
+        this.dienthoai = dienthoai;
+        this.diemthuong = diemthuong;
+        this.loaitk = loaitk;
+    }
+
     public Integer getId() {
         return id;
     }
