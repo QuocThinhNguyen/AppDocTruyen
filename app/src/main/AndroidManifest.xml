@@ -43,9 +43,6 @@
             android:name=".CTTruyen"
             android:exported="false" />
         <activity
-            android:name=".ChiTietTruyen"
-            android:exported="false" />
-        <activity
             android:name=".TheLoaiVoteFragment"
             android:exported="false" />
         <activity
@@ -75,14 +72,21 @@
         <activity
             android:name=".XepHangFragment"
             android:exported="false" />
+
         <activity
             android:name=".Login"
             android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
+        
         <activity
             android:name=".AdminController.QuanLyThongKe"
+
+      <activity
+            android:name=".AdminController.QuanLyTruyen"
+            android:exported="false" />
+        <activity
+           
+            android:name=".MainActivity"
+
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
