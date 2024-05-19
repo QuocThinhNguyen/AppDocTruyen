@@ -73,7 +73,6 @@ public class Login extends AppCompatActivity {
                 if (task.isSuccessful()){
                     Toast.makeText(getApplicationContext(),"Đăng nhập thành công",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(Login.this, MainActivity.class);
-                    intent.putExtra("email",emailtype);
                     startActivity(intent);
                 }
                 else Toast.makeText(getApplicationContext(),"Đăng nhập thất bại!",Toast.LENGTH_SHORT).show();

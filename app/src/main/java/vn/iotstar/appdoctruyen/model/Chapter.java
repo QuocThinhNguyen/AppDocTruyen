@@ -30,6 +30,7 @@
         private Set<Lichsudoctruyen> lichsudoctruyens;
         private Set<Noidungchapter> noidungchapters ;
 
+
         public Chapter(truyen idtruyen, String tenchapter, LocalDate ngaydang, Integer soluotxem, Double danhgia) {
             this.idtruyen = idtruyen;
             this.tenchapter = tenchapter;
@@ -44,6 +45,7 @@
             this.soluotxem = soluotxem;
             this.danhgia = danhgia;
         }
+
 
         public Integer getId() {
             return id;

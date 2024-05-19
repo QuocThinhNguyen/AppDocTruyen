@@ -28,6 +28,17 @@
             android:name=".Login"
             android:exported="false" />
         <activity
+
+            android:name=".TimKiem"
+            android:exported="false" />
+        <activity
+            android:name=".DocChapter"
+            android:exported="false" />
+        <activity
+            android:name=".CTTruyen"
+
+            android:exported="false" />
+        <activity
             android:name=".ChiTietTruyen"
             android:exported="false" />
         <activity
@@ -61,11 +72,16 @@
             android:name=".XepHangFragment"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Login"
+            android:exported="false" />
+      <activity
+            android:name=".AdminController.QuanLyTruyen"
             android:exported="false" />
         <activity
-            android:name=".AdminController.QuanLyTruyen"
-            android:exported="true" >
+           
+            android:name=".MainActivity"
+            android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

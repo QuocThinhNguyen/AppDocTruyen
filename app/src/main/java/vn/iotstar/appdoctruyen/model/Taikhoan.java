@@ -19,10 +19,64 @@ public class Taikhoan {
     private Integer loaitk;
     private String linkanh;
     private Set<Binhluan> binhluans ;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getMatkhau() {
+        return matkhau;
+    }
+
+    public String getHoten() {
+        return hoten;
+    }
+
+    public String getDienthoai() {
+        return dienthoai;
+    }
+
+    public Integer getDiemthuong() {
+        return diemthuong;
+    }
+
+    public Integer getLoaitk() {
+        return loaitk;
+    }
+
+    public String getLinkanh() {
+        return linkanh;
+    }
+
+    public Set<Binhluan> getBinhluans() {
+        return binhluans;
+    }
+
+    public Set<Danhgia> getDanhgias() {
+        return danhgias;
+    }
+
+    public Set<Diemthuong> getDiemthuongs() {
+        return diemthuongs;
+    }
+
+    public Set<Doithuong> getDoithuongs() {
+        return doithuongs;
+    }
+
+    public Set<Lichsudoctruyen> getLichsudoctruyens() {
+        return lichsudoctruyens;
+    }
+
     private Set<Danhgia> danhgias ;
     private Set<Diemthuong> diemthuongs;
 
     private Set<Doithuong> doithuongs ;
     private Set<Lichsudoctruyen> lichsudoctruyens ;
+
 
 }

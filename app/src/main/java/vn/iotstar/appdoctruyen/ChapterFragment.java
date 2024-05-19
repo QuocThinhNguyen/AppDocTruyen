@@ -12,7 +12,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.Firebase;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,28 +26,28 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import vn.iotstar.appdoctruyen.API.APIService;
+import vn.iotstar.appdoctruyen.Adapter.ChapterAdapter;
 import vn.iotstar.appdoctruyen.Adapter.truyenAdapter;
-import vn.iotstar.appdoctruyen.model.Lichsudoctruyen;
-import vn.iotstar.appdoctruyen.model.Taikhoan;
-import vn.iotstar.appdoctruyen.model.Truyen1;
-import vn.iotstar.appdoctruyen.Adapter.TruyenDaDocAdapter;
+import vn.iotstar.appdoctruyen.model.Chapter;
+import vn.iotstar.appdoctruyen.model.ChapterDto;
 import vn.iotstar.appdoctruyen.model.truyen;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link LichSuDocFragment#newInstance} factory method to
+ * Use the {@link ChapterFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LichSuDocFragment extends Fragment {
+public class ChapterFragment extends Fragment {
 
-    View view;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    ChapterDto chapter;
     String email;
-    Taikhoan taiKhoan;
-    Truyen1 truyen;
-    private List<Lichsudoctruyen> lichSuDocTruyenList;
-    public RecyclerView rcv;
-    public TruyenDaDocAdapter rcv_adapter;
-
+    View view;
+    TextView tv_chapter,tv_ngaydang,tv_luotxem;
+    private RecyclerView rcv;
+    private ChapterAdapter rcv_adapter;
+    int id_truyen;
+    private List<ChapterDto> list;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -52,7 +57,7 @@ public class LichSuDocFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public LichSuDocFragment() {
+    public ChapterFragment() {
         // Required empty public constructor
     }
 
@@ -62,11 +67,11 @@ public class LichSuDocFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment LichSuDocFragment.
+     * @return A new instance of fragment ChapterFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static LichSuDocFragment newInstance(String param1, String param2) {
-        LichSuDocFragment fragment = new LichSuDocFragment();
+    public static ChapterFragment newInstance(String param1, String param2) {
+        ChapterFragment fragment = new ChapterFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -86,52 +91,41 @@ public class LichSuDocFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view=inflater.inflate(R.layout.fragment_lich_su_doc_truyen, container, false);
+        view= inflater.inflate(R.layout.fragment_chapter, container, false);
         Anhxa();
-
-
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false);
+        rcv.setLayoutManager(linearLayoutManager);
         Intent intent=getActivity().getIntent();
-        email=intent.getStringExtra("email");
-        /*taiKhoan=db.getTaiKhoan(email);*/
-
-        recyclerViewTruyenDaDoc();
-
+        /*email=intent.getStringExtra("email");*/
+        id_truyen=intent.getIntExtra("id_truyen",0);
+        list = new ArrayList<>();
+        rcv_adapter = new ChapterAdapter(getActivity(), list, user.getEmail());
+        rcv.setAdapter(rcv_adapter);
+        GetChapter();
         return view;
     }
+    private void Anhxa(){
 
+        tv_chapter=view.findViewById(R.id.tv_chapter);
+        tv_ngaydang=view.findViewById(R.id.tv_ngaydang);
+        tv_luotxem=view.findViewById(R.id.tv_luotxem);
+        rcv=view.findViewById(R.id.rcv_chapter);
 
-
-    public void recyclerViewTruyenDaDoc() {
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL,false);
-        rcv.setLayoutManager(linearLayoutManager);
-
-        lichSuDocTruyenList = new ArrayList<>();
-        GetTruyenDaDoc();
-
-        rcv_adapter=new TruyenDaDocAdapter(getActivity(), lichSuDocTruyenList, taiKhoan.getId());
-        rcv.setAdapter(rcv_adapter);
     }
-    private void GetTruyenDaDoc() {
-        APIService.apiService.getListTruyenDaDoc(taiKhoan.getId()).enqueue(new Callback<List<Lichsudoctruyen>>() {
+    private void GetChapter() {
+        APIService.apiService.getChapterById(id_truyen).enqueue(new Callback<List<ChapterDto>>() {
             @Override
-            public void onResponse(@NonNull Call<List<Lichsudoctruyen>> call, @NonNull Response<List<Lichsudoctruyen>> response) {
-                lichSuDocTruyenList = response.body();
-                rcv_adapter  = new TruyenDaDocAdapter(getActivity(), lichSuDocTruyenList, taiKhoan.getId());
-                rcv.setAdapter(rcv_adapter);
+            public void onResponse(Call<List<ChapterDto>> call, Response<List<ChapterDto>> response) {
+                list = response.body();
+                ChapterAdapter chapterAdapter = new ChapterAdapter(getContext(), list, user.getEmail());
+                rcv.setAdapter(chapterAdapter);
             }
 
             @Override
-
-            public void onFailure(@NonNull Call<List<Lichsudoctruyen>> call, @NonNull Throwable t) {
+            public void onFailure(Call<List<ChapterDto>> call, Throwable t) {
                 Log.e("API_CALL", "Failed to fetch data from API", t);
                 Toast.makeText(getContext(), "Failure: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
-
         });
-    }
-
-    public void Anhxa(){
-        rcv=view.findViewById(R.id.rcv_truyendadoc);
     }
 }
