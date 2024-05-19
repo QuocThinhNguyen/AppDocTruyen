@@ -39,6 +39,7 @@ import vn.iotstar.appdoctruyen.model.truyen;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class HomeFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener {
@@ -120,7 +121,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         if (user != null) {
             email = user.getEmail();
 
-            if (user.getEmail() == "admin@gmail.com") {
+            if (Objects.equals(user.getEmail(), "admin@gmail.com")) {
                 menuquantri.setVisible(true);
             } else menuquantri.setVisible(false);
             tv_emailhome.setText(user.getEmail());
@@ -193,7 +194,8 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
             Intent dialog_box1 = new Intent(getActivity(), TimKiem.class);
             dialog_box1.putExtra("email", email);
             startActivity(dialog_box1);
-            if (v.getId() == R.id.bt_dxhome) {
+        }
+        if (v.getId() == R.id.bt_dxhome) {
                 FirebaseAuth m = FirebaseAuth.getInstance();
                 m.signOut();
                 Intent intent = new Intent(getActivity(), MainActivity.class);
@@ -201,8 +203,8 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
                 Toast.makeText(getActivity().getApplicationContext(), "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
                 startActivity(intent);
                 getActivity().finish();
-            }
         }
+
     }
 
         private void AnhXa () {
