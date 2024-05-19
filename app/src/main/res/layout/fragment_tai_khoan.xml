@@ -41,7 +41,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imgAvatar"
+            android:id="@+id/img_tk_avatar"
             android:layout_width="97dp"
             android:layout_height="99dp"
 
@@ -59,7 +59,7 @@
             tools:ignore="ImageContrastCheck" />
 
         <TextView
-            android:id="@+id/tx_username"
+            android:id="@+id/tv_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="115dp"
@@ -92,6 +92,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/tv_tk_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -104,18 +105,6 @@
             app:layout_constraintStart_toEndOf="@+id/imgAvatar"
             app:layout_constraintTop_toBottomOf="@+id/tx_username"
             app:layout_constraintVertical_bias="0.0" />
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.935"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.088"
-            app:srcCompat="@drawable/logout" />
 
 
         <TextView
@@ -285,7 +274,7 @@
             app:cardCornerRadius="8dp">
 
             <TextView
-                android:id="@+id/tv_taikhoan"
+                android:id="@+id/tv_tttk"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -307,7 +296,7 @@
             android:layout_marginTop="10dp"
             android:background="@color/white">
             <TextView
-                android:id="@+id/tv_binhluan"
+                android:id="@+id/tv_binhluancuatoi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"

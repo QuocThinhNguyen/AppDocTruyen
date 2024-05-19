@@ -21,6 +21,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
+import vn.iotstar.appdoctruyen.model.BinhLuanCuaToiDto;
 import vn.iotstar.appdoctruyen.model.Chapter;
 import vn.iotstar.appdoctruyen.model.ChapterAdmin;
 import vn.iotstar.appdoctruyen.model.Noidungchapter;
@@ -38,6 +39,7 @@ import vn.iotstar.appdoctruyen.model.Noidungchapter;
 
 
 import vn.iotstar.appdoctruyen.model.PhanLoaiTruyen;
+import vn.iotstar.appdoctruyen.model.TaiKhoanDto;
 import vn.iotstar.appdoctruyen.model.Truyen1;
 import vn.iotstar.appdoctruyen.model.TruyenVotes;
 import vn.iotstar.appdoctruyen.model.truyen;
@@ -47,7 +49,7 @@ public interface APIService {
     APIService apiService = new Retrofit.Builder()
 
 
-            .baseUrl("http://192.168.1.8:8090/")
+            .baseUrl("http://192.168.1.110:8090/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(APIService.class);
@@ -186,5 +188,11 @@ public interface APIService {
 
     @GET("/search")
     Call<List<Model_TimKiem>> getListTimKiem(@Field("textsearch") String textsearch);
+
+    @GET("taikhoan/{email}")
+    Call<TaiKhoanDto> findByEmail(@Path("email") String email);
+
+    @GET("/binhluancuatoi/{id}")
+    Call<List<BinhLuanCuaToiDto>> findByIdn(@Path("id") Integer id);
 
 }
