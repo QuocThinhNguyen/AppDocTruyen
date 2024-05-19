@@ -1,24 +1,33 @@
 package vn.iotstar.appdoctruyen;
 
+import android.content.Context;
 import android.content.Intent;
 import android.hardware.lights.LightState;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import  vn.iotstar.appdoctruyen.R;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,9 +41,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class HomeFragment extends Fragment implements View.OnClickListener {
+public class HomeFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener {
     ImageSlider imageSlider;
-    View view;
+    View view, headerLayout;
     RecyclerView rc1;
     RecyclerView rc2;
     RecyclerView rc3;
@@ -46,25 +55,35 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     List<truyen> truyenMoi;
     List<truyen> truyenTop;
 
+
     TextView tv_TimKemHome, tv_theloai,tv_xephang;
 
-    String email;
+    TextView tv_emailhome;
 
+
+    String email;
+    NavigationView navi;
+    FirebaseUser user;
+
+    Menu menu;
+    MenuItem menuquantri;
+
+    Button btn_login, btn_logout;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     private String mParam1;
     private String mParam2;
+    private static final String ARG_PARAM3 = "email";
 
     public HomeFragment() {
     }
 
 
-    public static HomeFragment newInstance(String param1, String param2) {
+    public static HomeFragment newInstance(String email) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_PARAM3, email);
         fragment.setArguments(args);
         return fragment;
     }
@@ -90,7 +109,31 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         slideModels.add(new SlideModel(R.drawable.image3, ScaleTypes.FIT));
         slideModels.add(new SlideModel(R.drawable.image4, ScaleTypes.FIT));
         imageSlider.setImageList(slideModels, ScaleTypes.FIT);
+
         AnhXa();
+
+        navi.setNavigationItemSelectedListener(this);
+        navi.bringToFront();
+        //Xét quyền hiển thị chức năng
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user!= null) {
+            email = user.getEmail();
+
+            if (user.getEmail() == "admin@gmail.com") {
+                menuquantri.setVisible(true);
+            } else menuquantri.setVisible(false);
+            tv_emailhome.setText(user.getEmail());
+            tv_emailhome.setVisibility(view.VISIBLE);
+            btn_logout.setVisibility(view.VISIBLE);
+            btn_login.setVisibility(view.GONE);
+        }
+        else{
+            menuquantri.setVisible(false);
+            tv_emailhome.setVisibility(view.GONE);
+            btn_logout.setVisibility(view.GONE);
+            btn_login.setVisibility(view.VISIBLE);
+        }
 
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false);
         LinearLayoutManager linearLayoutManager2=new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false);
@@ -101,13 +144,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         rc3.setLayoutManager(linearLayoutManager3);
 
         truyenList = new ArrayList<>();
-        truyenAdapter = new truyenAdapter(getActivity(), truyenList);
+        truyenAdapter = new truyenAdapter(getActivity(), truyenList, email);
         rc1.setAdapter(truyenAdapter);
         truyenMoi = new ArrayList<>();
-        truyenAdapter = new truyenAdapter(getActivity(), truyenMoi);
+        truyenAdapter = new truyenAdapter(getActivity(), truyenMoi,email);
         rc2.setAdapter(truyenMoiAdapter);
         truyenTop = new ArrayList<>();
-        truyenAdapter = new truyenAdapter(getActivity(), truyenTop);
+        truyenAdapter = new truyenAdapter(getActivity(), truyenTop,email);
         rc3.setAdapter(truyenTopAdapter);
 
         GetTruyen();
@@ -118,7 +161,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private void setOnClickListener() {
         tv_theloai.setOnClickListener(this);
         tv_xephang.setOnClickListener(this);
+
         tv_TimKemHome.setOnClickListener(this);
+
+        btn_login.setOnClickListener(this);
+        btn_logout.setOnClickListener(this);
+
     }
 
 
@@ -126,21 +174,37 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
+        if (v.getId() == R.id.bt_dnhome) {
+            Intent dialog_box = new Intent(getActivity(), Login.class);
+            startActivity(dialog_box);
+            getActivity().finish();
+        }
+
         //switch (v.getId()){
-        if (v.getId() == R.id.tv_theloai) {
+        if (v.getId() == R.id.tv_theloai ) {
             Intent dialog_box3 = new Intent(getActivity(), TheLoaiFragment.class);
-            dialog_box3.putExtra("email", email);
+            dialog_box3.putExtra("email",email );
             startActivity(dialog_box3);
         }
-        if (v.getId() == R.id.tv_xephang) {
+        if (v.getId() == R.id.tv_xephang ) {
             Intent dialog_box4 = new Intent(getActivity(), XepHangFragment.class);
             dialog_box4.putExtra("email", email);
             startActivity(dialog_box4);
         }
+
         if (v.getId() == R.id.tv_TimKiemHome){
             Intent dialog_box1 = new Intent(getActivity(), TimKiem.class);
             dialog_box1.putExtra("email",email);
             startActivity(dialog_box1);
+        if (v.getId() == R.id.bt_dxhome)
+        {
+            FirebaseAuth m = FirebaseAuth.getInstance();
+            m.signOut();
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            Toast.makeText(getActivity().getApplicationContext(),"Đăng xuất thành công",Toast.LENGTH_SHORT).show();
+            startActivity(intent);
+            getActivity().finish();
         }
     }
 
@@ -154,13 +218,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         tv_xephang = (TextView) view.findViewById(R.id.tv_xephang);
         tv_TimKemHome =  (TextView) view.findViewById(R.id.tv_TimKiemHome);
 
+        navi = (NavigationView) view.findViewById(R.id.menu);
+        menu = navi.getMenu();
+        menuquantri = menu.findItem(R.id.it_chucnangquantri);
+
+        headerLayout= navi.inflateHeaderView(R.layout.menuheader);
+        btn_login= (Button) headerLayout.findViewById(R.id.bt_dnhome);
+        btn_logout=headerLayout.findViewById(R.id.bt_dxhome);
+        tv_emailhome = headerLayout.findViewById(R.id.tv_emailhome);
+
+
     }
     private void GetTruyen() {
         APIService.apiService.getTruyenAll().enqueue(new Callback<List<truyen>>() {
             @Override
             public void onResponse(@NonNull Call<List<truyen>> call, @NonNull Response<List<truyen>> response) {
                 truyenList = response.body();
-                truyenAdapter categoryAdapter = new truyenAdapter(getContext(), truyenList);
+                truyenAdapter categoryAdapter = new truyenAdapter(getContext(), truyenList,email);
                 rc1.setAdapter(categoryAdapter);
             }
 
@@ -176,7 +250,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onResponse(@NonNull Call<List<truyen>> call, @NonNull Response<List<truyen>> response) {
                 truyenMoi = response.body();
-                truyenAdapter truyenAdapter1 = new truyenAdapter(getContext(), truyenMoi);
+                truyenAdapter truyenAdapter1 = new truyenAdapter(getContext(), truyenMoi, email);
                 rc2.setAdapter(truyenAdapter1);
             }
 
@@ -192,7 +266,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onResponse(@NonNull Call<List<truyen>> call, @NonNull Response<List<truyen>> response) {
                 truyenTop = response.body();
-                truyenAdapter truyenAdapter2 = new truyenAdapter(getContext(), truyenTop);
+                truyenAdapter truyenAdapter2 = new truyenAdapter(getContext(), truyenTop,email);
                 rc3.setAdapter(truyenAdapter2);
             }
 
@@ -206,4 +280,35 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         });
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+//            case R.id.it_quanlytaikhoan:
+//                Intent dialog_box = new Intent(getActivity(), QuanLyTaiKhoan.class);
+//                startActivity(dialog_box);
+//                break;
+//            case R.id.it_quanlytruyen:
+//                Intent dialog_box1 = new Intent(getActivity(), QuanLyTruyen.class);
+//                startActivity(dialog_box1);
+//                break;
+//            case R.id.it_quanlybinhluan:
+//                Intent dialog_box2 = new Intent(getActivity(), QuanLyBinhLuan.class);
+//                startActivity(dialog_box2);
+//                break;
+//            case R.id.it_quanlythongke:
+//                Intent dialog_box3 = new Intent(getActivity(), QuanLyThongKe.class);
+//                startActivity(dialog_box3);
+//                break;
+        if (menuItem.getItemId() == R.id.it_xephang)
+        {
+            Intent dialog_box4 = new Intent(getActivity(), XepHangFragment.class);
+            startActivity(dialog_box4);
+        }
+        if (menuItem.getItemId() == R.id.it_theloai) {
+            Intent dialog_box5 = new Intent(getActivity(), TheLoaiFragment.class);
+            startActivity(dialog_box5);
+        }
+
+        return true;
+    }
 }

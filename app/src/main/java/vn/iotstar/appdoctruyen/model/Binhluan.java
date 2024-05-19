@@ -7,7 +7,7 @@ public class Binhluan {
     private Chapter idchapter;
     private Taikhoan idtaikhoan;
     private String noidung;
-    private LocalDate ngaydang;
+    private String ngaydang;
 
     public void setId(Integer id) {
         this.id = id;
@@ -25,7 +25,7 @@ public class Binhluan {
         this.noidung = noidung;
     }
 
-    public void setNgaydang(LocalDate ngaydang) {
+    public void setNgaydang(String ngaydang) {
         this.ngaydang = ngaydang;
     }
 
@@ -33,7 +33,7 @@ public class Binhluan {
         this.trangthai = trangthai;
     }
 
-    public Binhluan(Integer id, Chapter idchapter, Taikhoan idtaikhoan, String noidung, LocalDate ngaydang, Integer trangthai) {
+    public Binhluan(Integer id, Chapter idchapter, Taikhoan idtaikhoan, String noidung, String ngaydang, Integer trangthai) {
         this.id = id;
         this.idchapter = idchapter;
         this.idtaikhoan = idtaikhoan;
@@ -61,7 +61,7 @@ public class Binhluan {
         return noidung;
     }
 
-    public LocalDate getNgaydang() {
+    public String getNgaydang() {
         return ngaydang;
     }
 
