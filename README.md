@@ -19,7 +19,7 @@
 - [DataBinding]
 - [PostMan] to test API
 
-## Member
+## Members
 
 - Nguyen Quoc Thinh - 21110662
 - Nguyen Dang Truong - 21110706
