@@ -257,7 +257,7 @@ public class DocChapter extends AppCompatActivity implements View.OnClickListene
 
                 if (edt_binhluan.getText().length() != 0) {
                     //Nhớ thay email
-                    APIService.apiService.findByEmail1("quangthien11@gmail.com").enqueue(new Callback<List<TaiKhoanDto>>() {
+                    APIService.apiService.findByEmail1(user.getEmail()).enqueue(new Callback<List<TaiKhoanDto>>() {
                         @Override
                         public void onResponse(Call<List<TaiKhoanDto>> call, Response<List<TaiKhoanDto>> response) {
                             List<TaiKhoanDto> listtaiKhoanTruyen = response.body();
@@ -296,7 +296,7 @@ public class DocChapter extends AppCompatActivity implements View.OnClickListene
             }
         }
     else if (view.getId() == R.id.bt_danhgia) {
-            APIService.apiService.findByEmail1("quangthien11@gmail.com").enqueue(new Callback<List<TaiKhoanDto>>() {
+            APIService.apiService.findByEmail1(user.getEmail()).enqueue(new Callback<List<TaiKhoanDto>>() {
                 @Override
                 public void onResponse(Call<List<TaiKhoanDto>> call, Response<List<TaiKhoanDto>> response) {
                     List<TaiKhoanDto> listtaiKhoanTruyen = response.body();

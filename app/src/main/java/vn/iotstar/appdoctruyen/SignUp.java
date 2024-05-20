@@ -26,6 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import vn.iotstar.appdoctruyen.API.APIService;
+import vn.iotstar.appdoctruyen.AdminController.QuanLyTaiKhoan;
 import vn.iotstar.appdoctruyen.model.TaiKhoanDto;
 import vn.iotstar.appdoctruyen.model.Taikhoan;
 
@@ -62,10 +63,13 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         prg.setMessage("Đang đợi xác nhận email!");
         prg.setCancelable(false);
 
+        //setOnClickListener();
+
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 register();
+                getData();
             }
         });
     }
@@ -153,36 +157,59 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
     private void setOnClickListener() {
         btnRegister.setOnClickListener(this);
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                register();
+            }
+        });
     }
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_logingg) {
             String emailt = email.getText().toString();
             String matkhaut = pass.getText().toString();
-            // Tạo một đối tượng TaiKhoanDto với email và mật khẩu
-            Taikhoan taikhoan = new Taikhoan(emailt, matkhaut, "Chưa xác định", "Chưa xác định", 0, 0);
-//                            taiKhoanDto.setEmail(email.getText().toString());
-//                            taiKhoanDto.setMatkhau(pass.getText().toString());
 
-            // Gửi yêu cầu đến API để cập nhật bảng taikhoan
+
+            Taikhoan taikhoan = new Taikhoan(emailt, matkhaut, "Chuaxacdinh", "Chuaxacdinh", 0, 0);
             APIService.apiService.addTaiKhoan(taikhoan).enqueue(new Callback<Taikhoan>() {
                 @Override
                 public void onResponse(Call<Taikhoan> call, Response<Taikhoan> response) {
-                    if (response.isSuccessful()) {
-                        Toast.makeText(getApplicationContext(), "Cập nhật bảng taikhoan thành công", Toast.LENGTH_SHORT).show();
 
-                                    } else {
-                                        Toast.makeText(getApplicationContext(), "Không thể cập nhật bảng taikhoan", Toast.LENGTH_SHORT).show();
-                                    }
+                   Toast.makeText(SignUp.this, "Thêm thành công", Toast.LENGTH_SHORT);
+//                    showTaiKhoan();
+//                    cv_themtaikhoan.setVisibility(View.GONE);
+
                 }
 
                 @Override
-                public void onFailure(Call<Taikhoan> call, Throwable throwable) {
-
-                    Toast.makeText(getApplicationContext(), "Lỗi kết nối: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                    Log.e("API Error", "Lỗi kết nối: ", throwable);
+                public void onFailure(Call<Taikhoan> call, Throwable t) {
+                    Toast.makeText(SignUp.this, "Thêm thất bại", Toast.LENGTH_SHORT);
                 }
             });
         }
+    }
+
+    public void getData(){
+        String emailt = email.getText().toString();
+        String matkhaut = pass.getText().toString();
+
+
+        Taikhoan taikhoan = new Taikhoan(emailt, matkhaut, "Chuaxacdinh", "Chuaxacdinh", 0, 0);
+        APIService.apiService.addTaiKhoan(taikhoan).enqueue(new Callback<Taikhoan>() {
+            @Override
+            public void onResponse(Call<Taikhoan> call, Response<Taikhoan> response) {
+
+                Toast.makeText(SignUp.this, "Thêm thành công", Toast.LENGTH_SHORT);
+//                    showTaiKhoan();
+//                    cv_themtaikhoan.setVisibility(View.GONE);
+
+            }
+
+            @Override
+            public void onFailure(Call<Taikhoan> call, Throwable t) {
+                Toast.makeText(SignUp.this, "Thêm thất bại", Toast.LENGTH_SHORT);
+            }
+        });
     }
 }
