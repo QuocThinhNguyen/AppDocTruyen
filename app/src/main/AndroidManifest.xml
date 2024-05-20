@@ -73,6 +73,10 @@
             android:name=".XepHangFragment"
             android:exported="false" />
 
+      <activity
+            android:name=".AdminController.QuanLyTruyen"
+android:exported="false" />
+
         <activity
             android:name=".Login"
             android:exported="false" />
@@ -82,14 +86,14 @@
             android:exported="false" />
 
 
-<!--        <activity-->
+
 <!--            android:name=".AdminController.QuanLyTruyen"-->
 <!--            android:exported="false" />-->
 
         <activity
            
             android:name=".MainActivity"
-
+            android:exported="true">
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

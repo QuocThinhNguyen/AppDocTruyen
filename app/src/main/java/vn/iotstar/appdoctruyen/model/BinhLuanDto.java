@@ -1,23 +1,16 @@
 package vn.iotstar.appdoctruyen.model;
 
 public class BinhLuanDto {
-    private Integer id;
     private int idchapter;
     private int idtaikhoan;
     private String noidung;
-    private String ngaydang;
-    public BinhLuanDto(Integer id, int idchapter, int idtaikhoan, String noidung, String ngaydang) {
-        this.id = id;
+
+    public BinhLuanDto( int idchapter, int idtaikhoan, String noidung) {
+
         this.idchapter = idchapter;
         this.idtaikhoan = idtaikhoan;
         this.noidung = noidung;
-        this.ngaydang = ngaydang;
     }
-
-    public Integer getId() {
-        return id;
-    }
-
     public int getIdchapter() {
         return idchapter;
     }
@@ -28,14 +21,6 @@ public class BinhLuanDto {
 
     public String getNoidung() {
         return noidung;
-    }
-
-    public String getNgaydang() {
-        return ngaydang;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public void setIdchapter(int idchapter) {
@@ -50,7 +35,4 @@ public class BinhLuanDto {
         this.noidung = noidung;
     }
 
-    public void setNgaydang(String ngaydang) {
-        this.ngaydang = ngaydang;
-    }
 }
