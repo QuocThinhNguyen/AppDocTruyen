@@ -18,6 +18,7 @@
         android:id="@+id/drlo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="start"
         android:fitsSystemWindows="false">
 
 
@@ -47,6 +48,20 @@
                     android:background="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize">
+                    <Button
+                        android:id="@+id/btn_menu"
+                        android:layout_width="35dp"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/ic_format_list"
+                        android:shadowColor="@color/slider"
+                        >
+                    </Button>
+
+
+
                     <TextView
                         android:id="@+id/tv_TimKiemHome"
                         android:layout_width="300dp"

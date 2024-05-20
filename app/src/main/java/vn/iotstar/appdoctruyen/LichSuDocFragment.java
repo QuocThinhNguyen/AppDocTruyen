@@ -5,14 +5,19 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +28,7 @@ import retrofit2.Response;
 import vn.iotstar.appdoctruyen.API.APIService;
 import vn.iotstar.appdoctruyen.Adapter.truyenAdapter;
 import vn.iotstar.appdoctruyen.model.Lichsudoctruyen;
+import vn.iotstar.appdoctruyen.model.TaiKhoanDto;
 import vn.iotstar.appdoctruyen.model.Taikhoan;
 import vn.iotstar.appdoctruyen.model.Truyen1;
 import vn.iotstar.appdoctruyen.Adapter.TruyenDaDocAdapter;
@@ -37,7 +43,9 @@ public class LichSuDocFragment extends Fragment {
 
     View view;
     String email;
-    Taikhoan taiKhoan;
+    TaiKhoanDto taiKhoan;
+
+
     Truyen1 truyen;
     private List<Lichsudoctruyen> lichSuDocTruyenList;
     public RecyclerView rcv;
@@ -90,6 +98,27 @@ public class LichSuDocFragment extends Fragment {
         view=inflater.inflate(R.layout.fragment_lich_su_doc_truyen, container, false);
         Anhxa();
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        email= user.getEmail();
+        ThongTinTaiKhoan thongTinTaiKhoan = new ThongTinTaiKhoan();
+        thongTinTaiKhoan.email= email;
+        thongTinTaiKhoan.gettaikhoan(email);
+
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
+        rcv.setLayoutManager(linearLayoutManager);
+
+        DividerItemDecoration item = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        rcv.addItemDecoration(item);
+
+        // Sử dụng Handler để trì hoãn hành động trong luồng chính
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                taiKhoan = thongTinTaiKhoan.tk;
+                GetTruyenDaDoc();
+            }
+        }, 5000);
 
         Intent intent=getActivity().getIntent();
         email=intent.getStringExtra("email");
@@ -109,7 +138,7 @@ public class LichSuDocFragment extends Fragment {
         lichSuDocTruyenList = new ArrayList<>();
         GetTruyenDaDoc();
 
-        rcv_adapter=new TruyenDaDocAdapter(getActivity(), lichSuDocTruyenList, taiKhoan.getId());
+        rcv_adapter=new TruyenDaDocAdapter(getActivity(), lichSuDocTruyenList, taiKhoan);
         rcv.setAdapter(rcv_adapter);
     }
     private void GetTruyenDaDoc() {
@@ -117,7 +146,7 @@ public class LichSuDocFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<List<Lichsudoctruyen>> call, @NonNull Response<List<Lichsudoctruyen>> response) {
                 lichSuDocTruyenList = response.body();
-                rcv_adapter  = new TruyenDaDocAdapter(getActivity(), lichSuDocTruyenList, taiKhoan.getId());
+                rcv_adapter  = new TruyenDaDocAdapter(getContext(), lichSuDocTruyenList, taiKhoan);
                 rcv.setAdapter(rcv_adapter);
             }
 

@@ -65,7 +65,7 @@ public class BinhLuanCuaToi extends AppCompatActivity {
                 idtk = thongTinTaiKhoan.tk.getId();
                 getBinhLuanCuaToi();
             }
-        }, 5000);
+        }, 500);
 
 
 

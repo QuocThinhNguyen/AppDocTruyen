@@ -21,9 +21,11 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
+import vn.iotstar.appdoctruyen.DanhGiaCuaToi;
 import vn.iotstar.appdoctruyen.model.BinhLuanCuaToiDto;
 import vn.iotstar.appdoctruyen.model.Chapter;
 import vn.iotstar.appdoctruyen.model.ChapterAdmin;
+import vn.iotstar.appdoctruyen.model.DanhGiaCuaToiDto;
 import vn.iotstar.appdoctruyen.model.Noidungchapter;
 
 
@@ -53,7 +55,7 @@ public interface APIService {
     APIService apiService = new Retrofit.Builder()
 
 
-            .baseUrl("http://192.168.1.110:8090/")
+            .baseUrl("http://192.168.165.78:8090/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(APIService.class);
@@ -212,5 +214,7 @@ public interface APIService {
     @GET("/binhluancuatoi/{id}")
     Call<List<BinhLuanCuaToiDto>> findByIdn(@Path("id") Integer id);
 
+    @GET("/danhgiacuatoi/{id}")
+    Call<List<DanhGiaCuaToiDto>> findDanhGiaByIdn(@Path("id") Integer id);
 
 }

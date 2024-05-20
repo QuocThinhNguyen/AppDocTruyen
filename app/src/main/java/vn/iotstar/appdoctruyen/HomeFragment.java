@@ -1,12 +1,10 @@
 package vn.iotstar.appdoctruyen;
 
-import android.content.Context;
 import android.content.Intent;
-import android.hardware.lights.LightState;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,7 +21,7 @@ import android.widget.Toast;
 
 import vn.iotstar.appdoctruyen.AdminController.QuanLyTaiKhoan;
 import vn.iotstar.appdoctruyen.AdminController.QuanLyTruyen;
-import  vn.iotstar.appdoctruyen.R;
+
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
@@ -35,7 +33,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import vn.iotstar.appdoctruyen.API.APIService;
-import vn.iotstar.appdoctruyen.API.RetrofitClient;
 import vn.iotstar.appdoctruyen.Adapter.truyenAdapter;
 import vn.iotstar.appdoctruyen.model.truyen;
 
@@ -55,10 +52,12 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
     truyenAdapter truyenTopAdapter;
     List<truyen> truyenList;
 
+    Button btnmenu;
     List<truyen> truyenMoi;
     List<truyen> truyenTop;
 
 
+    DrawerLayout drlo;
     TextView tv_TimKemHome, tv_theloai, tv_xephang;
 
     TextView tv_emailhome;
@@ -110,6 +109,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         slideModels.add(new SlideModel(R.drawable.image1, ScaleTypes.FIT));
         slideModels.add(new SlideModel(R.drawable.image2, ScaleTypes.FIT));
         slideModels.add(new SlideModel(R.drawable.image3, ScaleTypes.FIT));
+        slideModels.add(new SlideModel(R.drawable.image5, ScaleTypes.FIT));
         slideModels.add(new SlideModel(R.drawable.image4, ScaleTypes.FIT));
         imageSlider.setImageList(slideModels, ScaleTypes.FIT);
 
@@ -160,6 +160,9 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
     }
 
     private void setOnClickListener() {
+        btnmenu.setOnClickListener(this);
+
+
         tv_theloai.setOnClickListener(this);
         tv_xephang.setOnClickListener(this);
 
@@ -173,6 +176,10 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
 
     @Override
     public void onClick(View v) {
+
+        if (v.getId() == R.id.btn_menu) {
+            drlo.openDrawer(navi);
+        }
 
         if (v.getId() == R.id.bt_dnhome) {
             Intent dialog_box = new Intent(getActivity(), Login.class);
@@ -210,6 +217,8 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
     }
 
         private void AnhXa () {
+            drlo = (DrawerLayout) view.findViewById(R.id.drlo);
+            btnmenu = view.findViewById(R.id.btn_menu);
             rc1 = (RecyclerView) view.findViewById(R.id.rv3);
 
             rc2 = (RecyclerView) view.findViewById(R.id.rv);
