@@ -86,12 +86,12 @@ public class TruyenDaDocAdapter extends RecyclerView.Adapter<TruyenDaDocAdapter.
         }
 
 
-        id=truyendadoc.getIdchapter().getId();
+        //id=truyendadoc.getIdchapter().getId();
         getOneChapter(id);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                getOneTruyen(chapter.getId());
+                //getOneTruyen(chapter.getId());
 
                 new Handler().postDelayed(new Runnable() {
                     @Override
