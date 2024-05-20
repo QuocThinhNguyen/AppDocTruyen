@@ -132,6 +132,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
             btn_login.setVisibility(view.GONE);
         } else {
             menuquantri.setVisible(false);
+           /* tv_emailhome.setText(user.getEmail());*/
             tv_emailhome.setVisibility(view.GONE);
             btn_logout.setVisibility(view.GONE);
             btn_login.setVisibility(view.VISIBLE);

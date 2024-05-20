@@ -32,6 +32,7 @@ import vn.iotstar.appdoctruyen.Adapter.truyenAdapter;
 import vn.iotstar.appdoctruyen.model.BinhLuanDto;
 import vn.iotstar.appdoctruyen.model.BinhLuanTruyenDto;
 import vn.iotstar.appdoctruyen.model.ChapterDto;
+import vn.iotstar.appdoctruyen.model.DanhGiaDto;
 import vn.iotstar.appdoctruyen.model.NoiDungChapterDto;
 import vn.iotstar.appdoctruyen.model.TaiKhoanDto;
 import vn.iotstar.appdoctruyen.model.Taikhoan;
@@ -257,7 +258,7 @@ public class DocChapter extends AppCompatActivity implements View.OnClickListene
 
                 if (edt_binhluan.getText().length() != 0) {
                     //Nhớ thay email
-                    APIService.apiService.findByEmail("quangthien11@gmail.com").enqueue(new Callback<List<TaiKhoanDto>>() {
+                    APIService.apiService.findByEmail1("dangtruong@gmail.com").enqueue(new Callback<List<TaiKhoanDto>>() {
                         @Override
                         public void onResponse(Call<List<TaiKhoanDto>> call, Response<List<TaiKhoanDto>> response) {
                             List<TaiKhoanDto> listtaiKhoanTruyen = response.body();
@@ -296,13 +297,12 @@ public class DocChapter extends AppCompatActivity implements View.OnClickListene
             }
         }
     else if (view.getId() == R.id.bt_danhgia) {
-            APIService.apiService.findByEmail("quangthien11@gmail.com").enqueue(new Callback<List<TaiKhoanDto>>() {
+            APIService.apiService.findByEmail1("quangthien11@gmail.com").enqueue(new Callback<List<TaiKhoanDto>>() {
                 @Override
                 public void onResponse(Call<List<TaiKhoanDto>> call, Response<List<TaiKhoanDto>> response) {
                     List<TaiKhoanDto> listtaiKhoanTruyen = response.body();
                     if (listtaiKhoanTruyen != null && !listtaiKhoanTruyen.isEmpty()) {
                         idtaikhoan = listtaiKhoanTruyen.get(0).getId();
-
                         APIService.apiService.getIDByChapterAndTK(id_chapter, idtaikhoan).enqueue(new Callback<List<Integer>>() {
                             @Override
                             public void onResponse(Call<List<Integer>> call, Response<List<Integer>> response) {
@@ -336,7 +336,7 @@ public class DocChapter extends AppCompatActivity implements View.OnClickListene
             });
 
 
-            float sosao = rtb.getRating();
+            double sosao = rtb.getRating();
             if (kt != 0) {
                 APIService.apiService.updateDanhGia(id_chapter, idtaikhoan, sosao).enqueue(new Callback<Void>() {
                     @Override
@@ -364,7 +364,19 @@ public class DocChapter extends AppCompatActivity implements View.OnClickListene
                     }
                 });
             } /*else {
-                db.insertDanhGia(id_chapter, taiKhoan.getId(), sosao);
+                            DanhGiaDto binhLuanDto = new DanhGiaDto(id_chapter, idtaikhoan, sosao);
+                            APIService.apiService.themDanhGia(binhLuanDto).enqueue(new Callback<DanhGiaDto>() {
+                                @Override
+                                public void onResponse(Call<DanhGiaDto> call, Response<DanhGiaDto> response) {
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<DanhGiaDto> call, Throwable t) {
+                                    Log.e("API_CALL", "Failed to fetch data from API", t);
+                                    Toast.makeText(DocChapter.this, "Failure: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
                 setData();
             }*/
 

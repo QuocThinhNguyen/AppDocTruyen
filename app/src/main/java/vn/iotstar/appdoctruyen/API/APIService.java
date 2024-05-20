@@ -32,6 +32,7 @@ import retrofit2.http.Query;
 import vn.iotstar.appdoctruyen.model.BinhLuanCuaToiDto;
 import vn.iotstar.appdoctruyen.model.Chapter;
 import vn.iotstar.appdoctruyen.model.ChapterAdmin;
+import vn.iotstar.appdoctruyen.model.DanhGiaDto;
 import vn.iotstar.appdoctruyen.model.LichSuDocTruyenModel;
 import vn.iotstar.appdoctruyen.model.Noidungchapter;
 
@@ -65,7 +66,7 @@ public interface APIService {
     Gson gson = new GsonBuilder().setDateFormat("dd-MM-yyyy").create();
     APIService apiService = new Retrofit.Builder()
 
-            .baseUrl("http://192.168.76.223:8090/")
+            .baseUrl("http://172.172.9.188:8090/")
 
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
@@ -190,6 +191,8 @@ public interface APIService {
     Call<BinhLuanDto> themBinhLuan(@Body BinhLuanDto binhLuanDto);
 
 
+    @POST("/adddanhgia")
+    Call<DanhGiaDto> themDanhGia(@Body DanhGiaDto danhGiaDto);
 
     @GET("tusach/lichsu/{idtaikhoan}")
     Call<List<LichSuDocTruyenModel>> getListTruyenDaDoc(@Path("idtaikhoan") int idtaikhoan);
@@ -229,7 +232,7 @@ public interface APIService {
     Call<List<DanhGiaCuaToiDto>> findDanhGiaByIdn(@Path("id") Integer id);
 
     @GET("/timtaikhoan/{email}")
-    Call<List<TaiKhoanDto>> findByEmail(@Path("email") String email);
+    Call<List<TaiKhoanDto>> findByEmail1(@Path("email") String email);
     @GET("/findidtaikhoan/{email}")
     Call<Integer> findIdTaiKhoan(@Path("email") String email);
 
