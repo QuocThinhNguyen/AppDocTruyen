@@ -1,6 +1,7 @@
 package vn.iotstar.appdoctruyen.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import vn.iotstar.appdoctruyen.CTTruyen;
 import vn.iotstar.appdoctruyen.R;
 import vn.iotstar.appdoctruyen.model.PhanLoaiTruyen;
 
@@ -61,6 +63,12 @@ public class TheLoaiAdapter extends RecyclerView.Adapter<TheLoaiAdapter.TheLoaiV
         holder.tv_tentruyen.setText(phanLoaiTruyen.getTentruyen());
         holder.tv_pl.setText("Ngày đăng: "+phanLoaiTruyen.getNgaydang());
         Glide.with(this.context).load(phanLoaiTruyen.getLinkanh()).into(holder.img_theloai);
+        holder.ll_rcv_theloai.setOnClickListener(view -> {
+            Intent intent=new Intent(holder.itemView.getContext(), CTTruyen.class);
+            intent.putExtra("id_truyen",phanLoaiTruyen.getId());
+            intent.putExtra("email",email);
+            holder.itemView.getContext().startActivity(intent);
+        });
     }
 
     @Override

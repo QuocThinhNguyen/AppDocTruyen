@@ -38,6 +38,7 @@ import vn.iotstar.appdoctruyen.model.Noidungchapter;
 
 
 import vn.iotstar.appdoctruyen.model.PhanLoaiTruyen;
+import vn.iotstar.appdoctruyen.model.TaiKhoanDto;
 import vn.iotstar.appdoctruyen.model.Truyen1;
 import vn.iotstar.appdoctruyen.model.TruyenVotes;
 import vn.iotstar.appdoctruyen.model.truyen;
@@ -47,7 +48,7 @@ public interface APIService {
     APIService apiService = new Retrofit.Builder()
 
 
-            .baseUrl("http://192.168.1.8:8090/")
+            .baseUrl("http://172.172.9.188:8090/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(APIService.class);
@@ -187,4 +188,15 @@ public interface APIService {
     @GET("/search")
     Call<List<Model_TimKiem>> getListTimKiem(@Field("textsearch") String textsearch);
 
+    @GET("/timtaikhoan/{email}")
+    Call<List<TaiKhoanDto>> findByEmail(@Path("email") String email);
+    @GET("/findidtaikhoan/{email}")
+    Call<Integer> findIdTaiKhoan(@Path("email") String email);
+
+    @GET("/getidbychapterandtk/{idchapter}/{idtaikhoan}")
+    Call<List<Integer>> getIDByChapterAndTK(@Path("idchapter") int idchapter, @Path("idtaikhoan") int idtaikhoan);
+    @PUT("/danhgia/{idchapter}/{idtaikhoan}/{sosao}")
+    Call<Void> updateDanhGia(@Path("idchapter") int idchapter, @Path("idtaikhoan") int idtaikhoan, @Path("sosao") double sosao);
+    @GET("/truyen/gettbdanhgiatheochapter/{id}")
+    Call<Double> getAverageRatingByIdChapter(@Path("id")int id);
 }
