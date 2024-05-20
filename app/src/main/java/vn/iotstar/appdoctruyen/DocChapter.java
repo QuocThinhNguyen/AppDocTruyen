@@ -29,9 +29,11 @@ import vn.iotstar.appdoctruyen.Adapter.BinhLuanAdapter;
 import vn.iotstar.appdoctruyen.Adapter.BinhLuanTruyenAdapter;
 import vn.iotstar.appdoctruyen.Adapter.DocChapterAdapter;
 import vn.iotstar.appdoctruyen.Adapter.truyenAdapter;
+import vn.iotstar.appdoctruyen.model.BinhLuanDto;
 import vn.iotstar.appdoctruyen.model.BinhLuanTruyenDto;
 import vn.iotstar.appdoctruyen.model.ChapterDto;
 import vn.iotstar.appdoctruyen.model.NoiDungChapterDto;
+import vn.iotstar.appdoctruyen.model.TaiKhoanDto;
 import vn.iotstar.appdoctruyen.model.Taikhoan;
 import vn.iotstar.appdoctruyen.model.truyen;
 
@@ -48,7 +50,12 @@ public class DocChapter extends AppCompatActivity implements View.OnClickListene
     ChapterDto chapterDto;
     List<NoiDungChapterDto> truyenList;
     List<BinhLuanTruyenDto> binhLuanTruyen;
+    List<TaiKhoanDto> listtaiKhoanTruyen;
     List<ChapterDto> listten;
+    List<Integer> listid;
+    int idtaikhoan;
+    int kt = 0;
+    double sosaochapter;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     RatingBar rtb;
     Integer minIdChapter, maxIdChapter;
@@ -85,8 +92,6 @@ public class DocChapter extends AppCompatActivity implements View.OnClickListene
         rcv.setAdapter(rcv_adapter);
         GetNoiDungChapter();
         recyclerViewBinhLuan();
-
-
 
     }
     private void Anhxa(){
@@ -151,7 +156,7 @@ public class DocChapter extends AppCompatActivity implements View.OnClickListene
         rcv_binhluan.setAdapter(rcv_binhluanadapter);
         GetBinhLuanTheoIdChapter();
     }
-    private void GetBinhLuanTheoIdChapter(){
+    /*private void GetBinhLuanTheoIdChapter(){
         APIService.apiService.getBinhLuanTheoIdChapter(id_truyen).enqueue(new Callback<List<BinhLuanTruyenDto>>() {
             @Override
             public void onResponse(Call<List<BinhLuanTruyenDto>> call, Response<List<BinhLuanTruyenDto>> response) {
@@ -166,7 +171,35 @@ public class DocChapter extends AppCompatActivity implements View.OnClickListene
                 Toast.makeText(DocChapter.this, "Failure: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }*/
+    private void GetBinhLuanTheoIdChapter() {
+        APIService.apiService.getBinhLuanTheoIdChapter(id_chapter).enqueue(new Callback<List<BinhLuanTruyenDto>>() {
+            @Override
+            public void onResponse(Call<List<BinhLuanTruyenDto>> call, Response<List<BinhLuanTruyenDto>> response) {
+                if (response.isSuccessful()) {
+                    List<BinhLuanTruyenDto> responseData = response.body();
+                    if (responseData != null && !responseData.isEmpty()) {
+                        binhLuanTruyen.clear();
+                        binhLuanTruyen.addAll(responseData);
+                        rcv_binhluanadapter.notifyDataSetChanged();
+                    } else {
+                        Log.e("API_CALL", "Response body is empty");
+                        Toast.makeText(DocChapter.this, "No comments found", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Log.e("API_CALL", "Response not successful: " + response.errorBody());
+                    Toast.makeText(DocChapter.this, "Failed to load comments", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<BinhLuanTruyenDto>> call, Throwable t) {
+                Log.e("API_CALL", "Failed to fetch data from API", t);
+                Toast.makeText(DocChapter.this, "Failure: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
     private void getMinMax(final MinMaxCallback callback) {
         APIService.apiService.getMinIdChapter(id_truyen).enqueue(new Callback<Integer>() {
             @Override
@@ -219,31 +252,130 @@ public class DocChapter extends AppCompatActivity implements View.OnClickListene
             intent2.putExtra("id_truyen", id_truyen);
             startActivity(intent2);
             finish();
-        }  /*else if (view.getId() == R.id.bt_binhluan) {
+        } else if (view.getId() == R.id.bt_binhluan) {
             if (edt_binhluan.getText().length() != 0) {
-                db.insertBinhLuan(id_chapter, taiKhoan.getId(), edt_binhluan.getText().toString());
-                edt_binhluan.setText("");
-                recyclerViewBinhLuan();
-            } else {
-                Toast.makeText(this, "Vui lòng nhập bình luận!", Toast.LENGTH_SHORT).show();
+
+                if (edt_binhluan.getText().length() != 0) {
+                    //Nhớ thay email
+                    APIService.apiService.findByEmail1(user.getEmail()).enqueue(new Callback<List<TaiKhoanDto>>() {
+                        @Override
+                        public void onResponse(Call<List<TaiKhoanDto>> call, Response<List<TaiKhoanDto>> response) {
+                            List<TaiKhoanDto> listtaiKhoanTruyen = response.body();
+                            if (listtaiKhoanTruyen != null && !listtaiKhoanTruyen.isEmpty()) {
+                                idtaikhoan = listtaiKhoanTruyen.get(0).getId();
+
+                                BinhLuanDto binhLuanDto = new BinhLuanDto(id_chapter, idtaikhoan, edt_binhluan.getText() + "");
+                                APIService.apiService.themBinhLuan(binhLuanDto).enqueue(new Callback<BinhLuanDto>() {
+                                    @Override
+                                    public void onResponse(Call<BinhLuanDto> call, Response<BinhLuanDto> response) {
+                                        edt_binhluan.setText("");
+                                        recyclerViewBinhLuan();
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<BinhLuanDto> call, Throwable t) {
+                                        Log.e("API_CALL", "Failed to fetch data from API", t);
+                                        Toast.makeText(DocChapter.this, "Failure: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            } else {
+                                Toast.makeText(DocChapter.this, "Không tìm thấy tài khoản", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+
+                        @Override
+                        public void onFailure(Call<List<TaiKhoanDto>> call, Throwable t) {
+                            Log.e("API_CALL", "Failed to fetch data from API", t);
+                            Toast.makeText(DocChapter.this, "Failure: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    Toast.makeText(this, "Vui lòng nhập bình luận!", Toast.LENGTH_SHORT).show();
+                }
             }
-        } else if (view.getId() == R.id.bt_danhgia) {
-            Boolean kt = db.checkDanhGia(taiKhoan.getId(), id_chapter);
+        }
+    else if (view.getId() == R.id.bt_danhgia) {
+            APIService.apiService.findByEmail1(user.getEmail()).enqueue(new Callback<List<TaiKhoanDto>>() {
+                @Override
+                public void onResponse(Call<List<TaiKhoanDto>> call, Response<List<TaiKhoanDto>> response) {
+                    List<TaiKhoanDto> listtaiKhoanTruyen = response.body();
+                    if (listtaiKhoanTruyen != null && !listtaiKhoanTruyen.isEmpty()) {
+                        idtaikhoan = listtaiKhoanTruyen.get(0).getId();
+
+                        APIService.apiService.getIDByChapterAndTK(id_chapter, idtaikhoan).enqueue(new Callback<List<Integer>>() {
+                            @Override
+                            public void onResponse(Call<List<Integer>> call, Response<List<Integer>> response) {
+                                listid = response.body();
+                                if (listid != null && !listid.isEmpty()){
+                                    kt = listid.get(0);
+
+
+                                }
+                                else {
+                                    Toast.makeText(DocChapter.this, "Sai", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<List<Integer>> call, Throwable t) {
+                                Log.e("API_CALL", "Failed to fetch data from API", t);
+                                Toast.makeText(DocChapter.this, "Failure: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    } else {
+                        Toast.makeText(DocChapter.this, "Không tìm thấy tài khoản", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+
+                @Override
+                public void onFailure(Call<List<TaiKhoanDto>> call, Throwable t) {
+                    Log.e("API_CALL", "Failed to fetch data from API", t);
+                    Toast.makeText(DocChapter.this, "Failure: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
             float sosao = rtb.getRating();
-            if (kt) {
-                db.updateDanhGia(id_chapter, taiKhoan.getId(), sosao);
-                setData();
-            } else {
+            if (kt != 0) {
+                APIService.apiService.updateDanhGia(id_chapter, idtaikhoan, sosao).enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                    }
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Log.e("API_CALL", "Failed to fetch data from API", t);
+                        Toast.makeText(DocChapter.this, "Failure: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
+                });
+                APIService.apiService.getAverageRatingByIdChapter(id_chapter).enqueue(new Callback<Double>() {
+
+                    @Override
+                    public void onResponse(Call<Double> call, Response<Double> response) {
+                        double sosao = response.body();
+                        tv_sosaochapter.setText(""+sosao);
+                    }
+
+                    @Override
+                    public void onFailure(Call<Double> call, Throwable t) {
+                        Log.e("API_CALL", "Failed to fetch data from API", t);
+                        Toast.makeText(DocChapter.this, "Failure: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } /*else {
                 db.insertDanhGia(id_chapter, taiKhoan.getId(), sosao);
                 setData();
             }*/
 
+        }
     }
 
-   /* private void setData(){
-        float sosaochapter=db.getSoSaoChapter(id_chapter);
-        tv_sosaochapter.setText(""+sosaochapter);
-    }*/
+    private void setData(){
+
+
+
+    }
 
     private void setOnClickListener(){
         img_backdoctruyen.setOnClickListener(this);

@@ -107,6 +107,14 @@ public class LichSuDocFragment extends Fragment {
 
 
 
+        //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        email= user.getEmail();
+        //ThongTinTaiKhoan thongTinTaiKhoan = new ThongTinTaiKhoan();
+        thongTinTaiKhoan.email= email;
+        thongTinTaiKhoan.gettaikhoan(email);
+
+
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         rcv.setLayoutManager(linearLayoutManager);
 
@@ -144,7 +152,7 @@ public class LichSuDocFragment extends Fragment {
         rcv.setLayoutManager(linearLayoutManager);
 
         lichSuDocTruyenList = new ArrayList<>();
-        GetTruyenDaDoc();
+        //GetTruyenDaDoc();
 
         rcv_adapter=new TruyenDaDocAdapter(getActivity(), lichSuDocTruyenList, taiKhoan);
         rcv.setAdapter(rcv_adapter);
