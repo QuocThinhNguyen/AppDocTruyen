@@ -10,6 +10,18 @@ public class TaiKhoanDto {
     private Integer diemthuong;
     private Integer loaitaikhoan;
 
+    public TaiKhoanDto() {
+    }
+
+    public TaiKhoanDto(String email, String matkhau, String hoten, String dienthoai, Integer diemthuong, Integer loaitaikhoan) {
+        this.email = email;
+        this.matkhau = matkhau;
+        this.hoten = hoten;
+        this.dienthoai = dienthoai;
+        this.diemthuong = diemthuong;
+        this.loaitaikhoan = loaitaikhoan;
+    }
+
     public Integer getId() {
         return id;
     }
