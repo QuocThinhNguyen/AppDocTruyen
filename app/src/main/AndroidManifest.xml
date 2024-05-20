@@ -79,10 +79,11 @@
         
         <activity
             android:name=".AdminController.QuanLyThongKe"
-
-      <activity
-            android:name=".AdminController.QuanLyTruyen"
             android:exported="false" />
+
+<!--        <activity-->
+<!--            android:name=".AdminController.QuanLyTruyen"-->
+<!--            android:exported="false" />-->
         <activity
            
             android:name=".MainActivity"

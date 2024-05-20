@@ -3,6 +3,7 @@ package vn.iotstar.appdoctruyen.API;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -21,9 +22,11 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
+import retrofit2.http.Query;
 import vn.iotstar.appdoctruyen.model.BinhLuanCuaToiDto;
 import vn.iotstar.appdoctruyen.model.Chapter;
 import vn.iotstar.appdoctruyen.model.ChapterAdmin;
+import vn.iotstar.appdoctruyen.model.LichSuDocTruyenModel;
 import vn.iotstar.appdoctruyen.model.Noidungchapter;
 
 
@@ -53,7 +56,7 @@ public interface APIService {
     APIService apiService = new Retrofit.Builder()
 
 
-            .baseUrl("http://192.168.1.110:8090/")
+            .baseUrl("http://192.168.76.223:8090/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(APIService.class);
@@ -179,10 +182,10 @@ public interface APIService {
 
 
     @GET("tusach/lichsu/{idtaikhoan}")
-    Call<List<Lichsudoctruyen>> getListTruyenDaDoc(@Path("idtaikhoan") int idtaikhoan);
+    Call<List<LichSuDocTruyenModel>> getListTruyenDaDoc(@Path("idtaikhoan") int idtaikhoan);
 
     @GET("/truyen/getone/{idchapter}")
-    Call<Truyen1> getOneTruyen(@Path("idchapter") int idchapter);
+    Call<Truyen1> getOneTruyen(@Path("idchapter") ChapterDto idchapter);
 
     @GET("/truyen/chapter/getone/{idchapter}")
     Call<ChapterDto> getOneChapter(@Path("idchapter") int id);
@@ -191,7 +194,7 @@ public interface APIService {
     Call<String> getTenChapterNew(@Path("idtruyen") int idtruyen);
 
     @GET("/search")
-    Call<List<Model_TimKiem>> getListTimKiem(@Field("textsearch") String textsearch);
+    Call<ArrayList<Model_TimKiem>> getListTimKiem(@Query("textsearch") String textsearch);
 
 
     @GET("/taikhoan")
