@@ -1,33 +1,26 @@
 package vn.iotstar.appdoctruyen.model;
 
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-
 import java.time.LocalDate;
 
+public class ThongBaoDto {
 
-public class Thongbao {
-    private Integer id;
-    private String tieude;
-    private String noidung;
-    private String ngaydang;
+    private int id;
+    private String tieude, noidung;
+    private LocalDate ngaydang;
 
-    public Thongbao(Integer id, String tieude, String noidung, String ngaydang) {
+
+    public ThongBaoDto(int id, String tieude, String noidung, LocalDate ngaydang) {
         this.id = id;
         this.tieude = tieude;
         this.noidung = noidung;
         this.ngaydang = ngaydang;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -47,11 +40,11 @@ public class Thongbao {
         this.noidung = noidung;
     }
 
-    public String getNgaydang() {
+    public LocalDate getNgaydang() {
         return ngaydang;
     }
 
-    public void setNgaydang(String ngaydang) {
+    public void setNgaydang(LocalDate ngaydang) {
         this.ngaydang = ngaydang;
     }
 }

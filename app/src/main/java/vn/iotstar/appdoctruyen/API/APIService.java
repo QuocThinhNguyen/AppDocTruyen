@@ -57,6 +57,7 @@ import vn.iotstar.appdoctruyen.model.Taikhoan;
 import vn.iotstar.appdoctruyen.model.TaiKhoanDto;
 
 
+import vn.iotstar.appdoctruyen.model.Thongbao;
 import vn.iotstar.appdoctruyen.model.Truyen1;
 import vn.iotstar.appdoctruyen.model.TruyenVotes;
 import vn.iotstar.appdoctruyen.model.truyen;
@@ -239,4 +240,7 @@ public interface APIService {
     Call<Void> updateDanhGia(@Path("idchapter") int idchapter, @Path("idtaikhoan") int idtaikhoan, @Path("sosao") double sosao);
     @GET("/truyen/gettbdanhgiatheochapter/{id}")
     Call<Double> getAverageRatingByIdChapter(@Path("id")int id);
+
+    @GET("/thongbao}")
+    Call<List<Thongbao>> getThongBao();
 }
