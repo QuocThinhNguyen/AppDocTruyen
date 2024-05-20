@@ -14,18 +14,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import vn.iotstar.appdoctruyen.CTTruyen;
 import vn.iotstar.appdoctruyen.R;
 import vn.iotstar.appdoctruyen.model.Model_TimKiem;
 
 public class TimKiemAdapter extends RecyclerView.Adapter<TimKiemAdapter.TimKiemViewHolder>{
 
     private Context context;
-    private List<Model_TimKiem> list;
+    private ArrayList<Model_TimKiem> list;
     private String email;
 
-    public TimKiemAdapter(Context context, List<Model_TimKiem> list,String email) {
+    public TimKiemAdapter(Context context, ArrayList<Model_TimKiem> list, String email) {
         this.context = context;
         this.list = list;
         this.email=email;
@@ -53,15 +55,18 @@ public class TimKiemAdapter extends RecyclerView.Adapter<TimKiemAdapter.TimKiemV
         holder.tv_timkiem_dg.setText("Đánh giá: "+truyen.getDanhgia());
         holder.tv_timkiem_theloai.setText(truyen.getTheloai());
         holder.ll_rcv_timkiem.setOnClickListener(view -> {
-//            Intent intent=new Intent(holder.itemView.getContext(), CTTruyen.class);
-//            intent.putExtra("email",email);
-//            intent.putExtra("id_truyen",truyen.getId());
-//            holder.itemView.getContext().startActivity(intent);
+            Intent intent=new Intent(holder.itemView.getContext(), CTTruyen.class);
+            intent.putExtra("email",email);
+            intent.putExtra("id_truyen",truyen.getId());
+            holder.itemView.getContext().startActivity(intent);
         });
     }
 
     @Override
     public int getItemCount() {
+        if (list!=null){
+            return list.size();
+        }
         return 0;
     }
     public class TimKiemViewHolder extends RecyclerView.ViewHolder{

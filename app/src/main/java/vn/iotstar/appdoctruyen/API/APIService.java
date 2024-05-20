@@ -3,6 +3,7 @@ package vn.iotstar.appdoctruyen.API;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -21,8 +22,17 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
+
+import vn.iotstar.appdoctruyen.DanhGiaCuaToi;
+import vn.iotstar.appdoctruyen.model.BinhLuanCuaToiDto;
 import vn.iotstar.appdoctruyen.model.Chapter;
 import vn.iotstar.appdoctruyen.model.ChapterAdmin;
+import vn.iotstar.appdoctruyen.model.DanhGiaCuaToiDto;
+import retrofit2.http.Query;
+import vn.iotstar.appdoctruyen.model.BinhLuanCuaToiDto;
+import vn.iotstar.appdoctruyen.model.Chapter;
+import vn.iotstar.appdoctruyen.model.ChapterAdmin;
+import vn.iotstar.appdoctruyen.model.LichSuDocTruyenModel;
 import vn.iotstar.appdoctruyen.model.Noidungchapter;
 
 
@@ -38,7 +48,15 @@ import vn.iotstar.appdoctruyen.model.Noidungchapter;
 
 
 import vn.iotstar.appdoctruyen.model.PhanLoaiTruyen;
+
 import vn.iotstar.appdoctruyen.model.TaiKhoanDto;
+
+
+import vn.iotstar.appdoctruyen.model.Taikhoan;
+
+import vn.iotstar.appdoctruyen.model.TaiKhoanDto;
+
+
 import vn.iotstar.appdoctruyen.model.Truyen1;
 import vn.iotstar.appdoctruyen.model.TruyenVotes;
 import vn.iotstar.appdoctruyen.model.truyen;
@@ -47,8 +65,8 @@ public interface APIService {
     Gson gson = new GsonBuilder().setDateFormat("dd-MM-yyyy").create();
     APIService apiService = new Retrofit.Builder()
 
+            .baseUrl("http://192.168.76.223:8090/")
 
-            .baseUrl("http://172.172.9.188:8090/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(APIService.class);
@@ -174,10 +192,10 @@ public interface APIService {
 
 
     @GET("tusach/lichsu/{idtaikhoan}")
-    Call<List<Lichsudoctruyen>> getListTruyenDaDoc(@Path("idtaikhoan") int idtaikhoan);
+    Call<List<LichSuDocTruyenModel>> getListTruyenDaDoc(@Path("idtaikhoan") int idtaikhoan);
 
     @GET("/truyen/getone/{idchapter}")
-    Call<Truyen1> getOneTruyen(@Path("idchapter") int idchapter);
+    Call<Truyen1> getOneTruyen(@Path("idchapter") ChapterDto idchapter);
 
     @GET("/truyen/chapter/getone/{idchapter}")
     Call<ChapterDto> getOneChapter(@Path("idchapter") int id);
@@ -186,7 +204,29 @@ public interface APIService {
     Call<String> getTenChapterNew(@Path("idtruyen") int idtruyen);
 
     @GET("/search")
-    Call<List<Model_TimKiem>> getListTimKiem(@Field("textsearch") String textsearch);
+    Call<ArrayList<Model_TimKiem>> getListTimKiem(@Query("textsearch") String textsearch);
+
+
+    @GET("/taikhoan")
+    Call<List<Taikhoan>> getTaiKhoan();
+
+    @GET("timtaikhoan/{email}")
+    Call<List<Taikhoan>> getTaiKhoanByEmail(@Path("email") String email);
+
+    @PUT("taikhoan/{id}/{loaitk}")
+    Call<Taikhoan> updateLoaiTk(@Path("id") int id, @Path("loaitk") int loaitk);
+
+    @POST("taikhoan")
+    Call<Taikhoan> addTaiKhoan(@Body Taikhoan taikhoan);
+
+    @GET("taikhoan/{email}")
+    Call<TaiKhoanDto> findByEmail(@Path("email") String email);
+
+    @GET("/binhluancuatoi/{id}")
+    Call<List<BinhLuanCuaToiDto>> findByIdn(@Path("id") Integer id);
+
+    @GET("/danhgiacuatoi/{id}")
+    Call<List<DanhGiaCuaToiDto>> findDanhGiaByIdn(@Path("id") Integer id);
 
     @GET("/timtaikhoan/{email}")
     Call<List<TaiKhoanDto>> findByEmail(@Path("email") String email);

@@ -11,6 +11,38 @@ public class Thongke {
     private Integer tongluotxem;
     private Double sosaotb;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public truyen getIdtruyen() {
+        return idtruyen;
+    }
+
+    public void setIdtruyen(truyen idtruyen) {
+        this.idtruyen = idtruyen;
+    }
+
+    public Integer getTongluotxem() {
+        return tongluotxem;
+    }
+
+    public void setTongluotxem(Integer tongluotxem) {
+        this.tongluotxem = tongluotxem;
+    }
+
+    public Double getSosaotb() {
+        return sosaotb;
+    }
+
+    public void setSosaotb(Double sosaotb) {
+        this.sosaotb = sosaotb;
+    }
+
     public Thongke() {
     }
 

@@ -11,12 +11,6 @@
                 <item android:id="@+id/it_quanlytruyen"
                     android:title="Quản lý truyện"
                     android:icon="@drawable/account"/>
-                <item android:id="@+id/it_quanlybinhluan"
-                    android:title="Quản lý bình luận"
-                    android:icon="@drawable/account"/>
-                <item android:id="@+id/it_quanlythongke"
-                    android:title="Thống kê"
-                    android:icon="@drawable/account"/>
             </group>
         </menu>
     </item>

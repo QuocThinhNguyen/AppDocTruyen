@@ -2,6 +2,7 @@ package vn.iotstar.appdoctruyen;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -115,49 +117,59 @@ public class TimKiem extends AppCompatActivity implements View.OnClickListener{
             tv_trong.setVisibility(View.GONE);
             srv_danhsach.setVisibility(View.VISIBLE);
             String txt = removeAccent(textSearch);
-            //recyclerViewTruyen(txt);
+            this.textSearch = txt;
+            recyclerViewTruyen(txt);
         }
 
     }
 
 
 
-//    private void recyclerViewTruyen(String textSearch) {
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-//        rcv_timkiem.setLayoutManager(linearLayoutManager);
-//
-//        listtimkiem = new ArrayList<>();
-//        getListTimKiem();
-//        if(listtimkiem.size() == 0){
-//            Toast.makeText(this, "Không có truyện cần tìm!!!", Toast.LENGTH_SHORT).show();
-//            tv_trong.setVisibility(View.VISIBLE);
-//            srv_danhsach.setVisibility(View.GONE);
-//        }else {
-//            getListTimKiem();
-//            rcv_adapter = new TimKiemAdapter(this,listtimkiem,email);
-//            rcv_timkiem.setAdapter(rcv_adapter);
-//        }
-//
-//    }
+    private void recyclerViewTruyen(String textSearch) {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        rcv_timkiem.setLayoutManager(linearLayoutManager);
 
-//    private void getListTimKiem() {
-//        APIService.apiService.getListTimKiem(textSearch).enqueue(new Callback<ArrayList<Model_TimKiem>>() {
-//            @Override
-//            public void onResponse(@NonNull Call<ArrayList<Model_TimKiem>> call, @NonNull Response<ArrayList<Model_TimKiem>> response) {
-//                listtimkiem = response.body();
-//                rcv_adapter  = new TimKiemAdapter(getContext(), listtimkiem, email);
-//                rcv.setAdapter(rcv_adapter);
-//            }
-//
-//            @Override
-//
-//            public void onFailure(@NonNull Call<ArrayList<Model_TimKiem>> call, @NonNull Throwable t) {
-//                Log.e("API_CALL", "Failed to fetch data from API", t);
-//                Toast.makeText(getContext(), "Failure: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//
-//        });
-//    }
+        DividerItemDecoration item = new DividerItemDecoration(TimKiem.this,DividerItemDecoration.VERTICAL);
+        rcv_timkiem.addItemDecoration(item);
+
+        listtimkiem = new ArrayList<>();
+        getListTimKiem();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(listtimkiem.size() == 0){
+                    Toast.makeText(getApplicationContext(), "Không có truyện cần tìm!!!", Toast.LENGTH_SHORT).show();
+                    tv_trong.setVisibility(View.VISIBLE);
+                    srv_danhsach.setVisibility(View.GONE);
+                }else {
+                    rcv_adapter = new TimKiemAdapter(getApplicationContext(),listtimkiem,email);
+                    rcv_timkiem.setAdapter(rcv_adapter);
+                }
+            }
+        }, 5000);
+
+
+
+    }
+
+
+    private void getListTimKiem() {
+        APIService.apiService.getListTimKiem(textSearch.trim()).enqueue(new Callback<ArrayList<Model_TimKiem>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Model_TimKiem>> call,Response<ArrayList<Model_TimKiem>> response) {
+                listtimkiem = response.body();
+                rcv_adapter  = new TimKiemAdapter(getApplicationContext(), listtimkiem, email);
+                rcv_timkiem.setAdapter(rcv_adapter);
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Model_TimKiem>> call,Throwable t) {
+                Log.e("API_CALL", "Failed to fetch data from API", t);
+                Toast.makeText(TimKiem.this, "Failure: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+        });
+    }
 
 
 
