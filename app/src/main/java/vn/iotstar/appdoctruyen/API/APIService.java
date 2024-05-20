@@ -239,4 +239,11 @@ public interface APIService {
     Call<Void> updateDanhGia(@Path("idchapter") int idchapter, @Path("idtaikhoan") int idtaikhoan, @Path("sosao") double sosao);
     @GET("/truyen/gettbdanhgiatheochapter/{id}")
     Call<Double> getAverageRatingByIdChapter(@Path("id")int id);
+
+    //@PostMapping("/taikhoan")
+    //    public Taikhoan addTaiKhoan(@RequestBody Taikhoan taikhoan) {
+    //        return taiKhoanRepository.save(taikhoan);
+    //    }
+
+
 }

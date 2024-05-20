@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,9 +22,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.ktx.Firebase;
 
-public class SignUp extends AppCompatActivity {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import vn.iotstar.appdoctruyen.API.APIService;
+import vn.iotstar.appdoctruyen.model.TaiKhoanDto;
+import vn.iotstar.appdoctruyen.model.Taikhoan;
 
-    private EditText email,pass, confpass;
+public class SignUp extends AppCompatActivity implements View.OnClickListener {
+
+    private EditText email, pass, confpass;
     private Button btnRegister;
     private FirebaseAuth mAuth;
 
@@ -63,39 +71,35 @@ public class SignUp extends AppCompatActivity {
     }
 
     private void register() {
-        String emailtype, passtype,confpasstype;
+        String emailtype, passtype, confpasstype;
         emailtype = email.getText().toString();
         passtype = pass.getText().toString();
         confpasstype = confpass.getText().toString();
-        if (TextUtils.isEmpty(emailtype)){
-            Toast.makeText(this,"Vui lòng nhập email!",Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(emailtype)) {
+            Toast.makeText(this, "Vui lòng nhập email!", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (TextUtils.isEmpty(passtype)){
-            Toast.makeText(this,"Vui lòng nhập password!",Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(passtype)) {
+            Toast.makeText(this, "Vui lòng nhập password!", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (!passtype.equals(confpasstype)){
-            Toast.makeText(this,"Xác nhận mật khẩu không chính xác",Toast.LENGTH_SHORT).show();
+        if (!passtype.equals(confpasstype)) {
+            Toast.makeText(this, "Xác nhận mật khẩu không chính xác", Toast.LENGTH_SHORT).show();
             return;
         }
-        mAuth.createUserWithEmailAndPassword(emailtype,passtype).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        mAuth.createUserWithEmailAndPassword(emailtype, passtype).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     user = mAuth.getCurrentUser();
                     if (user != null) {
                         sendEmailVerification(user);
                     }
-                }
-                else Toast.makeText(getApplicationContext(),"Đăng kí thất bại!",Toast.LENGTH_SHORT).show();
+                } else
+                    Toast.makeText(getApplicationContext(), "Đăng kí thất bại!", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
-
     }
 
     private void sendEmailVerification(FirebaseUser user) {
@@ -130,6 +134,8 @@ public class SignUp extends AppCompatActivity {
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.putExtra("email", email.getText().toString());
                             startActivity(intent);
+
+
                         } else {
                             // Tiếp tục kiểm tra sau một khoảng thời gian định kỳ
                             handler.postDelayed(this, 3000); // 3 giây
@@ -143,5 +149,40 @@ public class SignUp extends AppCompatActivity {
             }
         };
         handler.post(checkEmailVerified);
+    }
+
+    private void setOnClickListener() {
+        btnRegister.setOnClickListener(this);
+    }
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.btn_logingg) {
+            String emailt = email.getText().toString();
+            String matkhaut = pass.getText().toString();
+            // Tạo một đối tượng TaiKhoanDto với email và mật khẩu
+            Taikhoan taikhoan = new Taikhoan(emailt, matkhaut, "Chưa xác định", "Chưa xác định", 0, 0);
+//                            taiKhoanDto.setEmail(email.getText().toString());
+//                            taiKhoanDto.setMatkhau(pass.getText().toString());
+
+            // Gửi yêu cầu đến API để cập nhật bảng taikhoan
+            APIService.apiService.addTaiKhoan(taikhoan).enqueue(new Callback<Taikhoan>() {
+                @Override
+                public void onResponse(Call<Taikhoan> call, Response<Taikhoan> response) {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(getApplicationContext(), "Cập nhật bảng taikhoan thành công", Toast.LENGTH_SHORT).show();
+
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "Không thể cập nhật bảng taikhoan", Toast.LENGTH_SHORT).show();
+                                    }
+                }
+
+                @Override
+                public void onFailure(Call<Taikhoan> call, Throwable throwable) {
+
+                    Toast.makeText(getApplicationContext(), "Lỗi kết nối: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.e("API Error", "Lỗi kết nối: ", throwable);
+                }
+            });
+        }
     }
 }
