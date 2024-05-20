@@ -1,56 +1,22 @@
 package vn.iotstar.appdoctruyen.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class TaiKhoanDto {
     private Integer id;
     private String email;
+    private String matkhau;
     private String hoten;
     private String dienthoai;
     private Integer diemthuong;
+    private Integer loaitaikhoan;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
+    public TaiKhoanDto(Integer id, String email, String matkhau, String hoten, String dienthoai, Integer diemthuong, Integer loaitaikhoan) {
         this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getHoten() {
-        return hoten;
-    }
-
-    public void setHoten(String hoten) {
+        this.matkhau = matkhau;
         this.hoten = hoten;
-    }
-
-    public String getDienthoai() {
-        return dienthoai;
-    }
-
-    public void setDienthoai(String dienthoai) {
         this.dienthoai = dienthoai;
-    }
-
-    public Integer getDiemthuong() {
-        return diemthuong;
-    }
-
-    public void setDiemthuong(Integer diemthuong) {
         this.diemthuong = diemthuong;
+        this.loaitaikhoan = loaitaikhoan;
     }
 }

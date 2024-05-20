@@ -49,9 +49,13 @@ import vn.iotstar.appdoctruyen.model.Noidungchapter;
 
 import vn.iotstar.appdoctruyen.model.PhanLoaiTruyen;
 
+import vn.iotstar.appdoctruyen.model.TaiKhoanDto;
+
+
 import vn.iotstar.appdoctruyen.model.Taikhoan;
 
 import vn.iotstar.appdoctruyen.model.TaiKhoanDto;
+
 
 import vn.iotstar.appdoctruyen.model.Truyen1;
 import vn.iotstar.appdoctruyen.model.TruyenVotes;
@@ -224,4 +228,15 @@ public interface APIService {
     @GET("/danhgiacuatoi/{id}")
     Call<List<DanhGiaCuaToiDto>> findDanhGiaByIdn(@Path("id") Integer id);
 
+    @GET("/timtaikhoan/{email}")
+    Call<List<TaiKhoanDto>> findByEmail(@Path("email") String email);
+    @GET("/findidtaikhoan/{email}")
+    Call<Integer> findIdTaiKhoan(@Path("email") String email);
+
+    @GET("/getidbychapterandtk/{idchapter}/{idtaikhoan}")
+    Call<List<Integer>> getIDByChapterAndTK(@Path("idchapter") int idchapter, @Path("idtaikhoan") int idtaikhoan);
+    @PUT("/danhgia/{idchapter}/{idtaikhoan}/{sosao}")
+    Call<Void> updateDanhGia(@Path("idchapter") int idchapter, @Path("idtaikhoan") int idtaikhoan, @Path("sosao") double sosao);
+    @GET("/truyen/gettbdanhgiatheochapter/{id}")
+    Call<Double> getAverageRatingByIdChapter(@Path("id")int id);
 }
