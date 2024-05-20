@@ -7,6 +7,9 @@ import android.os.Bundle;
 
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
+import vn.iotstart.appdoctruyen.R;
+
+
 public class MainActivity extends AppCompatActivity {
 
     Fragment fragment=null;
