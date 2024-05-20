@@ -66,7 +66,7 @@ public interface APIService {
     APIService apiService = new Retrofit.Builder()
 
 
-            .baseUrl("http://172.172.9.108:8090/")
+            .baseUrl("http://172.16.31.85:8090/")
 
 
             .addConverterFactory(GsonConverterFactory.create(gson))
@@ -262,6 +262,11 @@ public interface APIService {
     //    }
     @PUT("taikhoan/{id}")
     Call<Taikhoan> updateTaiKhoan(@Body Taikhoan taikhoan, @Path("id") int id);
+
+    //// @GetMapping("/taikhoan/{email}")
+    //        //    public Optional<TaiKhoanDto> findByEmail(@PathVariable String email){
+    //        //        return taiKhoanRepository.findByEmail(email);
+    //        //    }
 
 
 }
