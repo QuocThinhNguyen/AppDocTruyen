@@ -1,5 +1,6 @@
 package vn.iotstar.appdoctruyen;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -42,6 +43,7 @@ import vn.iotstar.appdoctruyen.model.truyen;
  */
 public class LichSuDocFragment extends Fragment {
 
+    ProgressDialog dlog;
     View view;
     String email;
     TaiKhoanDto taiKhoan;
@@ -102,13 +104,6 @@ public class LichSuDocFragment extends Fragment {
         thongTinTaiKhoan.email= email;
         thongTinTaiKhoan.gettaikhoan(email);
         // Sử dụng Handler để trì hoãn hành động trong luồng chính
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                taiKhoan = thongTinTaiKhoan.tk;
-                GetTruyenDaDoc();
-            }
-        }, 7000);
 
 
 
@@ -125,6 +120,10 @@ public class LichSuDocFragment extends Fragment {
 
         DividerItemDecoration item = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         rcv.addItemDecoration(item);
+        dlog = new ProgressDialog(getContext());
+        dlog.setMessage("Đang xử lý!");
+        dlog.setCancelable(false);
+        dlog.show();
 
         // Sử dụng Handler để trì hoãn hành động trong luồng chính
         new Handler().postDelayed(new Runnable() {
@@ -132,6 +131,7 @@ public class LichSuDocFragment extends Fragment {
             public void run() {
                 taiKhoan = thongTinTaiKhoan.tk;
                 recyclerViewTruyenDaDoc();
+                dlog.dismiss();
 
             }
         }, 5000);
@@ -174,7 +174,7 @@ public class LichSuDocFragment extends Fragment {
 
             public void onFailure(@NonNull Call<List<LichSuDocTruyenModel>> call, @NonNull Throwable t) {
                 Log.e("API_CALL", "Failed to fetch data from API", t);
-                Toast.makeText(getContext(), "Failure: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "loihi: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
 
         });

@@ -197,7 +197,7 @@ public interface APIService {
     Call<List<LichSuDocTruyenModel>> getListTruyenDaDoc(@Path("idtaikhoan") int idtaikhoan);
 
     @GET("/truyen/getone/{idchapter}")
-    Call<Truyen1> getOneTruyen(@Path("idchapter") ChapterDto idchapter);
+    Call<Truyen1> getOneTruyen(@Path("idchapter") Integer idchapter);
 
     @GET("/truyen/chapter/getone/{idchapter}")
     Call<ChapterDto> getOneChapter(@Path("idchapter") int id);
