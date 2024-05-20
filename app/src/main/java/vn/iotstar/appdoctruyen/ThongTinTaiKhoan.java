@@ -83,6 +83,33 @@ public class ThongTinTaiKhoan extends AppCompatActivity implements View.OnClickL
                 cs = false;
                 chinhsua.setText("Chỉnh sửa");
                 //gọi api
+
+                String hotent = hoten.getText().toString();
+                String dienthoait = dienthoai.getText().toString();
+
+                // updateTaiKhoan
+                int idt = Integer.parseInt(id.getText().toString());
+                Taikhoan taikhoan = new Taikhoan(hotent,dienthoait);
+
+                APIService.apiService.updateTaiKhoan(taikhoan,idt).enqueue(new Callback<Taikhoan>() {
+                    @Override
+                    public void onResponse(Call<Taikhoan> call, Response<Taikhoan> response) {
+//                        if (response.isSuccessful()) {
+//                            Toast.makeText(getApplicationContext(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+//                        } else {
+//                            Toast.makeText(getApplicationContext(), "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
+//                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Taikhoan> call, Throwable t) {
+                        Log.e("API_CALL", "Failed to fetch data from API", t);
+                        Toast.makeText(getApplicationContext(), "Failure: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+
             }
 
         }

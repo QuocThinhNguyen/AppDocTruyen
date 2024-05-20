@@ -247,5 +247,21 @@ public interface APIService {
     //        return taiKhoanRepository.save(taikhoan);
     //    }
 
+    //@PutMapping("/taikhoan/{id}")
+    //    public Taikhoan updateTaiKhoan(@RequestBody Taikhoan taikhoan, @PathVariable Integer id) {
+    //        Taikhoan taikhoan1 = taiKhoanRepository.findById(id).orElse(null);
+    //        if (taikhoan1 == null) {
+    //            return null;
+    //        }
+    //        taikhoan1.setHoten(taikhoan.getHoten());
+    //        taikhoan1.setDienthoai(taikhoan.getDienthoai());
+    //        //taikhoan1.setEmail(taikhoan.getEmail());
+    //        //taikhoan1.setMatkhau(taikhoan.getMatkhau());
+    //        //taikhoan1.setLoaitk(taikhoan.getLoaitk());
+    //        return taiKhoanRepository.save(taikhoan1);
+    //    }
+    @PUT("taikhoan/{id}")
+    Call<Taikhoan> updateTaiKhoan(@Body Taikhoan taikhoan, @Path("id") int id);
+
 
 }
