@@ -15,13 +15,13 @@
         app:cnb_textColor="@color/black"
         app:cnb_iconColor="@color/black"
         app:cnb_backgroundColor="@color/navbar_bg"/>
-    <item
+    <!--<item
         android:title="Thông báo"
         android:id="@+id/cart"
         android:icon="@drawable/icon_noti"
         app:cnb_textColor="@color/black"
         app:cnb_iconColor="@color/black"
-        app:cnb_backgroundColor="@color/navbar_bg"/>
+        app:cnb_backgroundColor="@color/navbar_bg"/>-->
     <item
         android:title="Tài khoản"
         android:id="@+id/profile"

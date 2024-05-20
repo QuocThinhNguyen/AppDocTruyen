@@ -79,7 +79,7 @@ public class TuSachFragment extends Fragment {
         pager2.setAdapter(adapterTuSach);
 
         tabLayout.addTab(tabLayout.newTab().setText("Lịch sử đọc"));
-        tabLayout.addTab(tabLayout.newTab().setText("Gợi ý truyện"));
+        /*tabLayout.addTab(tabLayout.newTab().setText("Gợi ý truyện"));*/
 
 
 

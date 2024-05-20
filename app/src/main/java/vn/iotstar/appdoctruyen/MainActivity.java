@@ -44,11 +44,11 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Vui Lòng đăng nhập để sử dụng chức năng này", Toast.LENGTH_SHORT).show();
                     else  fragment = new TuSachFragment();
                 }
-                else if (i == R.id.cart){
+                /*else if (i == R.id.cart){
                     if(email==null)
                         Toast.makeText(getApplicationContext(), "Vui Lòng đăng nhập để sử dụng chức năng này", Toast.LENGTH_SHORT).show();
                     else fragment = new ThongBaoFragment();
-                }
+                }*/
                 else {
                     if(email==null)
                         Toast.makeText(getApplicationContext(), "Vui Lòng đăng nhập để sử dụng chức năng này", Toast.LENGTH_SHORT).show();
