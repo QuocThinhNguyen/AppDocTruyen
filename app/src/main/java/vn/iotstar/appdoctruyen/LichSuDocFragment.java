@@ -27,6 +27,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vn.iotstar.appdoctruyen.API.APIService;
 import vn.iotstar.appdoctruyen.Adapter.truyenAdapter;
+import vn.iotstar.appdoctruyen.model.LichSuDocTruyenModel;
 import vn.iotstar.appdoctruyen.model.Lichsudoctruyen;
 import vn.iotstar.appdoctruyen.model.TaiKhoanDto;
 import vn.iotstar.appdoctruyen.model.Taikhoan;
@@ -44,10 +45,8 @@ public class LichSuDocFragment extends Fragment {
     View view;
     String email;
     TaiKhoanDto taiKhoan;
-
-
     Truyen1 truyen;
-    private List<Lichsudoctruyen> lichSuDocTruyenList;
+    private List<LichSuDocTruyenModel> lichSuDocTruyenList;
     public RecyclerView rcv;
     public TruyenDaDocAdapter rcv_adapter;
 
@@ -97,6 +96,19 @@ public class LichSuDocFragment extends Fragment {
         // Inflate the layout for this fragment
         view=inflater.inflate(R.layout.fragment_lich_su_doc_truyen, container, false);
         Anhxa();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        email= user.getEmail();
+        ThongTinTaiKhoan thongTinTaiKhoan = new ThongTinTaiKhoan();
+        thongTinTaiKhoan.email= email;
+        thongTinTaiKhoan.gettaikhoan(email);
+        // Sử dụng Handler để trì hoãn hành động trong luồng chính
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                taiKhoan = thongTinTaiKhoan.tk;
+                GetTruyenDaDoc();
+            }
+        }, 7000);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         email= user.getEmail();
@@ -120,8 +132,8 @@ public class LichSuDocFragment extends Fragment {
             }
         }, 5000);
 
-        Intent intent=getActivity().getIntent();
-        email=intent.getStringExtra("email");
+//        Intent intent=getActivity().getIntent();
+//        email=intent.getStringExtra("email");
         /*taiKhoan=db.getTaiKhoan(email);*/
 
         recyclerViewTruyenDaDoc();
@@ -142,17 +154,21 @@ public class LichSuDocFragment extends Fragment {
         rcv.setAdapter(rcv_adapter);
     }
     private void GetTruyenDaDoc() {
-        APIService.apiService.getListTruyenDaDoc(taiKhoan.getId()).enqueue(new Callback<List<Lichsudoctruyen>>() {
+        APIService.apiService.getListTruyenDaDoc(taiKhoan.getId()).enqueue(new Callback<List<LichSuDocTruyenModel>>() {
             @Override
-            public void onResponse(@NonNull Call<List<Lichsudoctruyen>> call, @NonNull Response<List<Lichsudoctruyen>> response) {
+            public void onResponse(@NonNull Call<List<LichSuDocTruyenModel>> call, @NonNull Response<List<LichSuDocTruyenModel>> response) {
                 lichSuDocTruyenList = response.body();
+
                 rcv_adapter  = new TruyenDaDocAdapter(getContext(), lichSuDocTruyenList, taiKhoan);
+
+                //rcv_adapter  = new TruyenDaDocAdapter(getActivity(), lichSuDocTruyenList, taiKhoan);
+
                 rcv.setAdapter(rcv_adapter);
             }
 
             @Override
 
-            public void onFailure(@NonNull Call<List<Lichsudoctruyen>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<List<LichSuDocTruyenModel>> call, @NonNull Throwable t) {
                 Log.e("API_CALL", "Failed to fetch data from API", t);
                 Toast.makeText(getContext(), "Failure: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
