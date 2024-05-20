@@ -71,15 +71,6 @@
                         android:background="@drawable/khung"
                         android:paddingLeft="35dp"
                         android:drawableLeft="@drawable/ic_baseline_search_24" />
-                    <TextView
-                        android:id="@+id/tv_diemdanh"
-                        android:layout_width="40dp"
-                        android:layout_height="35dp"
-                        android:layout_marginLeft="25dp"
-                        android:text="Điểm danh"
-                        android:textSize="8dp"
-                        android:gravity="center"
-                        app:drawableTopCompat="@drawable/ic_reward" />
                 </androidx.appcompat.widget.Toolbar>
 
                 <androidx.cardview.widget.CardView

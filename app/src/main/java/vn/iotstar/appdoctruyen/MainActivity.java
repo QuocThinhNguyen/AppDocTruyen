@@ -8,12 +8,16 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 public class MainActivity extends AppCompatActivity {
 
     Fragment fragment=null;
     ChipNavigationBar chipNavigationBar;
+
+    String email;
 
 
 
@@ -22,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) email = null;
+        else email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
         chipNavigationBar = findViewById(R.id.NavigationBar);
         chipNavigationBar.setItemSelected(R.id.home, true);
@@ -32,13 +38,21 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(int i) {
                 if (i == R.id.home){
                     fragment = new HomeFragment();
-                }else if (i == R.id.store){
-                    fragment = new TuSachFragment();
-                }else if (i == R.id.cart){
-                    fragment = new ThongBaoFragment();
+                }
+                else if (i == R.id.store){
+                    if(email==null)
+                        Toast.makeText(getApplicationContext(), "Vui Lòng đăng nhập để sử dụng chức năng này", Toast.LENGTH_SHORT).show();
+                    else  fragment = new TuSachFragment();
+                }
+                else if (i == R.id.cart){
+                    if(email==null)
+                        Toast.makeText(getApplicationContext(), "Vui Lòng đăng nhập để sử dụng chức năng này", Toast.LENGTH_SHORT).show();
+                    else fragment = new ThongBaoFragment();
                 }
                 else {
-                    fragment = new TaiKhoanFragment();
+                    if(email==null)
+                        Toast.makeText(getApplicationContext(), "Vui Lòng đăng nhập để sử dụng chức năng này", Toast.LENGTH_SHORT).show();
+                    else fragment = new TaiKhoanFragment();
                 }
                 if (fragment != null) {
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();

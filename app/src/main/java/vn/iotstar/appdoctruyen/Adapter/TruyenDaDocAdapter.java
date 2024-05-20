@@ -86,12 +86,20 @@ public class TruyenDaDocAdapter extends RecyclerView.Adapter<TruyenDaDocAdapter.
         }
 
 
+        id=truyendadoc.getIdchapter();
+
+
         //id=truyendadoc.getIdchapter().getId();
+
         getOneChapter(id);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+
+                getOneTruyen(chapter);
+
                 //getOneTruyen(chapter.getId());
+
 
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -128,21 +136,23 @@ public class TruyenDaDocAdapter extends RecyclerView.Adapter<TruyenDaDocAdapter.
 
             @Override
             public void onFailure(Call<ChapterDto> call, Throwable t) {
-                Toast.makeText(context.getApplicationContext(), "Loi",Toast.LENGTH_SHORT).show();
+
+                Log.e("API_CALL", "Failed to fetch data from API", t);
+                Toast.makeText(context.getApplicationContext(), "Failure: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
     private void getOneTruyen(ChapterDto chapter) {
         APIService.apiService.getOneTruyen(chapter).enqueue(new Callback<Truyen1>() {
             @Override
-            public void onResponse(Call<Truyen1> call, Response<Truyen1> response) {
+            public void onResponse(@NonNull Call<Truyen1> call, @NonNull Response<Truyen1> response) {
                 truyen = response.body();
             }
 
             @Override
-            public void onFailure(Call<Truyen1> call, Throwable t) {
+            public void onFailure(@NonNull Call<Truyen1> call, @NonNull Throwable t) {
 
-                Toast.makeText(context.getApplicationContext(), "Loi",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context.getApplicationContext(), "Loi 2",Toast.LENGTH_SHORT).show();
 
 //                Toast.makeText(this.c,"Loi",Toast.LENGTH_SHORT).show();
 
