@@ -29,11 +29,7 @@
     <item android:title="Ứng dụng">
         <menu>
             <group android:checkableBehavior="single">
-                <item android:id="@+id/it_danhgia"
-                    android:title="Đánh giá 5 sao"
-                    android:icon="@drawable/ic_stars"/>
-                <item android:id="@+id/it_phanhoi"
-                    android:title="Gửi phản hồi"
+
                     android:icon="@drawable/ic_email"/>
                 <item android:id="@+id/it_ttud"
                     android:title="Thông tin ứng dụng"

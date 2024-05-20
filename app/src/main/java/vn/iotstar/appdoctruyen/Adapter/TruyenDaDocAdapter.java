@@ -45,7 +45,7 @@ import java.util.List;
 public class TruyenDaDocAdapter extends RecyclerView.Adapter<TruyenDaDocAdapter.TruyenDaDocViewHolder>{
     private Context context;
     //private List<Lichsudoctruyen> list;
-    
+
     private List<LichSuDocTruyenModel> list;
     private TaiKhoanDto taiKhoan;
 
@@ -158,14 +158,14 @@ public class TruyenDaDocAdapter extends RecyclerView.Adapter<TruyenDaDocAdapter.
                 String jsonResponse = response.body(); // JSON từ API
 
 
-                    Gson gson = new Gson();
-                    JsonReader reader = new JsonReader(new StringReader(jsonResponse));
-                    reader.setLenient(true); // Đặt chế độ lenient
+                Gson gson = new Gson();
+                JsonReader reader = new JsonReader(new StringReader(jsonResponse));
+                reader.setLenient(true); // Đặt chế độ lenient
 
-                    // Giải mã JSON
-                    tenchaptermoinhat = gson.fromJson(String.valueOf(reader), String.class);
+                // Giải mã JSON
+                tenchaptermoinhat = gson.fromJson(String.valueOf(reader), String.class);
 
-                }
+            }
 
             @Override
             public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
