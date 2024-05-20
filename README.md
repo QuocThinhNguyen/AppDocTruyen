@@ -17,3 +17,11 @@
 - [Retrofit2](https://github.com/square/retrofit)
 - [Glide](https://github.com/bumptech/glide)
 - [DataBinding]
+- [PostMan] to test API
+
+## Member
+
+- Nguyen Quoc Thinh - 21110662
+- Nguyen Dang Truong - 21110706
+- Nguyen Huu Tien - 21110678
+- Bui Quang Thien - 21110656
