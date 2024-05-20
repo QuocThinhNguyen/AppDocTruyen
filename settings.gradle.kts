@@ -14,6 +14,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "AppDocTruyen"
+rootProject.name = "Manga Comic"
 include(":app")
  
