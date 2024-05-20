@@ -3,6 +3,7 @@ package vn.iotstar.appdoctruyen;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
@@ -20,6 +21,11 @@ import vn.iotstar.appdoctruyen.Adapter.FragmentAdapterTuSach;
  */
 public class TuSachFragment extends Fragment {
 
+
+    View view;
+    TabLayout tabLayout;
+    ViewPager2 pager2;
+    FragmentAdapterTuSach adapterTuSach;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -65,6 +71,47 @@ public class TuSachFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tu_sach, container, false);
+        view= inflater.inflate(R.layout.fragment_tu_sach, container, false);
+        Anhxa();
+
+        FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
+        adapterTuSach=new FragmentAdapterTuSach(fragmentManager,getLifecycle());
+        pager2.setAdapter(adapterTuSach);
+
+        tabLayout.addTab(tabLayout.newTab().setText("Lịch sử đọc"));
+        tabLayout.addTab(tabLayout.newTab().setText("Gợi ý truyện"));
+
+
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                pager2.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        pager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                tabLayout.selectTab(tabLayout.getTabAt(position));
+            }
+        });
+
+        return view;
+    }
+
+    private void Anhxa(){
+        tabLayout=view.findViewById(R.id.tab_layout_tusach);
+        pager2=view.findViewById(R.id.view_pager2_tusach);
     }
 }

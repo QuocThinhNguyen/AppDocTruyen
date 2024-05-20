@@ -28,7 +28,9 @@ import vn.iotstar.appdoctruyen.R;
 
 import vn.iotstar.appdoctruyen.model.Chapter;
 import vn.iotstar.appdoctruyen.model.ChapterDto;
+import vn.iotstar.appdoctruyen.model.LichSuDocTruyenModel;
 import vn.iotstar.appdoctruyen.model.Lichsudoctruyen;
+import vn.iotstar.appdoctruyen.model.TaiKhoanDto;
 import vn.iotstar.appdoctruyen.model.Taikhoan;
 import vn.iotstar.appdoctruyen.model.Truyen1;
 import vn.iotstar.appdoctruyen.model.TruyenVotes;
@@ -37,8 +39,8 @@ import java.util.List;
 
 public class TruyenDaDocAdapter extends RecyclerView.Adapter<TruyenDaDocAdapter.TruyenDaDocViewHolder>{
     private Context context;
-    private List<Lichsudoctruyen> list;
-    private Integer _idtaiKhoan;
+    private List<LichSuDocTruyenModel> list;
+    private TaiKhoanDto taiKhoan;
 
     private ChapterDto chapter;
 
@@ -46,15 +48,15 @@ public class TruyenDaDocAdapter extends RecyclerView.Adapter<TruyenDaDocAdapter.
 
     private String tenchaptermoinhat;
 
-    int id;
+    private int id;
 
 
 
 
-    public TruyenDaDocAdapter(Context context, List<Lichsudoctruyen> list, Integer _idtaiKhoan) {
+    public TruyenDaDocAdapter(Context context, List<LichSuDocTruyenModel> list, TaiKhoanDto taiKhoan) {
         this.context = context;
         this.list = list;
-        this._idtaiKhoan = _idtaiKhoan;
+        this.taiKhoan = taiKhoan;
     }
 
     @NonNull
@@ -66,16 +68,15 @@ public class TruyenDaDocAdapter extends RecyclerView.Adapter<TruyenDaDocAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull TruyenDaDocAdapter.TruyenDaDocViewHolder holder, int position) {
-        Lichsudoctruyen truyendadoc=list.get(position);
+        LichSuDocTruyenModel truyendadoc=list.get(position);
         if(truyendadoc==null){
             return;
         }
 
-        id=truyendadoc.getIdchapter().getId();
-        getOneChapter(id);
-        getOneChapter(id);
+        id=truyendadoc.getIdchapter();
 
-        getOneTruyen(chapter.getId());
+        getOneChapter(id);
+        getOneTruyen(chapter);
         getTenChapterNew(truyen.getId());
 
         Glide.with(this.context).load(truyen.getLinkanh()).into(holder.img_truyendadoc);
@@ -98,8 +99,8 @@ public class TruyenDaDocAdapter extends RecyclerView.Adapter<TruyenDaDocAdapter.
             }
         });
     }
-    private void getOneTruyen(int id) {
-        APIService.apiService.getOneTruyen(id).enqueue(new Callback<Truyen1>() {
+    private void getOneTruyen(ChapterDto chapter) {
+        APIService.apiService.getOneTruyen(chapter).enqueue(new Callback<Truyen1>() {
             @Override
             public void onResponse(Call<Truyen1> call, Response<Truyen1> response) {
                 truyen = response.body();
@@ -107,7 +108,7 @@ public class TruyenDaDocAdapter extends RecyclerView.Adapter<TruyenDaDocAdapter.
 
             @Override
             public void onFailure(Call<Truyen1> call, Throwable t) {
-                //Toast.makeText(TheLoaiNewFragment.this,"Loi",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this.c,"Loi",Toast.LENGTH_SHORT).show();
             }
         });
     }
