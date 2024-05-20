@@ -110,11 +110,6 @@ public class LichSuDocFragment extends Fragment {
             }
         }, 7000);
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        email= user.getEmail();
-        ThongTinTaiKhoan thongTinTaiKhoan = new ThongTinTaiKhoan();
-        thongTinTaiKhoan.email= email;
-        thongTinTaiKhoan.gettaikhoan(email);
 
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
@@ -128,7 +123,8 @@ public class LichSuDocFragment extends Fragment {
             @Override
             public void run() {
                 taiKhoan = thongTinTaiKhoan.tk;
-                GetTruyenDaDoc();
+                recyclerViewTruyenDaDoc();
+
             }
         }, 5000);
 
@@ -136,7 +132,7 @@ public class LichSuDocFragment extends Fragment {
 //        email=intent.getStringExtra("email");
         /*taiKhoan=db.getTaiKhoan(email);*/
 
-        recyclerViewTruyenDaDoc();
+
 
         return view;
     }
