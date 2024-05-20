@@ -87,12 +87,13 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
-        <TextView
+        <EditText
             android:id="@+id/tv_hoten"
             android:layout_width="230dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-
+            android:enabled="false"
+            android:textColor="@color/black"
             android:background="@drawable/khung"
             android:gravity="center"
             android:text="Nguyễn Quốc Thịnh"
@@ -113,12 +114,13 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
-        <TextView
+        <EditText
             android:id="@+id/tv_dienthoai"
             android:layout_width="230dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-
+            android:enabled="false"
+            android:textColor="@color/black"
             android:background="@drawable/khung"
             android:gravity="center"
             android:text="093xxxxxxx"

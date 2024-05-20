@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -18,12 +21,14 @@ import vn.iotstar.appdoctruyen.API.APIService;
 import vn.iotstar.appdoctruyen.model.TaiKhoanDto;
 import vn.iotstar.appdoctruyen.model.Taikhoan;
 
-public class ThongTinTaiKhoan extends AppCompatActivity {
+public class ThongTinTaiKhoan extends AppCompatActivity implements View.OnClickListener{
 
     TextView id,memail,hoten,dienthoai,diemthuong,trangthai;
+    Button chinhsua;
     public TaiKhoanDto tk;
     Boolean ax = false;
     String email;
+    Boolean cs= false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +36,9 @@ public class ThongTinTaiKhoan extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         email = user.getEmail();
         Anhxa();
+        chinhsua.setOnClickListener(this);
+
+
         ax=true;
         gettaikhoan(email);
 
@@ -60,6 +68,25 @@ public class ThongTinTaiKhoan extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.btn_chinhsua){
+            if (!cs) {
+                cs=true;
+                hoten.setEnabled(true);
+                dienthoai.setEnabled(true);
+                chinhsua.setText("Hoàn thành");
+            }
+            else {
+                hoten.setEnabled(false);
+                dienthoai.setEnabled(false);
+                cs = false;
+                chinhsua.setText("Chỉnh sửa");
+                //gọi api
+            }
+
+        }
+    }
     private void Anhxa(){
         id = findViewById(R.id.tv_id);
         memail = findViewById(R.id.tv_email);
@@ -67,5 +94,6 @@ public class ThongTinTaiKhoan extends AppCompatActivity {
         dienthoai=findViewById(R.id.tv_dienthoai);
         diemthuong=findViewById(R.id.tv_diemthuong);
         trangthai=findViewById(R.id.tv_trangthai);
+        chinhsua=findViewById(R.id.btn_chinhsua);
     }
 }

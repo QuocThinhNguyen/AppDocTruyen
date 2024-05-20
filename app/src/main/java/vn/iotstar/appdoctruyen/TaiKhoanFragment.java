@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import vn.iotstar.appdoctruyen.model.Taikhoan;
 
@@ -23,7 +25,7 @@ import vn.iotstar.appdoctruyen.model.Taikhoan;
  */
 public class TaiKhoanFragment extends Fragment implements View.OnClickListener {
 
-    TextView tv_tk_email,tv_tk_lv,tv_tongngaydiemdanh,tv_tk_diem,tv_tk_sotruyen,tv_tk_sobinhluan,tv_tk_sodanhgia,tv_binhluancuatoi,tv_danhgiacuatoi;
+    TextView tv_tongngaydiemdanh,tv_tk_diem,tv_binhluancuatoi,tv_danhgiacuatoi;
     TextView tv_doimatkhau,tv_dangxuat,tv_tttk,tv_username;
     ImageView img_tk_avatar;
     String email;
@@ -75,18 +77,25 @@ public class TaiKhoanFragment extends Fragment implements View.OnClickListener {
         view = inflater.inflate(R.layout.fragment_tai_khoan, container, false);
 
         Anhxa();
+
+        ThongTinTaiKhoan tki = new ThongTinTaiKhoan();
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        tki.email = user.getEmail();
+        tki.gettaikhoan(user.getEmail());
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+             tv_username.setText(tki.tk.getHoten().toString());
+            }
+        }, 500);
         setOnClickListener();
         return  view;
     }
 
     private void Anhxa(){
-        tv_tk_email=view.findViewById(R.id.tv_tk_email);
-        tv_tk_lv=view.findViewById(R.id.tv_tk_lv);
         tv_tongngaydiemdanh=view.findViewById(R.id.tv_tongngaydiemdanh);
-        tv_tk_diem=view.findViewById(R.id.tv_tk_diem);
-        tv_tk_sotruyen=view.findViewById(R.id.tv_tk_sotruyen);
-        tv_tk_sobinhluan=view.findViewById(R.id.tv_tk_sobinhluan);
-        tv_tk_sodanhgia=view.findViewById(R.id.tv_tk_sodanhgia);
         img_tk_avatar=view.findViewById(R.id.img_tk_avatar);
         tv_binhluancuatoi=view.findViewById(R.id.tv_binhluancuatoi);
         tv_danhgiacuatoi=view.findViewById(R.id.tv_danhgiacuatoi);
@@ -111,11 +120,10 @@ public class TaiKhoanFragment extends Fragment implements View.OnClickListener {
             Intent dialog_box = new Intent(getActivity(), BinhLuanCuaToi.class);
             startActivity(dialog_box);
         }
-//            case R.id.tv_danhgiacuatoi:
-//                Intent dialog_box1 = new Intent(getActivity(), ShowDanhGia.class);
-//                dialog_box1.putExtra("email", email);
-//                startActivity(dialog_box1);
-//                break;
+        if (view.getId()== R.id.tv_danhgiacuatoi) {
+            Intent dialog_box1 = new Intent(getActivity(), DanhGiaCuaToi.class);
+            startActivity(dialog_box1);
+        }
         if (view.getId()== R.id.tv_doimatkhau) {
             Intent dialog_box2 = new Intent(getActivity(), DoiMatKhau.class);
             startActivity(dialog_box2);

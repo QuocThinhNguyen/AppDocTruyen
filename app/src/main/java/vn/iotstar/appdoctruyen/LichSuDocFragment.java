@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -109,6 +110,27 @@ public class LichSuDocFragment extends Fragment {
             }
         }, 7000);
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        email= user.getEmail();
+        ThongTinTaiKhoan thongTinTaiKhoan = new ThongTinTaiKhoan();
+        thongTinTaiKhoan.email= email;
+        thongTinTaiKhoan.gettaikhoan(email);
+
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
+        rcv.setLayoutManager(linearLayoutManager);
+
+        DividerItemDecoration item = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        rcv.addItemDecoration(item);
+
+        // Sử dụng Handler để trì hoãn hành động trong luồng chính
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                taiKhoan = thongTinTaiKhoan.tk;
+                GetTruyenDaDoc();
+            }
+        }, 5000);
 
 //        Intent intent=getActivity().getIntent();
 //        email=intent.getStringExtra("email");
@@ -136,7 +158,11 @@ public class LichSuDocFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<List<LichSuDocTruyenModel>> call, @NonNull Response<List<LichSuDocTruyenModel>> response) {
                 lichSuDocTruyenList = response.body();
-                rcv_adapter  = new TruyenDaDocAdapter(getActivity(), lichSuDocTruyenList, taiKhoan);
+
+                rcv_adapter  = new TruyenDaDocAdapter(getContext(), lichSuDocTruyenList, taiKhoan);
+
+                //rcv_adapter  = new TruyenDaDocAdapter(getActivity(), lichSuDocTruyenList, taiKhoan);
+
                 rcv.setAdapter(rcv_adapter);
             }
 
