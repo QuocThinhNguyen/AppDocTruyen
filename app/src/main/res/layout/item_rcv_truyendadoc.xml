@@ -44,17 +44,6 @@
                 android:padding="1dp"
                 android:gravity="left"
                 android:text="Chapter đang xem: Chapter 1"/>
-            <TextView
-                android:id="@+id/tv_chaptermoinhat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="14dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="12dp"
-                android:padding="1dp"
-                android:gravity="left"
-                android:text="Chapter mới nhất: Chapter 3"/>
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

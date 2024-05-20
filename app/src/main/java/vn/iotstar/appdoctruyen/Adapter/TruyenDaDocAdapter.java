@@ -5,6 +5,7 @@ import static android.app.PendingIntent.getActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.util.JsonReader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,6 +39,7 @@ import vn.iotstar.appdoctruyen.model.Taikhoan;
 import vn.iotstar.appdoctruyen.model.Truyen1;
 import vn.iotstar.appdoctruyen.model.TruyenVotes;
 
+import java.io.StringReader;
 import java.util.List;
 
 public class TruyenDaDocAdapter extends RecyclerView.Adapter<TruyenDaDocAdapter.TruyenDaDocViewHolder>{
@@ -51,7 +54,7 @@ public class TruyenDaDocAdapter extends RecyclerView.Adapter<TruyenDaDocAdapter.
 
     private Truyen1 truyen;
 
-    private String tenchaptermoinhat;
+    String tenchaptermoinhat;
 
     private int id;
 
@@ -90,31 +93,29 @@ public class TruyenDaDocAdapter extends RecyclerView.Adapter<TruyenDaDocAdapter.
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                getOneTruyen(chapter);
+                getOneTruyen(chapter.getId());
 
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        getTenChapterNew(truyen.getId());
+
 
                         Glide.with(context).load(truyen.getLinkanh()).into(holder.img_truyendadoc);
                         holder.tv_tentruyen.setText(truyen.getTentruyen());
                         holder.tv_chapterdangxem.setText("Chapter đang xem: "+truyendadoc.getIdchapter());
-                        holder.tv_chaptermoinhat.setText("Chapter mới nhất: "+tenchaptermoinhat);
+                        id=truyendadoc.getIdchapter();
+                        getOneChapter(id);
+                        getOneTruyen(chapter.getId());
 
-        id=truyendadoc.getIdchapter();
 
-        getOneChapter(id);
-        getOneTruyen(chapter);
-        getTenChapterNew(truyen.getId());
 
 
                     }
-                }, 5000);
+                }, 500);
 
 
             }
-        }, 5000);
+        }, 500);
 
     }
 
@@ -129,11 +130,11 @@ public class TruyenDaDocAdapter extends RecyclerView.Adapter<TruyenDaDocAdapter.
             public void onFailure(Call<ChapterDto> call, Throwable t) {
 
                 Log.e("API_CALL", "Failed to fetch data from API", t);
-                Toast.makeText(context.getApplicationContext(), "Failure: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context.getApplicationContext(), "loine: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
-    private void getOneTruyen(ChapterDto chapter) {
+    private void getOneTruyen(Integer chapter) {
         APIService.apiService.getOneTruyen(chapter).enqueue(new Callback<Truyen1>() {
             @Override
             public void onResponse(@NonNull Call<Truyen1> call, @NonNull Response<Truyen1> response) {
@@ -143,9 +144,8 @@ public class TruyenDaDocAdapter extends RecyclerView.Adapter<TruyenDaDocAdapter.
             @Override
             public void onFailure(@NonNull Call<Truyen1> call, @NonNull Throwable t) {
 
-                Toast.makeText(context.getApplicationContext(), "Loi 2",Toast.LENGTH_SHORT).show();
-
-//                Toast.makeText(this.c,"Loi",Toast.LENGTH_SHORT).show();
+                Log.e("API_CALL", "Failed to fetch data from API", t);
+                Toast.makeText(context.getApplicationContext(), "loi2: " + t.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -154,13 +154,23 @@ public class TruyenDaDocAdapter extends RecyclerView.Adapter<TruyenDaDocAdapter.
     private void getTenChapterNew(int id) {
         APIService.apiService.getTenChapterNew(id).enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                tenchaptermoinhat = response.body();
-            }
+            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+                String jsonResponse = response.body(); // JSON từ API
+
+
+                    Gson gson = new Gson();
+                    JsonReader reader = new JsonReader(new StringReader(jsonResponse));
+                    reader.setLenient(true); // Đặt chế độ lenient
+
+                    // Giải mã JSON
+                    tenchaptermoinhat = gson.fromJson(String.valueOf(reader), String.class);
+
+                }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Toast.makeText(context.getApplicationContext(), "Loi",Toast.LENGTH_SHORT).show();
+            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                Log.e("API_CALL", "Failed to fetch data from API", t);
+                Toast.makeText(context.getApplicationContext(), "loi: " +id+ t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -176,14 +186,13 @@ public class TruyenDaDocAdapter extends RecyclerView.Adapter<TruyenDaDocAdapter.
 
     public class TruyenDaDocViewHolder extends RecyclerView.ViewHolder{
         private ImageView img_truyendadoc;
-        private TextView tv_tentruyen,tv_chapterdangxem,tv_chaptermoinhat;
+        private TextView tv_tentruyen,tv_chapterdangxem;
 
         public TruyenDaDocViewHolder(@NonNull View itemView) {
             super(itemView);
             img_truyendadoc=itemView.findViewById(R.id.img_truyendadoc);
             tv_tentruyen=itemView.findViewById(R.id.tv_tentruyen);
             tv_chapterdangxem=itemView.findViewById(R.id.tv_chapterdangxem);
-            tv_chaptermoinhat=itemView.findViewById(R.id.tv_chaptermoinhat);
         }
     }
 }
