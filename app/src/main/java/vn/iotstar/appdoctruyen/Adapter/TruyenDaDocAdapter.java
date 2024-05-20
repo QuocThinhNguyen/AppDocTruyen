@@ -48,9 +48,6 @@ public class TruyenDaDocAdapter extends RecyclerView.Adapter<TruyenDaDocAdapter.
 
     int id;
 
-
-
-
     public TruyenDaDocAdapter(Context context, List<Lichsudoctruyen> list, Integer _idtaiKhoan) {
         this.context = context;
         this.list = list;
@@ -73,7 +70,7 @@ public class TruyenDaDocAdapter extends RecyclerView.Adapter<TruyenDaDocAdapter.
 
         id=truyendadoc.getIdchapter().getId();
         getOneChapter(id);
-        getOneChapter(id);
+        getOneTruyen(id);
 
         getOneTruyen(chapter.getId());
         getTenChapterNew(truyen.getId());

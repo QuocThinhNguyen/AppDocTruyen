@@ -53,7 +53,7 @@ public interface APIService {
     APIService apiService = new Retrofit.Builder()
 
 
-            .baseUrl("http://192.168.1.110:8090/")
+            .baseUrl("http://172.172.9.108:8090/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(APIService.class);
@@ -211,6 +211,11 @@ public interface APIService {
 
     @GET("/binhluancuatoi/{id}")
     Call<List<BinhLuanCuaToiDto>> findByIdn(@Path("id") Integer id);
+
+    // @GetMapping("/lichsu/{idtaikhoan}")
+    //    public List<LichsudoctruyenModel> getListTruyenDaDoc(@PathVariable int idtaikhoan) {
+    //        return repo.getListTruyenDaDoc(idtaikhoan);
+    //    }
 
 
 }

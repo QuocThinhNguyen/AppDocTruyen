@@ -95,11 +95,30 @@ public class LichSuDocFragment extends Fragment {
         email=intent.getStringExtra("email");
         /*taiKhoan=db.getTaiKhoan(email);*/
 
-        recyclerViewTruyenDaDoc();
+        //recyclerViewTruyenDaDoc();
+        showLichSuDoc();
 
         return view;
     }
 
+    private void showLichSuDoc() {
+        //@GET("tusach/lichsu/{idtaikhoan}")
+        //    Call<List<Lichsudoctruyen>> getListTruyenDaDoc(@Path("idtaikhoan") int idtaikhoan);
+        APIService.apiService.getListTruyenDaDoc(taiKhoan.getId()).enqueue(new Callback<List<Lichsudoctruyen>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Lichsudoctruyen>> call, @NonNull Response<List<Lichsudoctruyen>> response) {
+                lichSuDocTruyenList = response.body();
+                rcv_adapter = new TruyenDaDocAdapter(getActivity(), lichSuDocTruyenList, taiKhoan.getId());
+                rcv.setAdapter(rcv_adapter);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<Lichsudoctruyen>> call, @NonNull Throwable t) {
+                Log.e("API_CALL", "Failed to fetch data from API", t);
+                Toast.makeText(getContext(), "Failure: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 
     public void recyclerViewTruyenDaDoc() {

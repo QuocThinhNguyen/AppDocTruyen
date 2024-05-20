@@ -17,7 +17,7 @@
         <ImageView
             android:layout_width="70dp"
             android:layout_height="90dp"
-            android:src="@drawable/new1"
+            android:src="@drawable/doremon"
             android:id="@+id/img_truyendadoc"/>
         <LinearLayout
             android:layout_width="match_parent"
