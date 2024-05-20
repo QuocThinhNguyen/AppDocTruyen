@@ -81,9 +81,11 @@
             android:name=".AdminController.QuanLyThongKe"
             android:exported="false" />
 
+
 <!--        <activity-->
 <!--            android:name=".AdminController.QuanLyTruyen"-->
 <!--            android:exported="false" />-->
+
         <activity
            
             android:name=".MainActivity"

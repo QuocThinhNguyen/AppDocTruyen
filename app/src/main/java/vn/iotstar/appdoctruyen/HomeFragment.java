@@ -21,6 +21,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import vn.iotstar.appdoctruyen.AdminController.QuanLyTaiKhoan;
+import vn.iotstar.appdoctruyen.AdminController.QuanLyTruyen;
 import  vn.iotstar.appdoctruyen.R;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
@@ -282,14 +284,14 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         @Override
         public boolean onNavigationItemSelected (@NonNull MenuItem menuItem){
 
-//            case R.id.it_quanlytaikhoan:
-//                Intent dialog_box = new Intent(getActivity(), QuanLyTaiKhoan.class);
-//                startActivity(dialog_box);
-//                break;
-//            case R.id.it_quanlytruyen:
-//                Intent dialog_box1 = new Intent(getActivity(), QuanLyTruyen.class);
-//                startActivity(dialog_box1);
-//                break;
+            if (menuItem.getItemId() == R.id.it_quanlytaikhoan) {
+                Intent dialog_box = new Intent(getActivity(), QuanLyTaiKhoan.class);
+                startActivity(dialog_box);
+            }
+            if (menuItem.getItemId() == R.id.it_quanlytruyen) {
+                Intent dialog_box1 = new Intent(getActivity(), QuanLyTruyen.class);
+                startActivity(dialog_box1);
+            }
 //            case R.id.it_quanlybinhluan:
 //                Intent dialog_box2 = new Intent(getActivity(), QuanLyBinhLuan.class);
 //                startActivity(dialog_box2);
